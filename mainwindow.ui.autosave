@@ -124,7 +124,11 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
+<<<<<<< HEAD
       <number>19</number>
+=======
+      <number>5</number>
+>>>>>>> d10a93f975732e9243973fa361ab677127c65761
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -2905,7 +2909,11 @@
         </rect>
        </property>
        <property name="currentIndex">
+<<<<<<< HEAD
         <number>1</number>
+=======
+        <number>0</number>
+>>>>>>> d10a93f975732e9243973fa361ab677127c65761
        </property>
        <widget class="QWidget" name="page_2">
         <widget class="QLabel" name="label_134">

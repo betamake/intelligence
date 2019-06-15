@@ -6,8 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
     <width>863</width>
     <height>683</height>
+=======
+    <width>723</width>
+    <height>639</height>
+>>>>>>> d10a93f975732e9243973fa361ab677127c65761
    </rect>
   </property>
   <property name="sizePolicy">
@@ -124,7 +129,11 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
+<<<<<<< HEAD
       <number>5</number>
+=======
+      <number>11</number>
+>>>>>>> d10a93f975732e9243973fa361ab677127c65761
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
