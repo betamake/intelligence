@@ -1,17 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>scanDialog</class>
- <widget name="scanDialog" class="QDialog">
+ <widget class="QDialog" name="scanDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>799</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QPushButton" name="buttonScan">
+   <property name="geometry">
+    <rect>
+     <x>39</x>
+     <y>610</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>开始扫描并识别</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonClose">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>610</y>
+     <width>80</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>230</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>  请把票据放置扫描处</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>379</x>
+     <y>30</y>
+     <width>291</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>总额          </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>90</y>
+     <width>291</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>发票号   </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_2"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>150</y>
+     <width>291</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>发票内容  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_3"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>210</y>
+     <width>291</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>发票备注  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_4"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>360</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_5">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>抬头  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_5"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_6">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>400</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_6">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>税号   </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_6"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_7">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>440</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_7">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>开户行   </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_7"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_8">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>480</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_8">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>银行账号  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_8"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_9">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>520</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_9">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>电话  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_9"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_10">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>560</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_10">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>地址  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_10"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_11">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>480</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_23">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_24">
+      <property name="text">
+       <string>银行账号  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_23"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_12">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>360</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_24">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_25">
+      <property name="text">
+       <string>抬头  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_24"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_13">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>520</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_25">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_26">
+      <property name="text">
+       <string>电话  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_25"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_14">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>400</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_26">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_27">
+      <property name="text">
+       <string>税号  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_26"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_15">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>440</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_27">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_28">
+      <property name="text">
+       <string>开户行  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_27"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_16">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>560</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_28">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_29">
+      <property name="text">
+       <string>地址  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_28"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label_30">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>310</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>销售方信息 </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_31">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>310</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>购买方信息</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_32">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>311</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>610</y>
+     <width>89</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>继续添加</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

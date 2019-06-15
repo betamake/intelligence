@@ -1,0 +1,3697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>863</width>
+    <height>683</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>12000</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="6" column="4" colspan="4">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>325</width>
+       <height>38</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="costBaseButton">
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="3" colspan="4">
+    <layout class="QVBoxLayout" name="levelLayout"/>
+   </item>
+   <item row="6" column="9">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>77</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="9" rowspan="2">
+    <widget class="QPushButton" name="firstBtn">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>首页</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="costScanButton">
+     <property name="text">
+      <string>2</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="10">
+    <widget class="QStackedWidget" name="mainWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>621</width>
+       <height>471</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="cursor">
+      <cursorShape>WaitCursor</cursorShape>
+     </property>
+     <property name="toolTipDuration">
+      <number>-7</number>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>-9</number>
+     </property>
+     <property name="midLineWidth">
+      <number>-3</number>
+     </property>
+     <property name="currentIndex">
+      <number>19</number>
+     </property>
+     <widget class="QWidget" name="welcomepage">
+      <property name="toolTipDuration">
+       <number>-3</number>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="1">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>67</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>14</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="mainLabel">
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="text">
+          <string>欢迎使用报销机器人</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <spacer name="horizontalSpacer_15">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>456</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>68</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="0">
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>14</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="expenseBtn">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>报销模块</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2" colspan="2">
+        <spacer name="horizontalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>462</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>67</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0">
+        <spacer name="horizontalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>14</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="talkBtn">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>聊天模块</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>67</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="2" colspan="2">
+        <spacer name="horizontalSpacer_14">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>462</width>
+           <height>47</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="startpage">
+      <widget class="QPushButton" name="LogBtn">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>300</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>宋体</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>登陆</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="RegBtn_2">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>300</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>宋体</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>注册</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="welcomeLabel_8">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>60</y>
+         <width>361</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>用户设置</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="loginpage">
+      <widget class="QLabel" name="welcomeLabel">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>120</y>
+         <width>371</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>选择登录方式</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="accountBtn">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>330</y>
+         <width>81</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>账号</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="faceBtn">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>330</y>
+         <width>91</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>人脸</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="idBtn">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>330</y>
+         <width>91</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>身份证</string>
+       </property>
+       <property name="autoRepeatDelay">
+        <number>294</number>
+       </property>
+       <property name="autoRepeatInterval">
+        <number>95</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="face">
+      <widget class="QLabel" name="faceLabel">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>341</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>正在进行人脸识别</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>130</y>
+         <width>381</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="imageLayout"/>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="account">
+      <widget class="QLabel" name="welcomeLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>371</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>账号登录</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>130</y>
+         <width>501</width>
+         <height>311</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string/>
+       </property>
+       <widget class="QLabel" name="unmlabel">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>100</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>宋体</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>用户名:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="user_loginEdit">
+        <property name="geometry">
+         <rect>
+          <x>201</x>
+          <y>100</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="upwdlabel">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>160</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>宋体</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>密码:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="user_pwdEdit">
+        <property name="geometry">
+         <rect>
+          <x>201</x>
+          <y>160</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="user_loginBtn">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>240</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>宋体</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>登陆</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="idCard">
+      <widget class="QPushButton" name="idLogin">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>390</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>登录</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idCardNumber">
+       <property name="geometry">
+        <rect>
+         <x>123</x>
+         <y>310</y>
+         <width>451</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idAddress">
+       <property name="geometry">
+        <rect>
+         <x>123</x>
+         <y>250</y>
+         <width>451</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idName_5">
+       <property name="geometry">
+        <rect>
+         <x>215</x>
+         <y>189</y>
+         <width>61</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idUsername">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>90</y>
+         <width>321</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idLabel5">
+       <property name="geometry">
+        <rect>
+         <x>43</x>
+         <y>310</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>身份证号：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idLabel4">
+       <property name="geometry">
+        <rect>
+         <x>43</x>
+         <y>250</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>家庭地址：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idName">
+       <property name="geometry">
+        <rect>
+         <x>93</x>
+         <y>200</y>
+         <width>131</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idPhone">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>200</y>
+         <width>121</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idLabel2">
+       <property name="geometry">
+        <rect>
+         <x>233</x>
+         <y>200</y>
+         <width>41</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>性别：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idSex">
+       <property name="geometry">
+        <rect>
+         <x>283</x>
+         <y>200</y>
+         <width>111</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::WinPanel</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idLabel3">
+       <property name="geometry">
+        <rect>
+         <x>403</x>
+         <y>200</y>
+         <width>41</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>电话：</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="idLabel">
+       <property name="geometry">
+        <rect>
+         <x>43</x>
+         <y>200</y>
+         <width>51</width>
+         <height>39</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>姓名：</string>
+       </property>
+      </widget>
+      <zorder>idLabel5</zorder>
+      <zorder>idLabel4</zorder>
+      <zorder>idLogin</zorder>
+      <zorder>idCardNumber</zorder>
+      <zorder>idAddress</zorder>
+      <zorder>idName_5</zorder>
+      <zorder>idUsername</zorder>
+      <zorder>idName</zorder>
+      <zorder>idPhone</zorder>
+      <zorder>idLabel2</zorder>
+      <zorder>idSex</zorder>
+      <zorder>idLabel3</zorder>
+      <zorder>idLabel</zorder>
+     </widget>
+     <widget class="QWidget" name="acountReg">
+      <widget class="QLabel" name="welcomeLabel_5">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>账号注册</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="avaterRegLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>240</y>
+         <width>181</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>110</y>
+         <width>541</width>
+         <height>311</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string/>
+       </property>
+       <widget class="QLabel" name="avaterRegBoxLabel">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>110</y>
+          <width>141</width>
+          <height>111</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>60</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>选择头像</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>140</y>
+          <width>261</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="QLabel" name="upwdlabel_3">
+           <property name="font">
+            <font>
+             <family>宋体</family>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>密码:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="RegPwd_LineEdit">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>180</y>
+          <width>261</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <widget class="QLabel" name="upwdlabel_4">
+           <property name="font">
+            <font>
+             <family>宋体</family>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>手机:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="RegPhoneNum_LineEdit">
+           <property name="echoMode">
+            <enum>QLineEdit::Normal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>100</y>
+          <width>261</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="0">
+          <widget class="QLabel" name="unmlabel_3">
+           <property name="font">
+            <font>
+             <family>宋体</family>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>用户名:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="RegUsername_LineEdit"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="RegAcountBtn">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>250</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>宋体</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>注册</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="avaterLineEdit">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>55</y>
+          <width>321</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="faceReg">
+      <widget class="QLabel" name="faceLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>40</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>正在注册人脸</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>120</y>
+         <width>391</width>
+         <height>271</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="faceRegImageLayout"/>
+      </widget>
+      <widget class="QPushButton" name="carmBtn">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>400</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>拍照</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="carmSkipBtn">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>400</y>
+         <width>61</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>跳过</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="idCardReg">
+      <widget class="QLabel" name="welcomeLabel_4">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>491</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>身份证认证</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_10">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>130</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_38">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_39">
+          <property name="text">
+           <string>姓名：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idName_2"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_40">
+          <property name="text">
+           <string>性别：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="idSex_2"/>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_41">
+          <property name="text">
+           <string>民族：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QLineEdit" name="idNation_2"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_9">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>170</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_37">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_28">
+          <property name="text">
+           <string>出生日期：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idBirth_2"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_38">
+          <property name="text">
+           <string>签发机关：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="idProvePlace_2"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>210</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_31">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idCardNum_2"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>身份证号：</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_8">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>250</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_36">
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="idEndDay_2"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_27">
+          <property name="text">
+           <string>有效结束日期：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idStartDay_2"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_26">
+          <property name="text">
+           <string>有效起始日期：</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="idCheckBtn">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>400</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>认证</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="idCheckIgnoreBtn">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>400</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>跳过</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>290</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_29">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_24">
+          <property name="text">
+           <string>家庭地址：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idHomeAddre_2"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget_11">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>330</y>
+         <width>481</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_30">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_42">
+          <property name="text">
+           <string>最新住址：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="idNewestAddre_2"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="begin">
+      <widget class="QLabel" name="welcomeLabel_6">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>80</y>
+         <width>361</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>即将开始报销！</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="applyButton">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>210</y>
+         <width>89</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>报销</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="advisoryButton">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>310</y>
+         <width>89</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>咨询</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="expenseChoice">
+      <widget class="QLabel" name="expenseChoiceLabel">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>341</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="text">
+        <string>请选择报销类别</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>120</y>
+         <width>171</width>
+         <height>271</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="busiBtn">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>差旅报销单</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="costBtn">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>费用报销单</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="abroadBtn">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>出国报销单</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="bill">
+      <widget class="QLabel" name="expenseChoiceLabel_10">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>30</y>
+         <width>631</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>票据录入</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="fileChooseBtn">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>120</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>选择图片</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="billTable">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>160</y>
+         <width>721</width>
+         <height>311</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>票据类别</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>电子版附件</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>票据日期</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>票据使用人</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>票据金额</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>始发站</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>终点站</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>其他信息</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QPushButton" name="scanBillbtn">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>110</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>扫描票据</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="busiExpense">
+      <widget class="QTableWidget" name="busiBodyTable">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>270</y>
+         <width>481</width>
+         <height>161</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="busiBodyAddBtn">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>240</y>
+         <width>41</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>增行</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="busiBodyDelBtn">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>240</y>
+         <width>41</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>删行</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="expenseChoiceLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>20</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>差旅报销单</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>150</y>
+         <width>481</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="busiCause_lineEdit"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_7">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>出差事由：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>经办人部门：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="busiDept_lineEdit"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>100</y>
+         <width>481</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>支出项目：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="busiProject_lineEdit"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_8">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>借款单：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="busiForm_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="costExpense">
+      <widget class="QLabel" name="costRnumLabel">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>120</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>单据编号</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costConoLabel">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>170</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>合同编号</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costUseLabel">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>280</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*用途</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costRdateLabel">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>220</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*单据日期</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costHandpLabel">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>180</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*经办人</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costConnameLabel">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>120</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*合同名称</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costHandpdLabel">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>230</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*经办人部门</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costMoneyLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>420</y>
+         <width>67</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>*报销金额</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costRnumEdit">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>120</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costConoEdit">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>170</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costRdateEdit">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>220</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costMoneyEdit">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>420</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costConnameEdit">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>110</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costHandpEdit">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>180</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="costHandpdEdit">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>230</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="costUseEdit">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>280</y>
+         <width>181</width>
+         <height>121</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="abroadExpense">
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="2">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>163</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="expenseChoiceLabel_4">
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="text">
+          <string>出国报销单</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>391</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1" colspan="4">
+        <layout class="QGridLayout" name="gridLayout_12">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_34">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>经办人部门：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="abordDept_lineEdit"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_30">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>用途：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="abordCause_lineEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1" colspan="4">
+        <layout class="QGridLayout" name="gridLayout_13">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_33">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>费用类型：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="abordType_comboBox">
+           <item>
+            <property name="text">
+             <string extracomment="普通费用">普通费用</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>往来款</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>捐赠支出</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>教学</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>财政</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_32">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>合同名称：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="abordContra_lineEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="1" colspan="4">
+        <layout class="QGridLayout" name="gridLayout_34">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_31">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>借款单：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="abordForm_lineEdit">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_29">
+           <property name="font">
+            <font>
+             <family>Adobe 仿宋 Std R</family>
+             <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>合同号：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="abordContraNum_lineEdit">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="5" column="0" colspan="5">
+        <widget class="QTableWidget" name="abdBodyTable"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;宋体&quot;;</string>
+         </property>
+         <property name="text">
+          <string>增行</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;宋体&quot;;</string>
+         </property>
+         <property name="text">
+          <string>删行</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" colspan="3">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>510</width>
+           <height>24</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="payInfo">
+      <widget class="QLabel" name="expenseChoiceLabel_9">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>40</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>支付信息</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>130</y>
+         <width>281</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_14">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="payinfoType_comboBox">
+          <item>
+           <property name="text">
+            <string>现金支付</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>汇款</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>支票支付</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>委托付款</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>民口技术专户</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>内部转账</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>支付方式：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>170</y>
+         <width>311</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_15">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoUnit_lineEdit"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>收款人/单位：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>210</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_16">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_13">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>所属银行：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoBank_lineEdit"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>250</y>
+         <width>331</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_17">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_14">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>具体开户行名称：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoBankName_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>300</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_18">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_35">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>收款人/单位银行卡号：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoBankNum_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>350</y>
+         <width>261</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_19">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_36">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>金额：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoBill_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>400</y>
+         <width>261</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_20">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="payInfoNote_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_37">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>备注：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="confirm">
+      <widget class="QLabel" name="expenseChoiceLabel_11">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>信息确认</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="confirmExcep_Table">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>180</y>
+         <width>491</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="confirmBtn">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>410</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>确认提交</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="ConfirmPayInfo_plainTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>250</y>
+         <width>491</width>
+         <height>71</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="ConfirmBillInfo_plainTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>320</y>
+         <width>491</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>100</y>
+         <width>491</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_21">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="confirmDept_lineEdit"/>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="confirmCause_lineEdit"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_63">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>出差事由：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_61">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>经办人部门：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>140</y>
+         <width>491</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_22">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_62">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>支出项目：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="confirmProject_lineEdit"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_64">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>借款单：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="confirmForm_lineEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="finish">
+      <widget class="QLabel" name="expenseChoiceLabel_19">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>110</y>
+         <width>371</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>报销完成，谢谢使用！</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="continueExpenseBtn">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>320</y>
+         <width>84</width>
+         <height>38</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>继续报销</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="logoutBtn">
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>320</y>
+         <width>80</width>
+         <height>38</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Adobe 仿宋 Std R</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>退出</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="costItem">
+      <widget class="QTableWidget" name="costItemTable">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>150</y>
+         <width>781</width>
+         <height>371</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costItemdetailLabel">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>90</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>费用报销明细</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page">
+      <widget class="QWidget" name="layoutWidget_80">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>80</y>
+         <width>252</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_97">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="payinfoType_comboBox_5">
+          <item>
+           <property name="text">
+            <string>请选择支付方式</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>还借款</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>网银汇款</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>网因入卡</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>公务卡支付</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>支票</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>现金</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>财政直接支付</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>财政直接支付-汇款</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>财政直接支付-现金</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>财政直接支付-公务卡</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_131">
+          <property name="font">
+           <font>
+            <family>Adobe 仿宋 Std R</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>支付方式：</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>761</width>
+         <height>361</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="page_2">
+        <widget class="QLabel" name="label_134">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>60</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>所属银行</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_135">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>120</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>收款人单位</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_136">
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>60</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>市</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_137">
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>10</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>省</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_138">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>170</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>开户行名称</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_139">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>300</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>备注</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_140">
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>110</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>汇款用途</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_141">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>230</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>银行卡号</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_7">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>60</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_8">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>120</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_9">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>170</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_10">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>230</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_11">
+         <property name="geometry">
+          <rect>
+           <x>470</x>
+           <y>10</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_12">
+         <property name="geometry">
+          <rect>
+           <x>470</x>
+           <y>60</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_13">
+         <property name="geometry">
+          <rect>
+           <x>470</x>
+           <y>110</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="textEdit">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>280</y>
+           <width>631</width>
+           <height>70</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_142">
+         <property name="geometry">
+          <rect>
+           <x>300</x>
+           <y>10</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>还借款</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="payInfoUnit_lineEdit_5">
+         <property name="geometry">
+          <rect>
+           <x>82</x>
+           <y>8</y>
+           <width>142</width>
+           <height>25</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_132">
+         <property name="geometry">
+          <rect>
+           <x>1</x>
+           <y>8</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>报销金额：</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_3">
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>10</y>
+           <width>67</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>网络汇款</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_143">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>报销金额：</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_144">
+         <property name="geometry">
+          <rect>
+           <x>364</x>
+           <y>60</y>
+           <width>91</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>收款人/单位</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_145">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>90</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>省</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_146">
+         <property name="geometry">
+          <rect>
+           <x>380</x>
+           <y>100</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>市</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_147">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>140</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>开户行名称</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_148">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>190</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>汇款用途</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_149">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>290</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>备注</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_150">
+         <property name="geometry">
+          <rect>
+           <x>380</x>
+           <y>160</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Adobe 仿宋 Std R</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>银行卡号</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>payInfoUnit_lineEdit_5</cstring>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="7" rowspan="2">
+    <widget class="QPushButton" name="faceManBtn">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>31</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>人脸管理</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>83</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="4">
+    <widget class="QLabel" name="costItemLabel">
+     <property name="text">
+      <string>事项明细</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2" colspan="2">
+    <widget class="QPushButton" name="lastStepBtn">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>38</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Adobe 仿宋 Std R</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>上一步</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="5">
+    <widget class="QPushButton" name="costPayButton">
+     <property name="text">
+      <string>4</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="8" rowspan="2">
+    <spacer name="horizontalSpacer_10">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>98</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="6" colspan="4">
+    <spacer name="horizontalSpacer_8">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>346</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <spacer name="horizontalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>7</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLabel" name="costScanLabel">
+     <property name="text">
+      <string>扫描发票</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="costItemButton">
+     <property name="text">
+      <string>3</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="8">
+    <widget class="QPushButton" name="nextStepBtn">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>101</width>
+       <height>41</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Adobe 仿宋 Std R</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>下一步</string>
+     </property>
+     <property name="autoRepeatInterval">
+      <number>115</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <spacer name="horizontalSpacer_9">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>331</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="4" rowspan="3" colspan="2">
+    <widget class="QLabel" name="userInfo">
+     <property name="font">
+      <font>
+       <family>Noto Sans CJK SC</family>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLabel" name="costBaseLabel">
+     <property name="text">
+      <string>   基本信息</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <widget class="QLabel" name="costPayLabel">
+     <property name="text">
+      <string>支付信息</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

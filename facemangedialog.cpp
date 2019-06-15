@@ -6,6 +6,7 @@ FaceMangeDialog::FaceMangeDialog(QWidget *parent) :
     ui(new Ui::FaceMangeDialog)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("人脸库管理"));
 }
 
 FaceMangeDialog::~FaceMangeDialog()

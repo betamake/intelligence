@@ -1,15 +1,16 @@
 #ifndef SCANTHREAD_H
 #define SCANTHREAD_H
 
-#include <QObject>
-
-class ScanThread : public QObject
+#include <QThread>
+class ScanThread : public QThread
 {
     Q_OBJECT
 public:
     explicit ScanThread(QObject *parent = 0);
+    void run();
 
 signals:
+    void isDone();
 
 public slots:
 };
