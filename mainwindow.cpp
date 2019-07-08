@@ -2917,26 +2917,26 @@ void MainWindow::on_advisoryButton_clicked()
 
 void MainWindow::on_costBaseButton_clicked()
 {
-    currentIndex = 13;
+    currentIndex = 12;
     ui->mainWidget->setCurrentIndex (currentIndex);
+
 }
 
 void MainWindow::on_costScanButton_clicked()
 {
-    currentIndex = 11;
+    currentIndex = 13;
     ui->mainWidget->setCurrentIndex (currentIndex);
 }
 
 void MainWindow::on_costItemButton_clicked()
 {
-    currentIndex = 18;
+    currentIndex = 14;
     ui->mainWidget->setCurrentIndex (currentIndex);
 }
 
 void MainWindow::on_costPayButton_clicked()
 {
-    currentIndex = 21;
-//    currentIndex = 19;
+    currentIndex = 15;
     ui->mainWidget->setCurrentIndex (currentIndex);
 }
 /**
