@@ -20,7 +20,8 @@ private:
     QString abdExchgbillnum;//出国换汇金额票据张数
 
     //ExpenseHead abroadHead;//表头对象
-    //busiExp abroadBusi;//差旅报销单对象
+    //busiExp abroadBusi;
+    //deshi
 
 
 public:
