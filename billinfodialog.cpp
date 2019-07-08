@@ -15,16 +15,16 @@ billinfodialog::~billinfodialog()
 
 void billinfodialog::showimg(QTableWidgetItem *img)
 {
-    ui->billimage->setText(img->text());
+//    ui->billimage->setText(img->text());
 }
 
 void billinfodialog::showbill(QString billpath)
 {
-    QImage img(billpath);
-    QPixmap pixmap = QPixmap::fromImage(img);
-    pixmap.scaled(ui->billimage->size(),Qt::KeepAspectRatio);
-    ui->billimage->setScaledContents(true);
-    ui->billimage->setPixmap(pixmap);
+//    QImage img(billpath);
+//    QPixmap pixmap = QPixmap::fromImage(img);
+//    pixmap.scaled(ui->billimage->size(),Qt::KeepAspectRatio);
+//    ui->billimage->setScaledContents(true);
+//    ui->billimage->setPixmap(pixmap);
 
 }
 

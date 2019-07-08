@@ -39,6 +39,7 @@ void scanDialog::on_buttonScan_clicked()
 void scanDialog::on_buttonClose_clicked()
 {
     this->dealDone ();
+    close();
 }
 
 void scanDialog::dealDone ()

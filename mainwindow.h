@@ -24,6 +24,10 @@
 #include "billinfodialog.h"
 #include "facemangedialog.h"
 #include "scandialog.h"
+#include "windows/insertpersonneldialog.h"
+#include "windows/addpaydialog.h"
+#include "windows/itemViews/paymethodsitem.h"
+#include "payinfomanager.h"
 //#include "networkthread.h"
 //#include "networkhandler.h"
 #include <QMap>
@@ -96,29 +100,30 @@ public:
     void deletePhoto(QString uid);//删除人脸库指定uid人脸
     bool VerifyNumber(QString str);
     //清空内容
-    void deleteBillInput(); //清空票据录入内容
-    void deleteTravelContent(); //清空差旅报内容
-    void deleteCostContent(); //清空费用报销内容
-    void deleteAbroadContent(); //清空出国报销内容
-    void deletePayInforn(); //清空支付信息
-    void deleteInfornConfirm();//清空信息确认内容
+//    void deleteBillInput(); //清空票据录入内容
+//    void deleteTravelContent(); //清空差旅报内容
+//    void deleteCostContent(); //清空费用报销内容
+//    void deleteAbroadContent(); //清空出国报销内容
+//    void deletePayInforn(); //清空支付信息
+//    void deleteInfornConfirm();//清空信息确认内容
     void deleteAccountInfo(); //清空账号登录信息
     void deleteFace(); //回收人脸识别资源
     void deleteAccountReg(); //清空注册信息.
     void isShowguiInforn(); //显示报销流程引导
     void noShowguiInforn(); //不显示报销流程引导
 
+
 private:
     void startRecord();
     void stopRecord();
     void setRecord();
     void sendPlayText(QByteArray text);
-    void on_faceRegBtn_clicked();
+//    void on_faceRegBtn_clicked();
 
 signals:
-    void costDone(); //发票识别完成发送信号.
-    void busiDone(); //差旅报销
-    void abroadDone();//出国报销
+//    void costDone(); //发票识别完成发送信号.
+//    void busiDone(); //差旅报销
+//    void abroadDone();//出国报销
 
 private slots:
     void on_faceBtn_clicked();
@@ -139,12 +144,12 @@ private slots:
     void on_costBtn_clicked();
     void on_busiBtn_clicked();
     void on_abroadBtn_clicked();
-    void on_busiBodyAddBtn_clicked();
-    void on_busiBodyDelBtn_clicked();
+//    void on_busiBodyAddBtn_clicked();
+//    void on_busiBodyDelBtn_clicked();
     void on_fileChooseBtn_clicked();
     void on_continueExpenseBtn_clicked();
     void on_logoutBtn_clicked();
-    void on_confirmBtn_clicked();
+//    void on_confirmBtn_clicked();
     void processBuffer(const QAudioBuffer&);
     void playChanged();
     void on_carmBtn_clicked();
@@ -155,8 +160,8 @@ private slots:
     void on_RegAcountBtn_clicked();
     //void on_costBodyAddBtn_clicked();
     //void on_costBodyDelBtn_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+//    void on_pushButton_clicked();
+//    void on_pushButton_2_clicked();
     void dealIdCardReply(Information,int);
     void on_idLogin_clicked();
     void on_idCheckIgnoreBtn_clicked();
@@ -177,8 +182,8 @@ private slots:
     void billScanRelpy();//处理扫面后的图片.
     //表格信息处理
     //void dealCost(); //处理发票信息
-    void dealBusi(); //处理差旅信息
-    void dealAbroad();// 处理出国信息;
+//    void dealBusi(); //处理差旅信息
+//    void dealAbroad();// 处理出国信息;
 
     void on_applyButton_clicked();
 
@@ -193,6 +198,17 @@ private slots:
     void on_costPayButton_clicked();
 
     void on_costAgainButton_clicked();
+
+    void on_addPersonnel_clicked();
+
+    void on_addPayInfoBtn_clicked();
+
+    void addPayInfoItem(payItemInfo *info);      //添加支付信息，参数后续添加
+
+
+private:
+    void setBasePage(int expenseType);
+
 
 private:
     Ui::MainWindow *ui;
@@ -217,22 +233,22 @@ private:
     bool busiType =false;
     bool abroadType = false;
     //表格
-    QTableWidget *bsTable;
-    QTableWidget *costTable;
-    QTableWidget *abdTable;
-    QTableWidget *blchkTable;
-    QTableWidget *confirmTable;
+//    QTableWidget *bsTable;
+//    QTableWidget *costTable;
+//    QTableWidget *abdTable;
+//    QTableWidget *blchkTable;
+//    QTableWidget *confirmTable;
     QTableWidget *table;
-    BusiExpense busi;//差旅费用
-    costExpense cost;//费用报销单
-    abroadExpense abroad;//出国报销单
+//    BusiExpense busi;//差旅费用
+//    costExpense cost;//费用报销单
+//    abroadExpense abroad;//出国报销单
     int expenseTypeId;
     PayInfo pay;
     BillCheck bill; // 票据数据
     BillCheck billinfo;
-    busiExp busiexp;
-    abroadExp abdexp;
-    costExp costexp;
+//    busiExp busiexp;
+//    abroadExp abdexp;
+//    costExp costexp;
     ExpenseHead exphead;
 
     int recordNum;//音频样本数量
@@ -292,6 +308,9 @@ private:
     Information loginInformation;//当前用户身份信息
     billinfodialog* billInfoDialog;//显示票据的弹框
     scanDialog *scanInfoDialog;
+    insertPersonnelDialog *insertPerDialog;
+    addPayDialog *addPayDlg;
+
     QByteArray getPixmapData(QString filePath,QImage image);
     QString avaterFilePath;
 

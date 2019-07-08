@@ -29,12 +29,6 @@ private:
     QMutex m_lock;
     bool m_isCanRun;
 
-    //    void getIdInfo();
-
-    //     int findFlag;
-    //     int selectFlag;
-    //     int readBasicFlag;
-    //     int sendFlag;
 };
 
 #endif // IDCARDTHREAD_H

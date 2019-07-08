@@ -61,7 +61,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     currentIndex = 10;
-    //ui->mainWidget->resize (800,800);
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->faceManBtn->hide();//人脸库管理登陆后才展示
     ui->lastStepBtn->hide ();
@@ -69,9 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->noShowguiInforn ();
 
     ui->userInfo->installEventFilter(this); //初始化个人信息页
-    //    address = "http://192.168.15.58:8000";
     address = "http://192.168.3.185:8000";
-    //        address = "http://211.71.15.58:8000";
     qDebug() << "length:"<< address.length();
 
     regCode = 0;//初始化注册信息
@@ -86,34 +83,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
-    busiTalble = false;  //这一行是否需要,需检查@hkl
     this->initMedia();
-    //处理表格信息
-    //connect (this,&MainWindow::costDone,this,&MainWindow::dealCost); //发票识别完成信息之后,处理识别发票信息;
-    connect (this,&MainWindow::busiDone,this,&MainWindow::dealBusi); //车票识别完成信息之后,处理识别车票信息;
-    connect (this,&MainWindow::abroadDone,this,&MainWindow::dealAbroad);
-}
 
-//QString MainWindow::HOST =  "http://192.168.3.102:8000";
+}
 
 MainWindow::~MainWindow()
 {
     qDebug() << "start destroy widget";
-    //    m_thread->stopImmediately();
-    //    //局部线程的终结
-    //    if(m_currentRunLoaclThread)
-    //    {
-    //        m_currentRunLoaclThread->stopImmediately();
-    //    }
-    //    m_thread->wait(i);
     delete ui;
-
-    //    if(m_objThread)i
-    //    {
-    //        m_objThread->quit();
-    //        //        m_obj->stop();
-    //    }
-    //    m_objThread->wait();
     qDebug() << "end destroy widget";
 }
 
@@ -147,10 +124,6 @@ void MainWindow::initMedia()
     playStatus = false;
     connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT(playChanged()));
 
-
-
-    //    ui->mainWidget->setWindowFlags(Qt::Window);
-    //    ui->mainWidget->showFullScreen();
     player->stop();
     this->sendPlayText("欢迎使用财务机器人");
 }
@@ -344,34 +317,6 @@ void MainWindow::on_RegBtn_2_clicked()
     ui->mainWidget->setCurrentIndex(currentIndex);
 }
 
-/**
-* @brief       人脸注册拍照
-* @author        胡帅成
-* @date        2018-09-06
-*/
-//void MainWindow::on_faceRegBtn_clicked()
-//{
-
-//    //设置取景器
-//    viewfinder = new QCameraViewfinder(this);
-//    ui->faceRegImageLayout->addWidget(viewfinder);
-//    camera->setViewfinder(viewfinder);
-//    viewfinder->resize(600,350);
-
-//    imageCapture2 = new QCameraImageCapture(camera);
-//    camera->setCaptureMode(QCamera::CaptureStillImage);
-//    imageCapture2->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-
-//    //注册时ID为1
-//    idFace=1;
-//    ui->mainWidget->setCurrentIndex(6);
-//    camera->searchAndLock();
-//    currentIndex = 0;
-
-//    camera->start();
-//    camera->unlock();
-//}
-
 
 /**
 * @function   on_carmBtn_clicked
@@ -403,12 +348,6 @@ void MainWindow::on_RegAcountBtn_clicked()
     QString username = ui->RegUsername_LineEdit->text().trimmed();
     QString password = ui->RegPwd_LineEdit->text().trimmed();
     QString phone = ui->RegPhoneNum_LineEdit->text().trimmed();
-    /*@author:胡坤伦
-     *@brief:删除avaterLineEdit
-     *@date:2019-02-28
-     */
-    //QString avaterPath = ui->avaterLineEdit->text().trimmed();
-
     if(!(username.isEmpty() || password.isEmpty() || phone.isEmpty()))
     {
         //数据库查询一下此用户名是否存在
@@ -554,247 +493,7 @@ void MainWindow::on_fileChooseBtn_clicked()
     manager->post(request,params.toString().toUtf8());
 }
 
-/**
-* @brief        确认并提交
-* @author
-* @date        2018-09-06
-*/
-void MainWindow::on_confirmBtn_clicked()
-{
-    player->stop();
-    this->sendPlayText("确认提交");
-    //差旅报销单数据插入
-    if(expenseType == 12)
-    {
 
-        QString bexp[18];
-        User usr;
-        qDebug()<<"uname:"<<uname;
-        usr = database.SearchUserByUsername(uname);
-        qDebug()<<"usr.getUid():"<<usr.getUid();
-        QString uid = usr.getUid();//10进制将int转换为16进制
-        qDebug()<<uid;
-        busiexp.setBusimanid(uid);
-        exphead.setHeadoperatori(uid);
-        qDebug()<<"bsTable->rowCount():"<<bsTable->rowCount();
-        for (int i=0; i< bsTable->rowCount(); i++)
-        {
-            for (int j=0;j< bsTable->columnCount();j++)
-            {
-                if(bsTable->item(i,j)!=NULL)
-                {
-                    bexp[j] =  bsTable->item(i,j)->text();
-                }
-                else {
-                    bexp[j]="";
-                }
-            }
-            //headers<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"
-            //<<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-
-            //busiexp.setBusimanid(bexp[0]);
-            busiexp.setbusid(bexp[0]);
-            pay.setPayInfoBusid(bexp[0]);
-            exphead.setHeadbusid(bexp[0]);
-            busiexp.setBusibegindate(bexp[2]);
-            busiexp.setBusienddate(bexp[3]);
-            busiexp.setBusiday(bexp[4]);
-            busiexp.setBusifromadres(bexp[5]);
-            busiexp.setBusitoadres(bexp[6]);
-            busiexp.setBusitranscost(bexp[7]);
-            busiexp.setBusitransbillnum(bexp[8]);
-            busiexp.setBusiaccomcost(bexp[9]);
-            busiexp.setbusiAccombillnum(bexp[10]);
-            busiexp.setBusirelaxday(bexp[11]);
-            busiexp.setBusitranssubsidy(bexp[12]);
-            busiexp.setBusifoodsubsidy(bexp[13]);
-            busiexp.setBusiothercost(bexp[14]);
-            busiexp.setBusiothernum(bexp[15]);
-            busiexp.setBusiothermemo(bexp[16]);
-            busiexp.setBusitotalcost(bexp[17]);
-
-            qDebug()<<"busiexp:"<<busiexp.getBusimanid()<<busiexp.getBusibegindate();
-            database.insertBusiexp(busiexp);
-
-            busiexp.setEmpty ();
-
-        }
-    }
-    //费用报销单数据插入
-    else if (expenseType == 13)
-    {
-        QString bexp[9];
-        User usr;
-        qDebug()<<"uname:"<<uname;
-        usr = database.SearchUserByUsername(uname);
-        qDebug()<<"usr.getUid():"<<usr.getUid();
-        QString uid = usr.getUid();//10进制将int转换为16进制
-        qDebug()<<uid;
-        costexp.setCostmanid(uid);
-        exphead.setHeadoperatori(uid);
-        qDebug()<<"costTable->rowCount():"<<costTable->rowCount();
-        for (int i=0; i< costTable->rowCount(); i++)
-        {
-            for (int j=0;j< costTable->columnCount();j++)
-            {
-                if(costTable->item(i,j)!=NULL)
-                {
-                    bexp[j] =  costTable->item(i,j)->text();
-                }
-                else {
-                    bexp[j]="";
-                }
-            }
-            //headers<<"报销单号"<<"报销人"<<"报销金额"<<"单据张数"<<"预算项目"<<"预算归属部门"<<"借款单"<<"剩余借款"<<"备注";
-            //busiexp.setBusimanid(bexp[0]);
-            costexp.setcostid(bexp[0]);
-            pay.setPayInfoCostid(bexp[0]);
-            exphead.setHeadcostid(bexp[0]);
-            costexp.setCostmoney(bexp[2]);
-            costexp.setCostbillamount(bexp[3]);
-            costexp.setCostbudgtproid(bexp[4]);
-            costexp.setCostcentrializedid(bexp[5]);
-            costexp.setCostloanid(bexp[6]);
-            costexp.setCostsurplusloan(bexp[7]);
-            costexp.setCostmemo(bexp[8]);
-
-            database.insertCostexp(costexp);
-        }
-    }
-    //出国报销单数据插入
-    else if (expenseType == 14)
-    {
-        //if()
-
-        QString bexp[24];
-        User usr;
-        qDebug()<<"uname:"<<uname;
-        usr = database.SearchUserByUsername(uname);
-        qDebug()<<"usr.getUid():"<<usr.getUid();
-        QString uid = usr.getUid();//10进制将int转换为16进制
-        qDebug()<<uid;
-        busiexp.setBusimanid(uid);
-        exphead.setHeadoperatori(uid);
-        qDebug()<<"abdTable->rowCount():"<<abdTable->rowCount();
-        for (int i=0; i< abdTable->rowCount(); i++)
-        {
-            for (int j=0;j< abdTable->columnCount();j++)
-            {
-                if(abdTable->item(i,j)!=NULL)
-                {
-                    bexp[j] =  abdTable->item(i,j)->text();
-                }
-                else {
-                    bexp[j]="";
-                }
-            }
-            //            headers<<"报销单编号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"
-            //                  <<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"签证费金额"<<"签证费单据张数"<<"服务费金额"
-            //                 <<"服务费票据张数"<<"出国换汇金额"<<"出国换汇金额票据张数"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-            //busiexp.setBusimanid(bexp[0]);
-            busiexp.setAbdid(bexp[0]);
-            busiexp.setBusibegindate(bexp[2]);
-            busiexp.setBusienddate(bexp[3]);
-            busiexp.setBusiday(bexp[4]);
-            busiexp.setBusifromadres(bexp[5]);
-            busiexp.setBusitoadres(bexp[6]);
-            busiexp.setBusitranscost(bexp[7]);
-            busiexp.setBusitransbillnum(bexp[8]);
-            busiexp.setBusiaccomcost(bexp[9]);
-            busiexp.setbusiAccombillnum(bexp[10]);
-            busiexp.setBusirelaxday(bexp[11]);
-            busiexp.setBusitranssubsidy(bexp[12]);
-            busiexp.setBusifoodsubsidy(bexp[13]);
-            busiexp.setBusiothercost(bexp[20]);
-            busiexp.setBusiothernum(bexp[21]);
-            busiexp.setBusiothermemo(bexp[22]);
-            busiexp.setBusitotalcost(bexp[23]);
-
-            abdexp.setAbdid(bexp[0]);
-            abdexp.setAbdvisacost(bexp[14]);
-            abdexp.setAbdvisabillnum(bexp[15]);
-            abdexp.setAbdservcost(bexp[16]);
-            abdexp.setAbdservbillnum(bexp[17]);
-            abdexp.setAbdexchgcost(bexp[18]);
-            abdexp.setAbdexchgbillnum(bexp[19]);
-
-            //qDebug()<<"busiexp:"<<busiexp.getBusimanid()<<busiexp.getBusibegindate();
-            database.insertBusiexp(busiexp);
-            database.insertAbdexp(abdexp);
-            busiexp.setEmpty ();
-        }
-
-    }
-    database.insertExpensehead(exphead);
-    database.insertPayinfo(pay);
-    pay.setEmpty ();
-
-
-    blchkTable = ui->billTable;
-    if (bldir.size())
-    {
-        QString bexp[8];
-        User usr;
-        qDebug()<<"uname:"<<uname;
-        usr = database.SearchUserByUsername(uname);
-        qDebug()<<"usr.getUid():"<<usr.getUid();
-        QString uid = usr.getUid();//10进制将int转换为16进制
-        qDebug()<<uid;
-
-        qDebug()<<"blchkTable->rowCount():"<<blchkTable->rowCount();
-        for (int i=0; i< blchkTable->rowCount(); i++)
-        {
-            for (int j=0;j< blchkTable->columnCount();j++)
-            {
-                if(blchkTable->item(i,j)!=NULL)
-                {
-                    bexp[j] =  blchkTable->item(i,j)->text();
-                }
-                else {
-                    bexp[j]="";
-                }
-            }
-            billinfo.setBilltype(bexp[0]);
-            billinfo.setBillcontent(bexp[1]);
-            billinfo.setBilldate(bexp[2]);
-            billinfo.setBillmoney(bexp[4]);
-            billinfo.setBillstartplace(bexp[5]);
-            billinfo.setBillendplace(bexp[6]);
-            billinfo.setBillother(bexp[7]);
-            billinfo.setBillrealpath(billdir);
-            billinfo.setBillattachmenttitle(bldir.at(i));
-            billinfo.setBilluser(uid);
-            database.insertBillcheck(billinfo);
-            //clear
-            billinfo.setEmpty ();
-        }
-    }
-    //保存票据电子版
-    //    QImage img(billpath);
-    //    QPixmap pixmap = QPixmap::fromImage(img);
-    //    pixmap.save(billdir);
-    //    busi.init();
-
-    //           QLineEdit * busiCause1 = ui->busiCause_lineEdit;
-    //           QLineEdit * busiForm1 = ui->busiForm_lineEdit;
-    //           QLineEdit * busiProject1 = ui->busiProject_lineEdit;
-    //    ui->busiDept_lineEdit
-    //    ui->busiCause_lineEdit;
-    //    ui->busiForm_lineEdit;
-    //     ui->busiProject_lineEdit;
-
-    player->stop();
-    this->sendPlayText("报销成功");
-    currentIndex = 17;
-    ui->mainWidget->setCurrentIndex(currentIndex);
-}
-
-
-//-------------------------------------------event end----------------------------------------
-
-
-//-------------------------------------------sequence action start----------------------------------------
-//上一步
 void MainWindow::toLastStep(){
     //报销类型的上一步是页面
     if(currentIndex == 12 || currentIndex == 13 || currentIndex == 14){
@@ -888,269 +587,7 @@ void MainWindow::toNextStep(){
         currentIndex=13; //在这三种报销中,发票肯定会有.所以先跳转到发票报销页面.
 
     }
-    else if(currentIndex == 12){//在报销页面的下一步是支付页
-        expenseType = 12;
-        //获取输入值，封装成busi对
-        QLineEdit * busiDept1 = ui->busiDept_lineEdit;
-        QLineEdit * busiCause1 = ui->busiCause_lineEdit;
-        QLineEdit * busiForm1 = ui->busiForm_lineEdit;
-        QLineEdit * busiProject1 = ui->busiProject_lineEdit;
-        if(busiDept1->text().isEmpty()||busiCause1->text().isEmpty()||busiForm1->text().isEmpty()
-                ||busiProject1->text().isEmpty())
-        {
-            QMessageBox::warning(this, tr("警告"),tr("请输入数据"),QMessageBox::Yes);
-            currentIndex = 12;
-        }
-        else
-        {
-            qDebug()<<tr("busi不为空");
-            //表头数据
-            exphead.setHeaddeptid(busiDept1->text().trimmed());
-            exphead.setHeadpurpose(busiCause1->text().trimmed());
-            exphead.setHeadprojectid(busiProject1->text().trimmed());
-            exphead.setHeadrequisitionid(busiForm1->text().trimmed());
 
-            busi.setBusiCause_line(busiCause1->text().trimmed());
-            busi.setBusiDept_line(busiDept1->text().trimmed());
-            busi.setBusiForm_line(busiForm1->text().trimmed());
-            busi.setBusiProject_line(busiProject1->text().trimmed());
-
-            busi.toString();
-            expenseTypeId = 12;
-            if (abroadType == true)//这里需要做判断 根据录入是否有出国飞机票报销,在确定是否直接跳转到支付页面
-            {
-                currentIndex = 14;
-            }
-            else
-            {
-                currentIndex = 15;
-            }
-
-        }
-
-        //确认界面显示出差报销单数据
-        confirmTable = ui->confirmExcep_Table;
-        confirmTable->setColumnCount(18);//设置列数
-        confirmTable->setRowCount(bsTable->rowCount());
-        QStringList headers;
-        headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"<<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-        confirmTable->setHorizontalHeaderLabels(headers);
-        confirmTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        for ( int i=0;i<bsTable->rowCount();i++)
-        {
-            for (int j=0;j<bsTable->columnCount();j++)
-            {
-                if(bsTable->item(i,j)!=NULL)
-                {
-                    //                    bsTable=busTable->item(i,j)->text();
-                    confirmTable->setItem(i,j,new QTableWidgetItem(bsTable->item(i,j)->text()));
-                }
-            }
-        }
-
-    }else if(currentIndex == 13)
-    {
-//        //获取输入值，封装成busi对象
-////        QComboBox * costType1 = ui->costType_comboBox;
-////        QLineEdit * costDept1 = ui->costDept_lineEdit;
-////        QLineEdit * costContra1 = ui->costContra_lineEdit;
-////        QLineEdit * costContraNum1 = ui->costContraNum_lineEdit;
-////        QLineEdit * costForm1 = ui->costForm_lineEdit;
-////        QLineEdit * costUse1 = ui->costUse_lineEdit;
-//        //combox再说
-//        if(costDept1->text().isEmpty()||costContra1->text().isEmpty()||costContraNum1->text().isEmpty()
-//                ||costForm1->text().isEmpty()||costUse1->text().isEmpty())
-//        {
-//            QMessageBox::warning(this, tr("警告"),tr("请输入数据"),QMessageBox::Yes);
-//            currentIndex = 13;
-//        }
-//        else
-//        {
-//            qDebug()<<tr("cost不为空");
-//            //设置表头数据
-//            exphead.setHeadCosttype(costType1->currentText());
-//            exphead.setHeadcontractid(costContraNum1->text().trimmed());
-//            exphead.setHeadContractname(costContra1->text().trimmed());
-//            exphead.setHeaddeptid(costDept1->text().trimmed());
-//            exphead.setHeadrequisitionid(costForm1->text().trimmed());//借款单
-//            exphead.setHeadpurpose(costUse1->text().trimmed());
-
-//            cost.setCostType_comboBox(costType1->currentText());
-//            cost.setCostContra(costContra1->text().trimmed());
-//            cost.setCostContraNum(costContraNum1->text().trimmed());
-//            cost.setCostDept(costDept1->text().trimmed());
-//            cost.setCostForm(costForm1->text().trimmed());
-//            cost.setCostUse(costUse1->text().trimmed());
-
-//            cost.toString();
-//            expenseTypeId = 13;
-//            if (busiType == true)//这里需要做判断 根据录入是否有车票报销,在确定是否直接跳转到支付页面
-//            {
-//                currentIndex = 12;
-//            }
-//            else
-//            {
-//                currentIndex = 15;
-//            }
-
-//        }
-//        //确认界面显示费用报销单信息
-//        confirmTable = ui->confirmExcep_Table;
-//        confirmTable->setColumnCount(9);//设置列数
-//        confirmTable->setRowCount(costTable->rowCount());
-//        QStringList headers;
-//        headers<<"报销单编号"<<"单据日期"<<"报销人"<<"报销金额"<<"单据张数"<<"预算项目"<<"预算归属部门"<<"借款单"<<"备注";
-//        confirmTable->setHorizontalHeaderLabels(headers);
-//        confirmTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-//        for ( int i=0;i<costTable->rowCount();i++)
-//        {
-//            for (int j=0;j<costTable->columnCount();j++)
-//            {
-//                if(costTable->item(i,j)!=NULL)
-//                {
-//                    //                    bsTable=busTable->item(i,j)->text();
-//                    confirmTable->setItem(i,j,new QTableWidgetItem(costTable->item(i,j)->text()));
-//                }
-//            }
-//        }
-
-        //    confirmTable->setItem (0,0,QTableWidgetItem(billNumber));
-    }else if (currentIndex == 14)
-    {
-        //获取输入值，封装成busi对象
-        QComboBox * abordType1 = ui->abordType_comboBox;
-        QLineEdit * abordDept1 = ui->abordDept_lineEdit;
-        QLineEdit * abordContra1 = ui->abordContra_lineEdit;
-        QLineEdit * abordContraNum1 = ui->abordContraNum_lineEdit;
-        QLineEdit * abordForm1 = ui->abordForm_lineEdit;
-        QLineEdit * abordCause1 = ui->abordCause_lineEdit;
-        //combox再说
-        if(abordDept1->text().isEmpty()||abordContra1->text().isEmpty()||abordContraNum1->text().isEmpty()
-                ||abordForm1->text().isEmpty()||abordCause1->text().isEmpty())
-        {
-            QMessageBox::warning(this, tr("警告"),tr("请输入数据"),QMessageBox::Yes);
-            currentIndex = 14;
-        }
-        else
-        {
-            qDebug()<<tr("cost不为空");
-            //设置报销单表头数据
-            exphead.setHeadCosttype(abordType1->currentText());
-            exphead.setHeadcontractid(abordContraNum1->text().trimmed());
-            exphead.setHeadContractname(abordContra1->text().trimmed());
-            exphead.setHeaddeptid(abordDept1->text().trimmed());
-            exphead.setHeadrequisitionid(abordForm1->text().trimmed());//借款单
-            exphead.setHeadpurpose(abordCause1->text().trimmed());
-
-            abroad.setAbordType(abordType1->currentText());
-            abroad.setAbordDept(abordDept1->text().trimmed());
-            abroad.setAbordContra(abordContra1->text().trimmed());
-            abroad.setAbordContraNum(abordContraNum1->text().trimmed());
-            abroad.setAbordForm(abordForm1->text().trimmed());
-            abroad.setAbordCause(abordCause1->text().trimmed());
-
-            abroad.toString();
-            expenseTypeId = 14;
-            currentIndex = 15; //这里需要做判断 根据录入发票类型的种类,在确定是否直接跳转到支付页面
-        }
-        //确认界面显示出国报销单信息
-        confirmTable = ui->confirmExcep_Table;
-        confirmTable->setColumnCount(24);//设置列数
-        confirmTable->setRowCount(abdTable->rowCount());
-        QStringList headers;
-        headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"
-              <<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"签证费金额"<<"签证费单据张数"<<"服务费金额"
-             <<"服务费票据张数"<<"出国换汇金额"<<"出国换汇金额票据张数"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-        confirmTable->setHorizontalHeaderLabels(headers);
-        confirmTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        for ( int i=0;i<abdTable->rowCount();i++)
-        {
-            for (int j=0;j<abdTable->columnCount();j++)
-            {
-                if(abdTable->item(i,j)!=NULL)
-                {
-                    //                    bsTable=busTable->item(i,j)->text();
-                    confirmTable->setItem(i,j,new QTableWidgetItem(abdTable->item(i,j)->text()));
-                }
-            }
-        }
-    }else if (currentIndex == 15)
-    {
-
-        //    QString payinfoType;//支付方式 待定
-        //    QString payInfoUnit;//收款人
-        //    QString payInfoBank;//所属银行
-        //    QString payInfoBankName;//开户行名称
-        //    QString payInfoBankNum;//银行卡号
-        //    QString payInfoBill;//金额
-        //    QString payInfoNote;//备注
-        //获取输入值，封装成busi对象
-        QComboBox * payinfoType1 = ui->payinfoType_comboBox;
-        QLineEdit * payInfoUnit1 = ui->payInfoUnit_lineEdit;
-        QLineEdit * payInfoBank1 = ui->payInfoBank_lineEdit;
-        QLineEdit * payInfoBankName1 = ui->payInfoBankName_lineEdit;
-        QLineEdit * payInfoBankNum1 = ui->payInfoBankNum_lineEdit;
-        QLineEdit * payInfoBill1 = ui->payInfoBill_lineEdit;
-        QLineEdit * payInfoNote1 = ui->payInfoNote_lineEdit;
-        //combox再说
-        if(payInfoUnit1->text().isEmpty()||payInfoBank1->text().isEmpty()
-                ||payInfoBankName1->text().isEmpty()||payInfoBankNum1->text().isEmpty()/*||payInfoNote1->text().isEmpty()*/
-                ||payInfoBill1->text().isEmpty())
-        {
-            QMessageBox::warning(this, tr("警告"),tr("请输入数据"),QMessageBox::Yes);
-            currentIndex = 15;
-        }
-        else
-        {
-            qDebug()<<tr("payinfo不为空")<<endl;
-            qDebug()<<tr("payinfoType1:")<<payinfoType1->currentText()<<endl;
-            pay.setPayinfoType(payinfoType1->currentText());
-            pay.setPayInfoUnit(payInfoUnit1->text().trimmed());
-            pay.setPayInfoBank(payInfoBank1->text().trimmed());
-            pay.setPayInfoBankName(payInfoBankName1->text().trimmed());
-            pay.setPayInfoBankNum(payInfoBankNum1->text().trimmed());
-            pay.setPayInfoBill(payInfoBill1->text().trimmed());
-            pay.setPayInfoNote(payInfoNote1->text().trimmed());
-
-            currentIndex = 16;
-        }
-    }
-    else if(currentIndex < 17 && currentIndex > 0){
-        currentIndex ++;
-    }
-    ui->mainWidget->setCurrentIndex(currentIndex);
-    if(currentIndex == 16){
-
-        switch(expenseTypeId){
-
-        case 12:
-            ui->confirmDept_lineEdit->setText(busi.getBusiDept_line());
-            ui->confirmCause_lineEdit->setText(busi.getBusiCause_line());
-            ui->confirmForm_lineEdit->setText(busi.getBusiForm_line());
-            ui->confirmProject_lineEdit->setText(busi.getBusiProject_line());
-            break;
-        case 13:
-            ui->confirmDept_lineEdit->setText(cost.getCostDept());
-            ui->confirmCause_lineEdit->setText(cost.getCostUse());
-            ui->confirmForm_lineEdit->setText(cost.getCostForm());
-            break;
-        case 14:
-            ui->confirmDept_lineEdit->setText(abroad.getAbordDept());
-            ui->confirmCause_lineEdit->setText(abroad.getAbordCause());
-            ui->confirmForm_lineEdit->setText(abroad.getAbordForm());
-            break;
-        default:
-
-            break;
-        }
-
-        //显示支付信息
-        ui->ConfirmPayInfo_plainTextEdit->setText(pay.toString());
-        //显示票据信息
-        ui->ConfirmBillInfo_plainTextEdit->setText(bill.toString());
-        player->stop();
-        this->sendPlayText(" 请确认报销数据");
-    }
 }
 
 
@@ -1185,9 +622,7 @@ void MainWindow::toCurrentPage (int pageNum)
         camera->setCaptureMode(QCamera::CaptureStillImage);
         imageCaptureReg->setCaptureDestination(QCameraImageCapture::CaptureToFile);
 
-        //        camera->searchAndLock();
         camera->start();
-        //        camera->unlock();
 
         //跳到人脸注册页面
         currentIndex = 7;
@@ -1298,142 +733,29 @@ void MainWindow::on_mainWidget_currentChanged(int arg1)
     if(currentIndex >1 && currentIndex <16){
         ui->lastStepBtn->show();
     }
-    //页号为4、5、6、7、8、9的时候显示下一步
-    //    if(currentIndex>9 && currentIndex <15){
-    //        ui->nextStepBtn->show();
-    //    }
-    if(currentIndex == 8 || currentIndex == 9 || currentIndex == 10 /*||currentIndex == 12 ||currentIndex == 13 || currentIndex == 14*/ ||currentIndex==15){
+    if(currentIndex == 8 || currentIndex == 9 || currentIndex == 10  ||currentIndex==15){
         ui->nextStepBtn->show();
     }
-    //    if(currentIndex == 8 )
-    //    {
-    //        this->toNextStep();
-    //        //页号为8的时候启动定时器，2s后开始报销
-    //        //        timerWelcom->setInterval(2000);
-    //        //        timerWelcom->start();
-    //        //        connect(timerWelcom, SIGNAL(timeout()), this, SLOT(beginWork()));
-    //    }
     //页号为10,的时候可处理页面表格
-    if(currentIndex == 12 ){// && busiTalble == false
-        //        QTableWidget * table = ui->busiBodyTable;
+    if(currentIndex == 12 ){
+
         ui->nextStepBtn->show();
-
-//        bsTable = ui->busiBodyTable;
-//        busiTalble = true;
-//        bsTable->setColumnCount(18);//设置列数
-//        bsTable->setRowCount(1);//设置行数
-//        /*设置列名*/
-//        QStringList headers;
-//        headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"<<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-//        bsTable->setHorizontalHeaderLabels(headers);
-//        bsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-//        bsTable->setItem (0,1,new QTableWidgetItem(trainPerson));
-//        bsTable->setItem (0,2,new QTableWidgetItem(trainDate));
-//        bsTable->setItem (0,5,new QTableWidgetItem(trainStart));
-//        bsTable->setItem (0,6,new QTableWidgetItem(trainEnd));
-         // ui->nextStepBtn->show();
-
     }
     if(currentIndex == 13 ){
        ui->nextStepBtn->show();
 
-//        //        QTableWidget * table = ui->busiBodyTable;
-//        costTable = ui->costBodyTable;
-//        costTable->setColumnCount(9);//设置列数
-//        costTable->setRowCount(1);//设置行数
-//        /*设置列名*/
-//        QStringList headers;
-//        headers<<"报销单编号号"<<"单据日期"<<"币种"<<"电子发票号"<<"纳税人识别号"<<"报销人"<<"报销金额"<<"单据张数"<<"预算项目";
-//        costTable->setHorizontalHeaderLabels(headers);
-//        costTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-//        costTable->setItem (0,0,new QTableWidgetItem(billNumber));
-//        costTable->setItem (0,1,new QTableWidgetItem(fbillDate));
-//        costTable->setItem (0,2,new QTableWidgetItem("人民币"));
-//        costTable->setItem (0,3,new QTableWidgetItem(billCode));
-//        costTable->setItem (0,4,new QTableWidgetItem(billCheckcode));
-//        costTable->setItem (0,6,new QTableWidgetItem(billPrice));
-//        costTable->setItem (0,7,new QTableWidgetItem("1"));
-      //ui->nextStepBtn->show();
-
   }
     if(currentIndex == 14){
         ui->nextStepBtn->show();
-
-//        abdTable = ui->abdBodyTable;
-//        abdTable->setColumnCount(24);//设置列数
-//        abdTable->setRowCount(1);//设置行数
-//        /*设置列名*/
-//        QStringList headers;
-//        headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"<<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"签证费金额"<<"签证费单据张数"<<"服务费金额"<<"服务费票据张数"<<"出国换汇金额"<<"出国换汇金额票据张数"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-//        abdTable->setHorizontalHeaderLabels(headers);
-//        abdTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     }
 }
-void MainWindow::dealBusi ()
-{
-    bsTable = ui->busiBodyTable;
-    //busiTalble = true;
-    bsTable->setColumnCount(7);//设置列数
-    busiRowcount = bsTable->rowCount ();
-    bsTable->setRowCount(busiRowcount+1);//设置行数
-    /*设置列名*/
-    QStringList headers;
-    headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点";
-    bsTable->setHorizontalHeaderLabels(headers);
-    bsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    bsTable->setItem (busiRowcount,1,new QTableWidgetItem(trainPerson));
-    bsTable->setItem (busiRowcount,2,new QTableWidgetItem(trainDate));
-    bsTable->setItem (busiRowcount,5,new QTableWidgetItem(trainStart));
-    bsTable->setItem (busiRowcount,6,new QTableWidgetItem(trainEnd));
-}
 
-//void MainWindow::dealCost ()
-//{
-//    //        QTableWidget * table = ui->busiBodyTable;
-//    costTable = ui->costBodyTable;
-//    costTable->setColumnCount(9);//设置列数
-//    costRowcount = costTable->rowCount ();
-//    costTable->setRowCount(costRowcount+1);//设置行数
-//    /*设置列名*/
-//    QStringList headers;
-//    headers<<"报销单编号号"<<"单据日期"<<"币种"<<"电子发票号"<<"纳税人识别号"<<"报销人"<<"报销金额"<<"单据张数"<<"预算项目";
-//    costTable->setHorizontalHeaderLabels(headers);
-//    costTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-//    costTable->setItem (costRowcount,0,new QTableWidgetItem(billNumber));
-//    costTable->setItem (costRowcount,1,new QTableWidgetItem(fbillDate));
-//    costTable->setItem (costRowcount,2,new QTableWidgetItem("人民币"));
-//    costTable->setItem (costRowcount,3,new QTableWidgetItem(billCode));
-//    costTable->setItem (costRowcount,4,new QTableWidgetItem(billCheckcode));
-//    costTable->setItem (costRowcount,6,new QTableWidgetItem(billPrice));
-//    costTable->setItem (costRowcount,7,new QTableWidgetItem("1"));
-//}
-void MainWindow::dealAbroad ()
-{
-    abdTable = ui->abdBodyTable;
-    abdTable->setColumnCount(24);//设置列数
-    abroadRowcount =abdTable->rowCount ();
-    abdTable->setRowCount(abroadRowcount+1);//设置行数
-    /*设置列名*/
-    QStringList headers;
-    headers<<"报销单号"<<"出差人"<<"起始时间"<<"终止时间"<<"出差天数"<<"出发地点"<<"到达地点"<<"市间交通费"<<"交通费单据张数"<<"住宿费用"<<"住宿单据张数"<<"补贴天数"<<"交通补贴"<<"伙食补贴"<<"签证费金额"<<"签证费单据张数"<<"服务费金额"<<"服务费票据张数"<<"出国换汇金额"<<"出国换汇金额票据张数"<<"其他费用金额"<<"其他费用单据张数"<<"其他费用说明"<<"小计";
-    abdTable->setHorizontalHeaderLabels(headers);
-    abdTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-}
-
-//选择差旅报销单
 void MainWindow::on_busiBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择差旅报销");
-
-    currentIndex = 13;
-    ui->mainWidget->setCurrentIndex(currentIndex);
-    ui->nextStepBtn->show ();
-
-
-
-
-    //    this->toNextStep();
+    expenseType = 12;
+    setBasePage(12);
 }
 
 //选择费用报销单
@@ -1441,16 +763,13 @@ void MainWindow::on_costBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择费用报销");
-    currentIndex = 13;
+
     expenseType = 13;
+    currentIndex = 13;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
-    //返回的数据添加至table中
+    //显示报销流程按钮
     this->isShowguiInforn ();
-
-
-
-
 }
 
 //选择出国保险单
@@ -1458,32 +777,36 @@ void MainWindow::on_abroadBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择出国报销");
-
-    currentIndex = 11;
     expenseType = 14;
+    setBasePage(14);
+}
+
+/**
+* @brief         选择是差旅报报销还是出国报销，两者不一样
+* @author        黄梦君
+* @date          2019-06-22
+*/
+void MainWindow::setBasePage(int expenseType)
+{
+    //差旅报销
+    if (expenseType == 12) {
+
+    }
+    else if (expenseType == 14) {
+
+    }
+    else
+        return;
+
+    currentIndex = 20;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
-
-
-
+    //显示报销流程按钮
+    this->isShowguiInforn ();
 }
 
-//增行
-void MainWindow::on_busiBodyAddBtn_clicked()
-{
-    int rowCount = ui->busiBodyTable->rowCount();
-    rowCount ++ ;
-    ui->busiBodyTable->setRowCount(rowCount);
-}
 
-//删行
-void MainWindow::on_busiBodyDelBtn_clicked()
-{
-    int rowIndex = ui->busiBodyTable->currentRow();
-    if(rowIndex != -1){
-        ui->busiBodyTable->removeRow(rowIndex);
-    }
-}
+
 
 //继续报销
 void MainWindow::on_continueExpenseBtn_clicked()
@@ -1495,48 +818,6 @@ void MainWindow::on_continueExpenseBtn_clicked()
     // busi.init ();
     currentIndex = 9;
     expenseType = 9;
-//    switch (reimCategory) {  //修改报销流程之后需要针对 资源回收做对应的修改.
-//    case 0: //差旅报销
-//        this->deleteBillInput ();
-//        this->deleteTravelContent ();
-//        this->deletePayInforn ();
-//        this->deleteInfornConfirm ();
-//        break;
-//    case 1: //费用报销
-//        this->deleteBillInput ();
-//        this->deleteCostContent ();
-//        this->deletePayInforn ();
-//        this->deleteInfornConfirm ();
-//        break;
-//    case 2: //出国报销
-//        this->deleteBillInput ();
-//        this->deleteAbroadContent ();
-//        this->deletePayInforn ();
-//        this->deleteInfornConfirm ();
-//        break;
-//    default:
-//                   qDebug () << "测试";
-//        break;
-//    }
-    if (costType ==true)
-    {
-        this->deleteCostContent ();
-    }
-    if (busiType ==true)
-    {
-        this->deleteTravelContent ();
-
-    }
-    if (abroadType == true)
-    {
-        this->deleteAbroadContent ();
-    }
-    this->deleteBillInput ();
-    this->deletePayInforn ();
-    this->deleteInfornConfirm ();
-    ui->mainWidget->setCurrentIndex(currentIndex);
-
-
 }
 /**
 * @brief         清空登录信息
@@ -1575,151 +856,7 @@ void MainWindow::deleteFace ()
     }
 }
 
-/**
-* @brief         清空录入票据
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deleteBillInput ()
-{
-    int rowIndex = table->rowCount ();
-    qDebug() << "行数:"<<rowIndex;
-    for (int i =0 ;i<rowIndex;i++)
-    {
-        qDebug() << "删除行数:"<<i;
-        table->removeRow (0);
-    }
 
-    //ui->billTable->clearContents ();
-}
-/**
-* @brief         清空费用报销内容
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deleteCostContent ()
-{
-
-    int rowIndex = costTable->rowCount ();
-    qDebug() << "行数:"<<rowIndex;
-    for (int i =0 ;i<rowIndex;i++)
-    {
-        qDebug() << "删除行数:"<<i;
-        costTable->removeRow (0);
-    }
-//    ui->costDept_lineEdit->clear ();
-//    ui->costUse_lineEdit->clear ();
-//    ui->costContra_lineEdit->clear();
-//    ui->costContraNum_lineEdit->clear ();
-//    ui->costForm_lineEdit->clear ();
-    costType = false;
-}
-/**
-* @brief         清空差旅报销
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deleteTravelContent ()
-{
-    //bsTable->clearContents ();
-    int rowIndex = bsTable->rowCount ();
-    qDebug() << "行数:"<<rowIndex;
-    for (int i =0 ;i<rowIndex;i++)
-    {
-        qDebug() << "删除行数:"<<i;
-        bsTable->removeRow (0);
-    }
-    ui->busiCause_lineEdit->clear ();
-    ui->busiDept_lineEdit->clear ();
-    ui->busiForm_lineEdit->clear ();
-    ui->busiProject_lineEdit->clear ();
-    busiType = false;
-}
-/**
-* @brief         清空出国报销
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deleteAbroadContent ()
-{
-    //abdTable->clearContents ();
-    int rowIndex = abdTable->rowCount ();
-    qDebug() << "行数:"<<rowIndex;
-    for (int i =0 ;i<rowIndex;i++)
-    {
-        qDebug() << "删除行数:"<<i;
-        abdTable->removeRow (0);
-    }
-    ui->abordCause_lineEdit->clear ();
-    ui->abordDept_lineEdit->clear ();
-    ui->abordContra_lineEdit->clear ();
-    ui->abordContraNum_lineEdit->clear ();
-    ui->abordForm_lineEdit->clear ();
-    abroadType = false;
-}
-/**
-* @brief         清空支付信息
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deletePayInforn ()
-{
-    ui->payInfoUnit_lineEdit->clear ();
-    ui->payInfoBank_lineEdit->clear ();
-    ui->payInfoBankName_lineEdit->clear ();
-    ui->payInfoBankNum_lineEdit->clear ();
-    ui->payInfoBill_lineEdit->clear();
-    ui->payInfoNote_lineEdit->clear ();
-}
-/**
-* @brief         清空确认信息
-* @author        胡坤伦
-* @date        2019-03-08
-*/
-void MainWindow::deleteInfornConfirm ()
-{
-    ui->ConfirmBillInfo_plainTextEdit->clear ();
-    ui->ConfirmPayInfo_plainTextEdit->clear ();
-    ui->confirmExcep_Table->clearContents ();
-    ui->confirmCause_lineEdit->clear();
-    ui->confirmDept_lineEdit->clear ();
-    ui->confirmForm_lineEdit->clear ();
-    ui->confirmProject_lineEdit->clear ();
-}
-
-
-//费用报销单增行
-//void MainWindow::on_costBodyAddBtn_clicked()
-//{
-//    //int rowCount = ui->costBodyTable->rowCount();
-//    costRowcount = ui->costBodyTable->rowCount ();
-//    costRowcount++;
-//    ui->costBodyTable->setRowCount(costRowcount);
-//}
-//费用报销单减行
-//void MainWindow::on_costBodyDelBtn_clicked()
-//{
-//     costRowcount = ui->costBodyTable->currentRow();
-//    if( costRowcount != -1){
-//        ui->costBodyTable->removeRow( costRowcount);
-//    }
-//}
-//出国报销单增行
-void MainWindow::on_pushButton_clicked()
-{
-    int rowCount = ui->abdBodyTable->rowCount();
-    rowCount ++ ;
-    ui->abdBodyTable->setRowCount(rowCount);
-
-}
-//出国报销单减行
-void MainWindow::on_pushButton_2_clicked()
-{
-    int rowIndex = ui->abdBodyTable->currentRow();
-    if(rowIndex != -1){
-        ui->abdBodyTable->removeRow(rowIndex);
-    }
-}
 
 //结束报销
 void MainWindow::on_logoutBtn_clicked()
@@ -1729,28 +866,6 @@ void MainWindow::on_logoutBtn_clicked()
     currentIndex =0;
     expenseType = 9;
     ui->userInfo->hide();
-    //    delete loginUser;
-    //    delete loginInformation;
-    //    delete idCardInformation;
-    //    ui->userInfoCheck->setText("");
-    if (costType ==true)
-    {
-        this->deleteCostContent ();
-    }
-    if (busiType ==true)
-    {
-        this->deleteTravelContent ();
-
-    }
-    if (abroadType == true)
-    {
-        this->deleteAbroadContent ();
-    }
-    this->deleteBillInput ();
-    this->deletePayInforn ();
-    this->deleteInfornConfirm ();
-    this->deleteAccountInfo ();
-    ui->mainWidget->setCurrentIndex(currentIndex);
 }
 
 //-------------------------------------------sequence action end----------------------------------------
@@ -1843,9 +958,6 @@ void MainWindow::faceRegReply(QNetworkReply *reply){
                     qDebug()<< "----result failure:----"<< error_msg<<endl;
                     QMessageBox::information(this, QString::fromUtf8("警告!"),QString::fromUtf8("人脸注册失败!"));
 
-                    //                    currentIndex = 4;
-                    //                    ui->mainWidget->setCurrentIndex(currentIndex);
-                    //                    this->on_facePreBtn_clicked();
                     toCurrentPage (6);
                 }
                 //注册成功
@@ -1873,9 +985,6 @@ void MainWindow::faceRegReply(QNetworkReply *reply){
                         regCode = 0;
                         QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("注册失败"));
 
-                        //                        currentIndex = 2;
-                        //                        ui->mainWidget->setCurrentIndex(currentIndex);
-                        //                        this->on_facePreBtn_clicked();
                         toCurrentPage (6);
                     }
                 }
@@ -2114,10 +1223,6 @@ void MainWindow::faceDelReply(QNetworkReply *reply){
 */
 void MainWindow::dealIdCardReply(Information information,int exitCode)
 {
-    //    if(m_currentRunLoaclThread)
-    //    {
-    //        m_currentRunLoaclThread->stopImmediately();
-    //    }
 
     qDebug()<<"exitCode:"<< exitCode << endl;
 
@@ -2474,7 +1579,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                                 }
 
                             }
-                            emit costDone ();
+//                            emit costDone ();
 
                             break;
                         case 2://火车票
@@ -2525,7 +1630,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                                     bill.setBillendplace(end);
                                 }
                             }
-                            emit busiDone ();
+//                            emit busiDone ();
                             break;
                         case 3://飞机票
                             abroadType = true;
@@ -2569,7 +1674,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                                     bill.setBillendplace(end);
                                 }
                             }
-                            emit abroadDone ();
+//                            emit abroadDone ();
 
                             break;
                         case 4://出租车票
@@ -2961,20 +2066,21 @@ void MainWindow::instructionExp(QString instruction){
         }/*else if(""==instru && 1==currentIndex){//缺少帐号登录指令
             ui->accountBtn->clicked();
         }*/
-        else if("0004"==instru){//差旅(报销单)     //    0004###请填写差旅报销单
-            //            ui->busiBtn->clicked();
-            this->on_busiBtn_clicked();
-        }else if ("0005"==instru){//出国(报销单)
-            this->on_abroadBtn_clicked();
-        }else if(""==instru && 9==currentIndex){//缺少费用报销单指令
-            ui->busiBtn->clicked();
-        }else if("0011"==instru ){//[上一步|返回]
+//        else if("0004"==instru){//差旅(报销单)     //    0004###请填写差旅报销单
+//            //            ui->busiBtn->clicked();
+//            this->on_busiBtn_clicked();
+//        }else if ("0005"==instru){//出国(报销单)
+//            this->on_abroadBtn_clicked();
+//        }else if(""==instru && 9==currentIndex){//缺少费用报销单指令
+//            ui->busiBtn->clicked();
+//        }
+    else if("0011"==instru ){//[上一步|返回]
             this->toLastStep();
         }else if("0012"==instru){//[下一步|返回]
             this->toNextStep();
-        }else if (("0006"==instru ||"0008"==instru)&& 15==currentIndex){//确认/提交(报销)
+        }/*else if (("0006"==instru ||"0008"==instru)&& 15==currentIndex){//确认/提交(报销)
             ui->confirmBtn->clicked();
-        }else if ("0009"==instru && 16==currentIndex){//[退出|结束|结束报销]
+        }*/else if ("0009"==instru && 16==currentIndex){//[退出|结束|结束报销]
             ui->logoutBtn->clicked();
         }else if ("0010"==instru && 16==currentIndex){//继续(报销)
             ui->continueExpenseBtn->clicked();
@@ -3504,31 +2610,6 @@ void MainWindow::on_idCheckBtn_clicked()
  }*/
 
 
-/**
-* @brief         人脸注册
-* @author        胡帅成
-* @date        2018-09-06
-*/
-//void MainWindow::on_facePreBtn_clicked()
-//{
-//    //设置取景器
-//    viewfinder = new QCameraViewfinder(this);
-//    ui->faceRegImageLayout->addWidget(viewfinder);
-//    camera->setViewfinder(viewfinder);
-//    viewfinder->resize(600,400);
-
-//    imageCaptureReg = new QCameraImageCapture(camera);
-//    camera->setCaptureMode(QCamera::CaptureStillImage);
-//    imageCaptureReg->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-
-//    camera->searchAndLock();
-//    camera->start();
-//    camera->unlock();
-
-//    //跳到人脸注册页面
-//    currentIndex = 7;
-//    ui->mainWidget->setCurrentIndex(currentIndex);
-//}
 
 void MainWindow::showUserInfo(User user)
 {
@@ -3802,176 +2883,7 @@ void MainWindow::on_carmSkipBtn_clicked()
     toCurrentPage (7);
 }
 
-//void MainWindow::progress(int val)
-//{
-//    ui->progressBar->setValue(val);
-//}
 
-//void MainWindow::receiveMessage(const QString &str)
-//{
-//    //    ui->textBrowser->append(str);
-//}
-
-//void MainWindow::heartTimeOut()
-//{
-//    static int s_heartCount = 0;
-//    ++s_heartCount;
-//    if(s_heartCount > 100)
-//    {
-//        s_heartCount = 0;
-//    }
-
-//    //    ui->progressBar_heart->setValue(s_heartCount);
-//}
-////创建线程
-//void MainWindow::startNetWorkThread()
-//{
-//    if(m_objThread)
-//    {
-//        return;
-//    }
-//    m_objThread= new QThread();
-//    m_obj = new NetworkThread();
-//    m_obj->moveToThread(m_objThread);
-//    connect(m_objThread,&QThread::finished,m_objThread,&QObject::deleteLater);
-//    connect(m_objThread,&QThread::finished,m_obj,&QObject::deleteLater);
-//    connect(this,&MainWindow::startNetWorkThreadWork1,m_obj,&NetworkThread::runNetwork);
-//    connect(this,&MainWindow::startNetWorThreadWork2,m_obj,&NetworkThread::runNetwork2);
-
-//    //    connect(this,&MainWindow::startfaceCheckThreadWork,m_obj,&NetworkThread::runfaceCheckNetwork);
-
-//    connect(m_obj,&NetworkThread::progress,this,&MainWindow::progress);
-//    connect(m_obj,&NetworkThread::message,this,&MainWindow::receiveMessage);
-
-//    m_objThread->start();
-//}
-//创建线程
-//void MainWindow::startfaceCheckThread()
-//{
-//    qDebug()<<"startfaceCheckThread:" <<endl;
-
-//    if(m_objThread)
-//    {
-//        return;
-//    }
-//    m_objThread= new QThread();
-//    m_obj = new NetworkThread();
-//    m_obj->moveToThread(m_objThread);
-//    connect(m_objThread,&QThread::finished,m_objThread,&QObject::deleteLater);
-//    connect(m_objThread,&QThread::finished,m_obj,&QObject::deleteLater);
-
-//    connect(this,&MainWindow::startfaceCheckThreadWork,m_obj,&NetworkThread::runfaceCheckNetwork);
-//    connect(this,&MainWindow::startfaceCheckThreadWork,m_obj,&NetworkThread::runNetwork);
-
-//    connect(m_obj,&NetworkThread::progress,this,&MainWindow::progress);
-//    connect(m_obj,&NetworkThread::emitCode,this,&MainWindow::faceCheckResult);
-//    connect(m_obj,&NetworkThread::message,this,&MainWindow::receiveMessage);
-
-//    m_objThread->start();
-//}
-
-//void MainWindow::on_faceCheckBtn_clicked()
-//{
-//    //设置取景器
-//    viewfinder = new QCameraViewfinder(this);
-//    ui->imageLayout->addWidget(viewfinder);
-//    camera->setViewfinder(viewfinder);
-//    viewfinder->resize(600,350);
-
-//    imageCapture = new QCameraImageCapture(camera);
-//    camera->setCaptureMode(QCamera::CaptureStillImage);
-//    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-
-//    //扫描人脸次数
-//    facetime = 0;
-//    currentIndex = 2;
-//    ui->mainWidget->setCurrentIndex(currentIndex);
-//    camera->start();
-
-//    QThread* backgroundRecvThread = new QThread;
-//    NetworkHandler *handler = new NetworkHandler(NULL);
-//    handler->moveToThread(backgroundRecvThread);
-
-//    if(QCamera::ActiveStatus == camera->status()){
-//        connect(handler, &NetworkHandler::updateCarmer,this, &MainWindow::receiveCarmer,Qt::QueuedConnection);
-//        connect(handler, &NetworkHandler::emitCode,this, &MainWindow::faceCheckResult,Qt::QueuedConnection);
-
-//    }
-
-//    backgroundRecvThread->start();
-
-
-
-//}
-
-//void MainWindow::receiveCarmer(int id)
-//{
-//    //update ui
-//    imageCapture->capture();
-//    camera->stop();
-//    if(id == 2)
-//    {
-//        idFace =2;
-//        connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), m_network, SLOT(sendPhoto(int,QImage)));
-//    }
-//}
-
-
-//调用线程的中断
-//void MainWindow::on_pushButton_qobjectStop_clicked()
-//{
-//    if(m_objThread)
-//    {
-//        if(m_obj)
-//        {
-//            m_obj->stop();
-//        }
-//    }
-//}
-
-//void MainWindow::faceCheckResult(int code, QMap<QString, QString> map)
-//{
-//    QString str = map["info"];
-//    qDebug() <<" map['info']:"<<str<<endl;
-//    camera->stop();
-
-//    if(code ==1)
-//    {
-//        player->stop();
-//        this->sendPlayText("登录成功");
-//        QMessageBox::information(NULL, "登录成功", str, QMessageBox::Yes, QMessageBox::Yes);
-
-//        QString username = map["username"];
-//        if(!username.isEmpty())
-//        {
-//            loginUser = database.SearchUserByUsername(username);
-//        }
-//        this->showUserInfo(loginUser);
-
-//        currentIndex = 8;
-//        ui->mainWidget->setCurrentIndex(currentIndex);
-//    }else if(code ==2)
-//    {
-//        //数据库不存在此人脸信息
-//        //                                    player->stop();
-//        //                                    this->sendPlayText("人脸不存在，请重新注册！");
-//        QMessageBox::critical(NULL, "警告", str, QMessageBox::Yes, QMessageBox::Yes);
-
-//        currentIndex = 0;
-//        ui->mainWidget->setCurrentIndex(currentIndex);
-//    }
-//    else if(code == -1)
-//    {
-//        qDebug() <<"faceCheckResult fail2"<<endl;
-//        QMessageBox::critical(NULL, "警告", str, QMessageBox::Yes, QMessageBox::Yes);
-//        currentIndex = 0;
-//        ui->mainWidget->setCurrentIndex(currentIndex);
-//    }
-//    else
-//    {
-//        qDebug() <<"fail"<<endl;
-//    }
-//}
 
 
 void MainWindow::on_talkBtn_clicked()
@@ -3985,11 +2897,6 @@ void MainWindow::on_talkBtn_clicked()
 }
 
 
-
-//void MainWindow::on_answerBtn_clicked()
-//{
-
-//}
 
 void MainWindow::on_expenseBtn_clicked()
 {
@@ -4028,7 +2935,8 @@ void MainWindow::on_costItemButton_clicked()
 
 void MainWindow::on_costPayButton_clicked()
 {
-    currentIndex = 19;
+    currentIndex = 21;
+//    currentIndex = 19;
     ui->mainWidget->setCurrentIndex (currentIndex);
 }
 /**
@@ -4067,4 +2975,52 @@ void MainWindow::noShowguiInforn ()
 void MainWindow::on_costAgainButton_clicked()
 {
     this->on_scanBillbtn_clicked();
+}
+
+/**
+* @brief       人员信息录入按钮,打开对应的Dialog
+* @author      黄梦君
+* @date        2019-06-22
+*/
+void MainWindow::on_addPersonnel_clicked()
+{
+    insertPerDialog = new insertPersonnelDialog(this);
+    if (expenseType == 12) {
+        insertPerDialog->setType(1);
+    }
+    else if (expenseType == 14) {
+        insertPerDialog->setType(2);
+    }
+    insertPerDialog->show();
+}
+
+/**
+* @brief       添加支付信息按钮,打开对应的Dialog
+* @author      黄梦君
+* @date        2019-07-02
+*/
+void MainWindow::on_addPayInfoBtn_clicked()
+{
+    addPayDlg = new addPayDialog(this);
+    addPayDlg->show();
+
+    connect(addPayDlg, &addPayDialog::addPayItem, this, &MainWindow::addPayInfoItem);
+}
+
+/**
+* @brief       添加支付信息
+* @brief       支付信息窗口保存退出后，在列表里添加支付信息
+* @author      黄梦君
+* @date        2019-07-02
+*/
+void MainWindow::addPayInfoItem(payItemInfo *info)
+{
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setSizeHint(QSize(720, 100));
+
+    payMethodsItem *widget = new payMethodsItem();
+    widget->setInfoItem(info);
+
+    ui->payInfoList->addItem(item);
+    ui->payInfoList->setItemWidget(item, widget);
 }

@@ -72,12 +72,26 @@ HEADERS += abroadexp.h \
     networkhandler.h  \
     turing.h \
     scandialog.h \
-    scanthread.h
+    scanthread.h \
+    windows/itemViews/addPersonnel.h \
+    windows/insertpersonneldialog.h \
+    windows/itemViews/abroadpersonnel.h \
+    common/commondefs.h \
+    windows/itemViews/abroadfeeitem.h \
+    windows/itemViews/paymethodsitem.h \
+    windows/addpaydialog.h \
+    payinfomanager.h
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
          mainwindow.ui \
          userinfodialog.ui \
-    scandialog.ui
+    scandialog.ui \
+    windows/itemViews/addPersonnel.ui \
+    windows/insertpersonneldialog.ui \
+    windows/itemViews/abroadpersonnel.ui \
+    windows/itemViews/abroadfeeitem.ui \
+    windows/itemViews/paymethodsitem.ui \
+    windows/addpaydialog.ui
 SOURCES += abroadexp.cpp \
            abroadexpense.cpp \
            billcheck.cpp \
@@ -110,4 +124,12 @@ SOURCES += abroadexp.cpp \
     networkhandler.cpp \
     turing.cpp \
     scandialog.cpp \
-    scanthread.cpp
+    scanthread.cpp \
+    windows/itemViews/addPersonnel.cpp \
+    windows/insertpersonneldialog.cpp \
+    windows/itemViews/abroadpersonnel.cpp \
+    common/commondefs.cpp \
+    windows/itemViews/abroadfeeitem.cpp \
+    windows/itemViews/paymethodsitem.cpp \
+    windows/addpaydialog.cpp \
+    payinfomanager.cpp
