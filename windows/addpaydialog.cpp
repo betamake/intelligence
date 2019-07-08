@@ -9,6 +9,7 @@ addPayDialog::addPayDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    curItem = new payItemInfo();
     currentType = 0;
     ui->comboBox->setCurrentIndex(currentType);
     ui->stackedWidget->setCurrentIndex(currentType);
