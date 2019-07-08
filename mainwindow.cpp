@@ -3024,3 +3024,13 @@ void MainWindow::addPayInfoItem(payItemInfo *info)
     ui->payInfoList->addItem(item);
     ui->payInfoList->setItemWidget(item, widget);
 }
+
+/**
+* @brief       打开addPayDialog窗口，修改对应的支付信息
+* @author      黄梦君
+* @date        2019-07-08
+*/
+void modifyPayInfoItem(payItemInfo *info)
+{
+
+}

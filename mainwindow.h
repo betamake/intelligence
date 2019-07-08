@@ -205,6 +205,8 @@ private slots:
 
     void addPayInfoItem(payItemInfo *info);      //添加支付信息，参数后续添加
 
+    void modifyPayInfoItem(payItemInfo *info);      //修改支付信息
+
 
 private:
     void setBasePage(int expenseType);

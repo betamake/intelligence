@@ -27,6 +27,12 @@ void addPayDialog::on_comboBox_currentIndexChanged(int index)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
+//设置要修改的项目的内容
+void addPayDialog::setItem(payItemInfo *info)
+{
+
+}
+
 //保存并退出按钮
 void addPayDialog::on_saveEditBtn_clicked()
 {

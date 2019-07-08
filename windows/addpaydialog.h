@@ -18,6 +18,8 @@ public:
 
     payItemInfo *getPayItem() { return curItem;}
 
+    void setItem(payItemInfo *info);
+
 signals:
     void addPayItem(payItemInfo *info);
 
