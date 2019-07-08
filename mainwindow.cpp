@@ -749,7 +749,7 @@ void MainWindow::on_mainWidget_currentChanged(int arg1)
         ui->nextStepBtn->show();
     }
 }
-
+//选择差旅报销
 void MainWindow::on_busiBtn_clicked()
 {
     player->stop();
@@ -764,8 +764,8 @@ void MainWindow::on_costBtn_clicked()
     player->stop();
     this->sendPlayText("已选择费用报销");
 
-    expenseType = 13;
-    currentIndex = 13;
+    expenseType = 11;
+    currentIndex = 11;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
     //显示报销流程按钮
@@ -777,8 +777,8 @@ void MainWindow::on_abroadBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择出国报销");
-    expenseType = 14;
-    setBasePage(14);
+    expenseType = 13;
+    setBasePage(13);
 }
 
 /**
@@ -792,13 +792,13 @@ void MainWindow::setBasePage(int expenseType)
     if (expenseType == 12) {
 
     }
-    else if (expenseType == 14) {
+    else if (expenseType == 13) {
 
     }
     else
         return;
 
-    currentIndex = 20;
+    currentIndex = 12;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
     //显示报销流程按钮
