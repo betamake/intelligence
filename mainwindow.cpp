@@ -777,7 +777,7 @@ void MainWindow::on_abroadBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择出国报销");
-    expenseType = 13;
+    expenseType = 14;
     setBasePage(13);
 }
 
