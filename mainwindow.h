@@ -313,7 +313,7 @@ private:
     insertPersonnelDialog *insertPerDialog;
     addPayDialog *addPayDlg;
 
-    QList<payMethodsItem*> payItems;        //支付信息项目itemview列表
+
 
     QByteArray getPixmapData(QString filePath,QImage image);
     QString avaterFilePath;

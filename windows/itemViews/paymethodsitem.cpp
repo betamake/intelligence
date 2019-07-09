@@ -36,6 +36,9 @@ void payMethodsItem::on_modifyBtn_clicked()
 void payMethodsItem::setInfoItem(payItemInfo *info)
 {
     int type = info->getType();
+    if (type > 2 || type < 0)
+        return;
+    curItem = info;
     if (type == 0) {
         ui->methodLabel->setText("网银支付");
         ui->accountLabel->setNum(info->getAccount());
