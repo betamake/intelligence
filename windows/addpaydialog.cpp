@@ -10,6 +10,7 @@ addPayDialog::addPayDialog(QWidget *parent) :
     ui->setupUi(this);
 
     curItem = new payItemInfo();
+    beginModify = false;
     currentType = 0;
     ui->comboBox->setCurrentIndex(currentType);
     ui->stackedWidget->setCurrentIndex(currentType);
@@ -34,6 +35,9 @@ void addPayDialog::setItem(payItemInfo *info)
     if (type > 2 || type < 0)
         return;
     currentType = type;
+
+    beginModify = true;
+
     ui->comboBox->setCurrentIndex(currentType);
     if (type == 0) {
         ui->bankAccount->setText(QString::number(info->getAccount()));
@@ -105,9 +109,15 @@ void addPayDialog::on_saveEditBtn_clicked()
         curItem->setRemark(ui->cashRemark->toPlainText());
     }
 
-    payInfoManager::getInstance()->addPayItem(curItem);
+    if (true == beginModify) {
+        //在payInfoManager中也要修改对应的支付信息
 
-    emit addPayItem(curItem);
+        emit modifyPayItem(curItem);
+        beginModify = false;
+    } else {
+        payInfoManager::getInstance()->addPayItem(curItem);
+        emit addPayItem(curItem);
+    }
 
     close();
 }

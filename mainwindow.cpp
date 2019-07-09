@@ -75,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
     loginStatus = 0;//未登录
     idCheckId = 0;//初始化身份证调用id
 
+    modifyItemIndex = -1;
+
     isScan=false;
 
     qRegisterMetaType<Information>("Information");//注册information类
@@ -777,7 +779,7 @@ void MainWindow::on_abroadBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择出国报销");
-    expenseType = 13;
+    expenseType = 14;
     setBasePage(13);
 }
 
@@ -1687,55 +1689,66 @@ void MainWindow::billReply(QNetworkReply * reply){
                             break;
                         }
 
+                        QListWidgetItem *item = new QListWidgetItem();
+                        item->setSizeHint(QSize(760,90));
+
+                        billItem *billItemView = new billItem();
+                        billItemView->setBillType(bill.getBilltype());
+                        billItemView->setBillAccount(bill.getBillmoney());
+                        billItemView->setBillPixmap(pixmap);
+
+                        ui->billListWidget->addItem(item);
+                        ui->billListWidget->setItemWidget(item, billItemView);
+
                         //添加一行数据
-                        table = ui->billTable;
-                        int rowIndex = table->rowCount(); //获取行号
-                        table->setRowCount(rowIndex + 1);
-                        table->setRowHeight(rowIndex, 24);//设置行的高度
-                        QTableWidgetItem *item = new QTableWidgetItem (type);
-                        table->setItem(rowIndex, 0, item);
-                        item = new QTableWidgetItem (bill.getBillcontent());
-                        //                        item = new QTableWidgetItem (billContent);
-                        table->setItem(rowIndex, 1, item);
-                        item->setIcon(QIcon("/home/intelligence/qt/see.png"));
-                        //在Table中显示上传的票据图片
-                        QLabel *label = new QLabel(this);
-                        pixmap.scaled(label->size(),Qt::KeepAspectRatio);
-                        label->setScaledContents(true);
-                        label->setPixmap(pixmap);
-                        table->setCellWidget(rowIndex, 1, label);
+//                        table = ui->billTable;
+//                        int rowIndex = table->rowCount(); //获取行号
+//                        table->setRowCount(rowIndex + 1);
+//                        table->setRowHeight(rowIndex, 24);//设置行的高度
+//                        QTableWidgetItem *item = new QTableWidgetItem (type);
+//                        table->setItem(rowIndex, 0, item);
+//                        item = new QTableWidgetItem (bill.getBillcontent());
+//                        //                        item = new QTableWidgetItem (billContent);
+//                        table->setItem(rowIndex, 1, item);
+//                        item->setIcon(QIcon("/home/intelligence/qt/see.png"));
+//                        //在Table中显示上传的票据图片
+//                        QLabel *label = new QLabel(this);
+//                        pixmap.scaled(label->size(),Qt::KeepAspectRatio);
+//                        label->setScaledContents(true);
+//                        label->setPixmap(pixmap);
+//                        table->setCellWidget(rowIndex, 1, label);
 
-                        //                        item = new QTableWidgetItem (billDate);
-                        table->setItem(rowIndex, 1, item);
-                        item = new QTableWidgetItem (bill.getBilldate());
+//                        //                        item = new QTableWidgetItem (billDate);
+//                        table->setItem(rowIndex, 1, item);
+//                        item = new QTableWidgetItem (bill.getBilldate());
 
-                        table->setItem(rowIndex, 2, item);
-                        item = new QTableWidgetItem (user);
-                        //                        item = new QTableWidgetItem (money);
+//                        table->setItem(rowIndex, 2, item);
+//                        item = new QTableWidgetItem (user);
+//                        //                        item = new QTableWidgetItem (money);
 
-                        table->setItem(rowIndex, 3, item);
-                        item = new QTableWidgetItem (bill.getBillmoney());
+//                        table->setItem(rowIndex, 3, item);
+//                        item = new QTableWidgetItem (bill.getBillmoney());
 
-                        table->setItem(rowIndex, 4, item);
-                        item = new QTableWidgetItem (start);
+//                        table->setItem(rowIndex, 4, item);
+//                        item = new QTableWidgetItem (start);
 
-                        table->setItem(rowIndex, 5, item);
-                        item = new QTableWidgetItem (end);
-                        //                        item = new QTableWidgetItem (other);
+//                        table->setItem(rowIndex, 5, item);
+//                        item = new QTableWidgetItem (end);
+//                        //                        item = new QTableWidgetItem (other);
 
-                        table->setItem(rowIndex, 6, item);
-                        item = new QTableWidgetItem (bill.getBillother());
+//                        table->setItem(rowIndex, 6, item);
+//                        item = new QTableWidgetItem (bill.getBillother());
 
-                        table->setItem(rowIndex, 7, item);
-                        item = new QTableWidgetItem (bill.getBillnumber());
+//                        table->setItem(rowIndex, 7, item);
+//                        item = new QTableWidgetItem (bill.getBillnumber());
 
-                        table->setItem(rowIndex, 8, item);
-                        item = new QTableWidgetItem (bill.getBillcode());
+//                        table->setItem(rowIndex, 8, item);
+//                        item = new QTableWidgetItem (bill.getBillcode());
 
-                        table->setItem(rowIndex, 9, item);
-                        item = new QTableWidgetItem (bill.getBillcheckcode());
+//                        table->setItem(rowIndex, 9, item);
+//                        item = new QTableWidgetItem (bill.getBillcheckcode());
 
-                        connect(table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(showBillimg(QTableWidgetItem*)));
+//                        connect(table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(showBillimg(QTableWidgetItem*)));
 
                     }
                 }
@@ -1743,10 +1756,6 @@ void MainWindow::billReply(QNetworkReply * reply){
         }
 
     }
-    //    QString all = reply->readAll();
-    //    qDebug()<<endl<<all<<endl;
-    //    ui->billText->setText(all);
-    //QTableWidget * table = ui->billTable;
 
 }
 
@@ -3021,17 +3030,54 @@ void MainWindow::addPayInfoItem(payItemInfo *info)
     payMethodsItem *widget = new payMethodsItem();
     widget->setInfoItem(info);
 
-    ui->payInfoList->addItem(item);
-    ui->payInfoList->setItemWidget(item, widget);
+    //对于修改的item，在原来的位置添加view
+    if (modifyItemIndex > -1) {
+        ui->payInfoList->insertItem(modifyItemIndex, item);
+        ui->payInfoList->setItemWidget(item, widget);
+        widget->setCurrentIndex(modifyItemIndex+1);
+        modifyItemIndex = -1;
+    }
+    else {
+        ui->payInfoList->addItem(item);
+        ui->payInfoList->setItemWidget(item, widget);
+        int row = ui->payInfoList->row(item);
+        row += 1;
+        widget->setCurrentIndex(row);
+    }
+
+    connect(widget, &payMethodsItem::openItem, this, &MainWindow::openPayInfoItem);
 }
 
 /**
-* @brief       打开addPayDialog窗口，修改对应的支付信息
+* @brief       打开要修改的支付信息的addPayDialog窗口
+* @author      黄梦君
+* @date        2019-07-09
+*/
+void MainWindow::openPayInfoItem(payItemInfo *info, int index)
+{
+    if (index < 1)
+        return;
+    modifyItemIndex = index -1 ;
+
+    addPayDlg = new addPayDialog(this);
+    addPayDlg->setItem(info);
+    addPayDlg->show();
+
+    connect(addPayDlg, &addPayDialog::modifyPayItem, this, &MainWindow::modifyPayInfoItem);
+}
+
+/**
+* @brief       完成对支付信息的修改后再将原itemView修改出来
 * @author      黄梦君
 * @date        2019-07-08
 */
-void modifyPayInfoItem(payItemInfo *info)
+void MainWindow::modifyPayInfoItem(payItemInfo *info)
 {
-    //payMethodsItem *item = new payMethodsItem();
+    //删除选中的支付信息item，然后在此处重新添加一条itemView
+    //int row = ui->payInfoList->currentRow();      行不通，因为打开dialog后就失去焦点了
 
+    QListWidgetItem *item = ui->payInfoList->takeItem(modifyItemIndex);
+    delete item;
+
+    addPayInfoItem(info);
 }

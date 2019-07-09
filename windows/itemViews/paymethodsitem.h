@@ -22,6 +22,9 @@ public:
 
     payItemInfo *getInfoItem();
 
+signals:
+    void openItem(payItemInfo *info, int index);
+
 private slots:
 
     void on_delBtn_clicked();
@@ -32,6 +35,7 @@ private:
     Ui::payMethodsItem *ui;
 
     payItemInfo *curItem;
+
     int currentIndex;
 };
 

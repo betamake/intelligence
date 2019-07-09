@@ -22,6 +22,7 @@ public:
 
 signals:
     void addPayItem(payItemInfo *info);
+    void modifyPayItem(payItemInfo *info);
 
 private slots:
     void on_comboBox_currentIndexChanged(int index);
@@ -36,6 +37,8 @@ private:
 
     int currentType;
     payItemInfo *curItem;
+
+    bool beginModify;       //修改的标志
 };
 
 #endif // ADDPAYDIALOG_H

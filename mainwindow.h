@@ -27,6 +27,7 @@
 #include "windows/insertpersonneldialog.h"
 #include "windows/addpaydialog.h"
 #include "windows/itemViews/paymethodsitem.h"
+#include "windows/itemViews/billitem.h"
 #include "payinfomanager.h"
 //#include "networkthread.h"
 //#include "networkhandler.h"
@@ -205,6 +206,7 @@ private slots:
 
     void addPayInfoItem(payItemInfo *info);      //添加支付信息，参数后续添加
 
+    void openPayInfoItem(payItemInfo *info, int index);        //打开要修改的支付信息的窗口
     void modifyPayInfoItem(payItemInfo *info);      //修改支付信息
 
 
@@ -310,10 +312,12 @@ private:
     Information loginInformation;//当前用户身份信息
     billinfodialog* billInfoDialog;//显示票据的弹框
     scanDialog *scanInfoDialog;
+
+
+    //黄梦君，添加的成员的标记，勿删
     insertPersonnelDialog *insertPerDialog;
     addPayDialog *addPayDlg;
-
-
+    int modifyItemIndex;        //要修改的支付信息的序号，从0开始，对应的是在list中的行数
 
     QByteArray getPixmapData(QString filePath,QImage image);
     QString avaterFilePath;

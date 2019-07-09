@@ -80,7 +80,9 @@ HEADERS += abroadexp.h \
     windows/itemViews/abroadfeeitem.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
-    payinfomanager.h
+    payinfomanager.h \
+    windows/itemViews/billitem.h \
+    windows/itemViews/reimdetailitem.h
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
          mainwindow.ui \
@@ -91,7 +93,9 @@ FORMS += billinfodialog.ui \
     windows/itemViews/abroadpersonnel.ui \
     windows/itemViews/abroadfeeitem.ui \
     windows/itemViews/paymethodsitem.ui \
-    windows/addpaydialog.ui
+    windows/addpaydialog.ui \
+    windows/itemViews/billitem.ui \
+    windows/itemViews/reimdetailitem.ui
 SOURCES += abroadexp.cpp \
            abroadexpense.cpp \
            billcheck.cpp \
@@ -132,4 +136,6 @@ SOURCES += abroadexp.cpp \
     windows/itemViews/abroadfeeitem.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
-    payinfomanager.cpp
+    payinfomanager.cpp \
+    windows/itemViews/billitem.cpp \
+    windows/itemViews/reimdetailitem.cpp

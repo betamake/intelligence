@@ -9,7 +9,6 @@ payMethodsItem::payMethodsItem(QWidget *parent) :
     currentIndex = 0;
     curItem = new payItemInfo();
     ui->setupUi(this);
-
 }
 
 payMethodsItem::~payMethodsItem()
@@ -30,7 +29,7 @@ void payMethodsItem::on_delBtn_clicked()
 
 void payMethodsItem::on_modifyBtn_clicked()
 {
-
+    emit openItem(curItem, currentIndex);
 }
 
 void payMethodsItem::setInfoItem(payItemInfo *info)
@@ -55,5 +54,5 @@ void payMethodsItem::setInfoItem(payItemInfo *info)
 
 payItemInfo *payMethodsItem::getInfoItem()
 {
-
+    return curItem;
 }
