@@ -37,24 +37,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += abroadexp.h \
-           abroadexpense.h \
+HEADERS += \
            billcheck.h \
            billinfodialog.h \
-           busiexp.h \
-           busiexpense.h \
            ClientSocket.h \
            commonutils.h \
-           costexp.h \
-           costexpense.h \
            databaseutils.h \
-           expensehead.h \
            facemangedialog.h \
            idcardthread.h \
            Information.h \
            Instructions.h \
            mainwindow.h \
-           payinfo.h \
            qaudiolevel.h \
            Serial.h \
            ServerSocket.h \
@@ -81,8 +74,12 @@ HEADERS += abroadexp.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
     payinfomanager.h \
+<<<<<<< HEAD
     windows/itemViews/billitem.h \
     windows/itemViews/reimdetailitem.h
+=======
+    costbaseinfo.h
+>>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
          mainwindow.ui \
@@ -93,28 +90,27 @@ FORMS += billinfodialog.ui \
     windows/itemViews/abroadpersonnel.ui \
     windows/itemViews/abroadfeeitem.ui \
     windows/itemViews/paymethodsitem.ui \
+<<<<<<< HEAD
     windows/addpaydialog.ui \
     windows/itemViews/billitem.ui \
     windows/itemViews/reimdetailitem.ui
 SOURCES += abroadexp.cpp \
            abroadexpense.cpp \
+=======
+    windows/addpaydialog.ui
+SOURCES += \
+>>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
            billcheck.cpp \
            billinfodialog.cpp \
-           busiexp.cpp \
-           busiexpense.cpp \
            ClientSocket.cpp \
            commonutils.cpp \
-           costexp.cpp \
-           costexpense.cpp \
            databaseutils.cpp \
-           expensehead.cpp \
            facemangedialog.cpp \
            idcardthread.cpp \
            Information.cpp \
            Instructions.cpp \
            main.cpp \
            mainwindow.cpp \
-           payinfo.cpp \
            qaudiolevel.cpp \
            Serial.cpp \
            ServerSocket.cpp \
@@ -137,5 +133,9 @@ SOURCES += abroadexp.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
     payinfomanager.cpp \
+<<<<<<< HEAD
     windows/itemViews/billitem.cpp \
     windows/itemViews/reimdetailitem.cpp
+=======
+    costbaseinfo.cpp
+>>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b

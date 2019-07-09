@@ -224,7 +224,11 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
+<<<<<<< HEAD
       <number>14</number>
+=======
+      <number>10</number>
+>>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -1753,13 +1757,13 @@
         </rect>
        </property>
       </widget>
-      <widget class="QTextEdit" name="costUseEdit">
+      <widget class="QLineEdit" name="costUseEdit">
        <property name="geometry">
         <rect>
-         <x>83</x>
-         <y>171</y>
-         <width>256</width>
-         <height>192</height>
+         <x>81</x>
+         <y>174</y>
+         <width>541</width>
+         <height>41</height>
         </rect>
        </property>
       </widget>

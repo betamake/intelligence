@@ -237,94 +237,53 @@ bool databaseUtils::insertIdCard(Information information)
  * @param user
  * 插入差旅报销单数据
  */
-bool databaseUtils::insertBusiexp(busiExp busiexp)
-{
-    //    if(db.open())
-    //    {
-    //        qDebug() << "数据库连接成功"<<endl;
-    //    }else
-    //    {
-    //        qDebug() << "数据库连接失败";
-    //    }
-    //    QSqlQuery query(db);
-//    QSqlQuery query(getConnectionByName("MyConnection"));
-    // 1. 从数据库连接池里取得连接
-    QSqlDatabase db = ConnectionPool::openConnection();
-    // 2. 使用连接查询数据库
-    QSqlQuery query(db);
+//bool databaseUtils::insertBusiexp(busiExp busiexp)
+//{
+//    //    if(db.open())
+//    //    {
+//    //        qDebug() << "数据库连接成功"<<endl;
+//    //    }else
+//    //    {
+//    //        qDebug() << "数据库连接失败";
+//    //    }
+//    //    QSqlQuery query(db);
+////    QSqlQuery query(getConnectionByName("MyConnection"));
+//    // 1. 从数据库连接池里取得连接
+//    QSqlDatabase db = ConnectionPool::openConnection();
+//    // 2. 使用连接查询数据库
+//    QSqlQuery query(db);
 
 
-    //md5加密密码串  /*id_face,id_card,*/
-    query.prepare("insert into busi_exp(busid,manid,abdid,begindate,enddate,day,relaxday,formadres,toadres,transcost,transbillnum,accomcost,accombillnum,transsubsidy,foodsubsidy,totalcost,othercost,othernum,othermemo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    query.addBindValue(busiexp.getbusid());
-    query.addBindValue(busiexp.getBusimanid());
-    query.addBindValue(busiexp.getAbdid());
-    query.addBindValue(busiexp.getBusibegindate());
-    query.addBindValue(busiexp.getBusienddate());
-    query.addBindValue(busiexp.getBusiday());
-    query.addBindValue(busiexp.getBusirelaxday());
-    query.addBindValue(busiexp.getBusifromadres());
-    query.addBindValue(busiexp.getBusitoadres());
-    query.addBindValue(busiexp.getBusitranscost());
-    query.addBindValue(busiexp.getBusitransbillnum());
-    query.addBindValue(busiexp.getBusiaccomcost());
-    query.addBindValue(busiexp.getbusiAccombillnum());
-    query.addBindValue(busiexp.getBusitranssubsidy());
-    query.addBindValue(busiexp.getBusifoodsubsidy());
-    query.addBindValue(busiexp.getBusitotalcost());
-    query.addBindValue(busiexp.getBusiothercost());
-    query.addBindValue(busiexp.getBusiothernum());
-    query.addBindValue(busiexp.getBusiothermemo());
-    bool result = query.exec();
-    if(!result){
-        QSqlError lastError = query.lastError();
-        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
-    }
-    return result;
-    // 3. 连接使用完后需要释放回数据库连接池
-    ConnectionPool::closeConnection(db);
-}
-
-/**
- * @brief databaseUtils::insertUser
- * @ljh
- * 插入出国报销单数据
- */
-
-bool databaseUtils::insertAbdexp(abroadExp abdexp)
-{
-    //    if(db.open())
-    //    {
-    //        qDebug() << "数据库连接成功"<<endl;
-    //    }else
-    //    {
-    //        qDebug() << "数据库连接失败";
-    //    }
-    //    QSqlQuery query(db);
-//    QSqlQuery query(getConnectionByName("MyConnection"));
-    // 1. 从数据库连接池里取得连接
-    QSqlDatabase db = ConnectionPool::openConnection();
-    // 2. 使用连接查询数据库
-    QSqlQuery query(db);
-    //md5加密密码串  /*id_face,id_card,*/
-    query.prepare("insert into abroad_exp(abdid,visacost,visabillnum,servcost,servbillnum,exchgcost,exchgbillnum) values(?,?,?,?,?,?,?)");
-
-    query.addBindValue(abdexp.getAbdid());
-    query.addBindValue(abdexp.getAbdvisacost());
-    query.addBindValue(abdexp.getAbdvisabillnum());
-    query.addBindValue(abdexp.getAbdservcost());
-    query.addBindValue(abdexp.getAbdservbillnum());
-    query.addBindValue(abdexp.getAbdexchgcost());
-    query.addBindValue(abdexp.getAbdexchgbillnum());
-
-    bool result = query.exec();
-    if(!result){
-        QSqlError lastError = query.lastError();
-        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
-    }
-    return result;
-    // 3. 连接使用完后需要释放回数据库连接池
-    ConnectionPool::closeConnection(db);}
+//    //md5加密密码串  /*id_face,id_card,*/
+//    query.prepare("insert into busi_exp(busid,manid,abdid,begindate,enddate,day,relaxday,formadres,toadres,transcost,transbillnum,accomcost,accombillnum,transsubsidy,foodsubsidy,totalcost,othercost,othernum,othermemo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+//    query.addBindValue(busiexp.getbusid());
+//    query.addBindValue(busiexp.getBusimanid());
+//    query.addBindValue(busiexp.getAbdid());
+//    query.addBindValue(busiexp.getBusibegindate());
+//    query.addBindValue(busiexp.getBusienddate());
+//    query.addBindValue(busiexp.getBusiday());
+//    query.addBindValue(busiexp.getBusirelaxday());
+//    query.addBindValue(busiexp.getBusifromadres());
+//    query.addBindValue(busiexp.getBusitoadres());
+//    query.addBindValue(busiexp.getBusitranscost());
+//    query.addBindValue(busiexp.getBusitransbillnum());
+//    query.addBindValue(busiexp.getBusiaccomcost());
+//    query.addBindValue(busiexp.getbusiAccombillnum());
+//    query.addBindValue(busiexp.getBusitranssubsidy());
+//    query.addBindValue(busiexp.getBusifoodsubsidy());
+//    query.addBindValue(busiexp.getBusitotalcost());
+//    query.addBindValue(busiexp.getBusiothercost());
+//    query.addBindValue(busiexp.getBusiothernum());
+//    query.addBindValue(busiexp.getBusiothermemo());
+//    bool result = query.exec();
+//    if(!result){
+//        QSqlError lastError = query.lastError();
+//        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+//    }
+//    return result;
+//    // 3. 连接使用完后需要释放回数据库连接池
+//    ConnectionPool::closeConnection(db);
+//}
 
 /**
  * @brief databaseUtils::insertUser
@@ -332,115 +291,156 @@ bool databaseUtils::insertAbdexp(abroadExp abdexp)
  * 插入出国报销单数据
  */
 
-bool databaseUtils::insertCostexp(costExp costexp)
-{
-//    QSqlQuery query(getConnectionByName("MyConnection"));
-    // 1. 从数据库连接池里取得连接
-    QSqlDatabase db = ConnectionPool::openConnection();
-    // 2. 使用连接查询数据库
-    QSqlQuery query(db);
+//bool databaseUtils::insertAbdexp(abroadExp abdexp)
+//{
+//    //    if(db.open())
+//    //    {
+//    //        qDebug() << "数据库连接成功"<<endl;
+//    //    }else
+//    //    {
+//    //        qDebug() << "数据库连接失败";
+//    //    }
+//    //    QSqlQuery query(db);
+////    QSqlQuery query(getConnectionByName("MyConnection"));
+//    // 1. 从数据库连接池里取得连接
+//    QSqlDatabase db = ConnectionPool::openConnection();
+//    // 2. 使用连接查询数据库
+//    QSqlQuery query(db);
+//    //md5加密密码串  /*id_face,id_card,*/
+//    query.prepare("insert into abroad_exp(abdid,visacost,visabillnum,servcost,servbillnum,exchgcost,exchgbillnum) values(?,?,?,?,?,?,?)");
 
-    //md5加密密码串  /*id_face,id_card,*/
-    query.prepare("insert into cost_exp(costid,manid,expensemoney,amount,budgetprojectid,centrializedid,loanid,surplushloan,memo) values(?,?,?,?,?,?,?,?,?)");
+//    query.addBindValue(abdexp.getAbdid());
+//    query.addBindValue(abdexp.getAbdvisacost());
+//    query.addBindValue(abdexp.getAbdvisabillnum());
+//    query.addBindValue(abdexp.getAbdservcost());
+//    query.addBindValue(abdexp.getAbdservbillnum());
+//    query.addBindValue(abdexp.getAbdexchgcost());
+//    query.addBindValue(abdexp.getAbdexchgbillnum());
 
-    query.addBindValue(costexp.getcostid());
-    query.addBindValue(costexp.getCostmanid());
-    query.addBindValue(costexp.getCostmoney());
-    query.addBindValue(costexp.getCostbillamount());
-    query.addBindValue(costexp.getCostbudgtproid());
-    query.addBindValue(costexp.getCostcentrializedid());
-    query.addBindValue(costexp.getCostloanid());
-    query.addBindValue(costexp.getCostsurplusloan());
-    query.addBindValue(costexp.getCostmemo());
+//    bool result = query.exec();
+//    if(!result){
+//        QSqlError lastError = query.lastError();
+//        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+//    }
+//    return result;
+//    // 3. 连接使用完后需要释放回数据库连接池
+//    ConnectionPool::closeConnection(db);}
 
-    bool result = query.exec();
-    if(!result){
-        QSqlError lastError = query.lastError();
-        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
-    }
-    return result;
-    // 3. 连接使用完后需要释放回数据库连接池
-    ConnectionPool::closeConnection(db);}
+/**
+ * @brief databaseUtils::insertUser
+ * @ljh
+ * 插入出国报销单数据
+ */
+
+//bool databaseUtils::insertCostexp(costExp costexp)
+//{
+////    QSqlQuery query(getConnectionByName("MyConnection"));
+//    // 1. 从数据库连接池里取得连接
+//    QSqlDatabase db = ConnectionPool::openConnection();
+//    // 2. 使用连接查询数据库
+//    QSqlQuery query(db);
+
+//    //md5加密密码串  /*id_face,id_card,*/
+//    query.prepare("insert into cost_exp(costid,manid,expensemoney,amount,budgetprojectid,centrializedid,loanid,surplushloan,memo) values(?,?,?,?,?,?,?,?,?)");
+
+//    query.addBindValue(costexp.getcostid());
+//    query.addBindValue(costexp.getCostmanid());
+//    query.addBindValue(costexp.getCostmoney());
+//    query.addBindValue(costexp.getCostbillamount());
+//    query.addBindValue(costexp.getCostbudgtproid());
+//    query.addBindValue(costexp.getCostcentrializedid());
+//    query.addBindValue(costexp.getCostloanid());
+//    query.addBindValue(costexp.getCostsurplusloan());
+//    query.addBindValue(costexp.getCostmemo());
+
+//    bool result = query.exec();
+//    if(!result){
+//        QSqlError lastError = query.lastError();
+//        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+//    }
+//    return result;
+//    // 3. 连接使用完后需要释放回数据库连接池
+//    ConnectionPool::closeConnection(db);}
 
 /**
  * @brief databaseUtils::insertUser
  * @ljh
  * 插入表头信息数据
  */
-bool databaseUtils::insertExpensehead(ExpenseHead exphead)
-{
+//bool databaseUtils::insertExpensehead(ExpenseHead exphead)
+//{
 
-//    QSqlQuery query(getConnectionByName("MyConnection"));
-    // 1. 从数据库连接池里取得连接
-    QSqlDatabase db = ConnectionPool::openConnection();
-    // 2. 使用连接查询数据库
-    QSqlQuery query(db);
-    //md5加密密码串  /*id_face,id_card,*/
-    query.prepare("insert into exphead(busid,costid,deptid,operatorid,date,year,purpose,requisitionid,loanmoneysum,projectid,currency,exrate,einvoiceid,costtype,contractid,contractname) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+////    QSqlQuery query(getConnectionByName("MyConnection"));
+//    // 1. 从数据库连接池里取得连接
+//    QSqlDatabase db = ConnectionPool::openConnection();
+//    // 2. 使用连接查询数据库
+//    QSqlQuery query(db);
+//    //md5加密密码串  /*id_face,id_card,*/
+//    query.prepare("insert into exphead(busid,costid,deptid,operatorid,date,year,purpose,requisitionid,loanmoneysum,projectid,currency,exrate,einvoiceid,costtype,contractid,contractname) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-    query.addBindValue(exphead.getHeadbusid());
-    query.addBindValue(exphead.getHeadcostid());
-    query.addBindValue(exphead.getHeaddeptid());
-    query.addBindValue(exphead.getHeadoperatorid());
-    query.addBindValue(exphead.getHeadDate());
-    query.addBindValue(exphead.getHeadyear());
-    query.addBindValue(exphead.getHeadpurpose());
-    query.addBindValue(exphead.getHeadrequisitionid());
-    query.addBindValue(exphead.getHeadloanmoneysum());
-    query.addBindValue(exphead.getHeadprojectid());
-    query.addBindValue(exphead.getHeadcurrency());
-    query.addBindValue(exphead.getHeadExrate());
-    query.addBindValue(exphead.getHeadeinvoiceid());
-    query.addBindValue(exphead.getHeadCosttype());
-    query.addBindValue(exphead.getHeadcontractid());
-    query.addBindValue(exphead.getHeadContractname());
+//    query.addBindValue(exphead.getHeadbusid());
+//    query.addBindValue(exphead.getHeadcostid());
+//    query.addBindValue(exphead.getHeaddeptid());
+//    query.addBindValue(exphead.getHeadoperatorid());
+//    query.addBindValue(exphead.getHeadDate());
+//    query.addBindValue(exphead.getHeadyear());
+//    query.addBindValue(exphead.getHeadpurpose());
+//    query.addBindValue(exphead.getHeadrequisitionid());
+//    query.addBindValue(exphead.getHeadloanmoneysum());
+//    query.addBindValue(exphead.getHeadprojectid());
+//    query.addBindValue(exphead.getHeadcurrency());
+//    query.addBindValue(exphead.getHeadExrate());
+//    query.addBindValue(exphead.getHeadeinvoiceid());
+//    query.addBindValue(exphead.getHeadCosttype());
+//    query.addBindValue(exphead.getHeadcontractid());
+//    query.addBindValue(exphead.getHeadContractname());
 
-    bool result = query.exec();
-    if(!result){
-        QSqlError lastError = query.lastError();
-        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
-    }
-    return result;
-    // 3. 连接使用完后需要释放回数据库连接池
-    ConnectionPool::closeConnection(db);
-}
+//    bool result = query.exec();
+//    if(!result){
+//        QSqlError lastError = query.lastError();
+//        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+//    }
+//    return result;
+//    // 3. 连接使用完后需要释放回数据库连接池
+//    ConnectionPool::closeConnection(db);
+//}
 
 /**
  * @brief databaseUtils::insertUser
  * @ljh
  * 插入支付信息数据
  */
-bool databaseUtils::insertPayinfo(PayInfo payinfo)
-{
+//bool databaseUtils::insertPayinfo(PayInfo payinfo)
+//{
 
-//    QSqlQuery query(getConnectionByName("MyConnection"));
-    // 1. 从数据库连接池里取得连接
-    QSqlDatabase db = ConnectionPool::openConnection();
-    // 2. 使用连接查询数据库
-    QSqlQuery query(db);
+////    QSqlQuery query(getConnectionByName("MyConnection"));
+//    // 1. 从数据库连接池里取得连接
+//    QSqlDatabase db = ConnectionPool::openConnection();
+//    // 2. 使用连接查询数据库
+//    QSqlQuery query(db);
 
-    //md5加密密码串  /*id_face,id_card,*/
-    query.prepare("insert into pay_info(costid,busid,type,unit,bank,bankname,bankbum,bill,note) values(?,?,?,?,?,?,?,?,?)");
+//    //md5加密密码串  /*id_face,id_card,*/
+//    query.prepare("insert into pay_info(costid,busid,type,unit,bank,bankname,bankbum,bill,note) values(?,?,?,?,?,?,?,?,?)");
 
-    query.addBindValue(payinfo.getPayInfoCostid());
-    query.addBindValue(payinfo.getPayInfoBusid());
-    query.addBindValue(payinfo.getPayinfoType());
-    query.addBindValue(payinfo.getPayInfoUnit());
-    query.addBindValue(payinfo.getPayInfoBank());
-    query.addBindValue(payinfo.getPayInfoBankName());
-    query.addBindValue(payinfo.getPayInfoBankNum());
-    query.addBindValue(payinfo.getPayInfoBill());
-    query.addBindValue(payinfo.getPayInfoNote());
+//    query.addBindValue(payinfo.getPayInfoCostid());
+//    query.addBindValue(payinfo.getPayInfoBusid());
+//    query.addBindValue(payinfo.getPayinfoType());
+//    query.addBindValue(payinfo.getPayInfoUnit());
+//    query.addBindValue(payinfo.getPayInfoBank());
+//    query.addBindValue(payinfo.getPayInfoBankName());
+//    query.addBindValue(payinfo.getPayInfoBankNum());
+//    query.addBindValue(payinfo.getPayInfoBill());
+//    query.addBindValue(payinfo.getPayInfoNote());
 
-    bool result = query.exec();
-    if(!result){
-        QSqlError lastError = query.lastError();
-        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
-    }
-    return result;
-    // 3. 连接使用完后需要释放回数据库连接池
-    ConnectionPool::closeConnection(db);
-}
+//    bool result = query.exec();
+//    if(!result){
+//        QSqlError lastError = query.lastError();
+//        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+//    }
+//    return result;
+//    // 3. 连接使用完后需要释放回数据库连接池
+//    ConnectionPool::closeConnection(db);
+//}
 
 /**
  * @brief databaseUtils::insertUser

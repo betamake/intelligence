@@ -498,11 +498,20 @@ void MainWindow::on_fileChooseBtn_clicked()
 
 void MainWindow::toLastStep(){
     //报销类型的上一步是页面
-    if(currentIndex == 12 || currentIndex == 13 || currentIndex == 14){
-        currentIndex = 11;
-    }else if(currentIndex == 15){
-        currentIndex = expenseType;
+    if(currentIndex == 11 || currentIndex == 12 ){
+        currentIndex = 10;
+    }else if(currentIndex == 16){
+        currentIndex = 15;
     }
+    else if(currentIndex == 15){
+            currentIndex = 14;
+        }
+    else if(currentIndex == 14){
+            currentIndex = 13;
+        }
+    else if(currentIndex == 13){
+            currentIndex = 12;
+        }
     else if (currentIndex==11)//身份认证的上一页是
     {
         currentIndex=10;
@@ -573,22 +582,38 @@ void MainWindow::toNextStep(){
         ui->lastStepBtn->hide ();
         ui->nextStepBtn->hide ();
     }
-    else if(currentIndex ==10)
+    else if(currentIndex ==11)
     {
         ui->nextStepBtn->show ();
         ui->lastStepBtn->show ();
-        currentIndex =  expenseType; //当在选择报销类型时,应该注意到
-        currentIndex =  11;
+//        currentIndex =  expenseType; //当在选择报销类型时,应该注意到
+        currentIndex =  13;
+        ui->mainWidget->setCurrentIndex (currentIndex);
 
     }
-    else if(currentIndex ==11)
+    else if(currentIndex ==12)
     {
         ui->nextStepBtn->show ();
         ui->lastStepBtn->show ();
         //录入票据之后需要点击下一步需要进行判定  结合标志位
         currentIndex=13; //在这三种报销中,发票肯定会有.所以先跳转到发票报销页面.
+        ui->mainWidget->setCurrentIndex (currentIndex);
+    }
+    else if(currentIndex == 13){
+        currentIndex=14;
+        ui->mainWidget->setCurrentIndex (currentIndex);
 
     }
+    else if(currentIndex == 14){
+        currentIndex=15;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+
+    }
+    else if(currentIndex == 15){
+        currentIndex=16;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+    }
+
 
 }
 
@@ -3080,4 +3105,21 @@ void MainWindow::modifyPayInfoItem(payItemInfo *info)
     delete item;
 
     addPayInfoItem(info);
+}
+/**
+* @brief
+* @brief       支付信息窗口保存退出后，在列表里添加支付信息
+* @author      黄梦君
+* @date        2019-07-02
+*/
+
+void MainWindow::costbaseRead ()
+{
+    costBinfo.setcostRnumEidt (ui->costRnumEdit->text ());
+    costBinfo.setcostConname (ui->costConnameEdit->text ());
+    costBinfo.setcostCono (ui->costConoEdit->text ().toInt ());
+    costBinfo.setcostHandp (ui->costHandpEdit->text ());
+    costBinfo.setcostRdate (ui->costRdateEdit->text());
+    costBinfo.setcostHandpd (ui->costHandpdEdit->text ());
+    costBinfo.setcostUse (ui->costUseEdit->text ());
 }

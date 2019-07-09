@@ -1,15 +1,11 @@
-﻿#ifndef DATABASEUTILS_H
+#ifndef DATABASEUTILS_H
 #define DATABASEUTILS_H
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>
 #include <QString>
 #include "user.h"
-#include "busiexp.h"
-#include "abroadexp.h"
-#include "costexp.h"
-#include "expensehead.h"
-#include "payinfo.h"
+//#include "payinfo.h"
 #include "billcheck.h"
 #include "Information.h"
 #include <string>
@@ -28,11 +24,11 @@ public:
     void outputUserInfo();
     QString md5Encode(QString string);
     bool insertUser(User user);
-    bool insertBusiexp(busiExp busiexp);//插入出差报销单信息
-    bool insertAbdexp(abroadExp abdexp);//插入出国报销单信息
-    bool insertCostexp(costExp costexp);//插入费用报销单信息
-    bool insertExpensehead(ExpenseHead exphead);//插入表头信息
-    bool insertPayinfo(PayInfo payinfo);//插入支付信息
+//    bool insertBusiexp(busiExp busiexp);//插入出差报销单信息
+//    bool insertAbdexp(abroadExp abdexp);//插入出国报销单信息
+//    bool insertCostexp(costExp costexp);//插入费用报销单信息
+//    bool insertExpensehead(ExpenseHead exphead);//插入表头信息
+//    bool insertPayinfo(PayInfo payinfo);//插入支付信息
     bool insertBillcheck(BillCheck billinfo);
 
     bool checkUsername(QString username);//检查用户名是否重复
