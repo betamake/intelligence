@@ -126,5 +126,4 @@ SOURCES += \
     windows/addpaydialog.cpp \
     payinfomanager.cpp \
     windows/itemViews/billitem.cpp \
-    windows/itemViews/reimdetailitem.cpp \
-    costbaseinfo.cpp
+    windows/itemViews/reimdetailitem.cpp
