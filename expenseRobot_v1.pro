@@ -74,12 +74,9 @@ HEADERS += \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
     payinfomanager.h \
-<<<<<<< HEAD
     windows/itemViews/billitem.h \
     windows/itemViews/reimdetailitem.h
-=======
     costbaseinfo.h
->>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
          mainwindow.ui \
@@ -90,16 +87,11 @@ FORMS += billinfodialog.ui \
     windows/itemViews/abroadpersonnel.ui \
     windows/itemViews/abroadfeeitem.ui \
     windows/itemViews/paymethodsitem.ui \
-<<<<<<< HEAD
     windows/addpaydialog.ui \
     windows/itemViews/billitem.ui \
-    windows/itemViews/reimdetailitem.ui
-SOURCES += abroadexp.cpp \
-           abroadexpense.cpp \
-=======
+    windows/itemViews/reimdetailitem.ui\
     windows/addpaydialog.ui
 SOURCES += \
->>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
            billcheck.cpp \
            billinfodialog.cpp \
            ClientSocket.cpp \
@@ -133,9 +125,6 @@ SOURCES += \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
     payinfomanager.cpp \
-<<<<<<< HEAD
     windows/itemViews/billitem.cpp \
-    windows/itemViews/reimdetailitem.cpp
-=======
+    windows/itemViews/reimdetailitem.cpp \
     costbaseinfo.cpp
->>>>>>> 8672108450d60dd8524cd39eecd60a0f45f4589b
