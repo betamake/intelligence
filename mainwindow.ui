@@ -2088,7 +2088,7 @@
            <string>费用报销明细</string>
           </property>
          </widget>
-         <widget class="QListWidget" name="listWidget">
+         <widget class="QListWidget" name="feeDetailList">
           <property name="geometry">
            <rect>
             <x>0</x>
