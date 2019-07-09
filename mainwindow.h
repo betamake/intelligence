@@ -5,20 +5,12 @@
 #include<QTableWidget>
 #include<QMediaRecorder>
 #include "voicecheck.h"
-#include "busiexpense.h"
-#include "costexpense.h"
-#include "abroadexpense.h"
-#include "payinfo.h"
 #include "databaseutils.h"
 #include "qaudiolevel.h"
 #include "user.h"
 #include "commonutils.h"
 #include "billcheck.h"
 #include <QString>
-#include "busiexp.h"
-#include "abroadexp.h"
-#include "costexp.h"
-#include "expensehead.h"
 #include "idcardthread.h"
 #include "userinfodialog.h"
 #include "billinfodialog.h"
@@ -45,7 +37,7 @@
 #include <QTimer>
 #include<QKeyEvent>
 #include "scanthread.h" //扫面线程
-
+#include "costbaseinfo.h"//处理费用报销基本信息
 #if _MSC_VER >= 1600
 
 #pragma execution_character_set("utf-8")
@@ -111,6 +103,9 @@ public:
     void deleteAccountReg(); //清空注册信息.
     void isShowguiInforn(); //显示报销流程引导
     void noShowguiInforn(); //不显示报销流程引导
+//报销流程处理函数
+    void costbaseRead() ;//读取费用报销基本信息
+
 
 
 private:
@@ -243,13 +238,13 @@ private:
 //    costExpense cost;//费用报销单
 //    abroadExpense abroad;//出国报销单
     int expenseTypeId;
-    PayInfo pay;
+//    PayInfo pay;
     BillCheck bill; // 票据数据
     BillCheck billinfo;
 //    busiExp busiexp;
 //    abroadExp abdexp;
 //    costExp costexp;
-    ExpenseHead exphead;
+//    ExpenseHead exphead;
 
     int recordNum;//音频样本数量
     int recordLow;//低音音频样本数量
@@ -329,6 +324,8 @@ private:
     Turing *turing;
     //扫描线程
     ScanThread *myScanThread;
+    //
+    costBase costBinfo;
 
 };
 

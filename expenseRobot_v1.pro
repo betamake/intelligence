@@ -37,24 +37,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += abroadexp.h \
-           abroadexpense.h \
+HEADERS += \
            billcheck.h \
            billinfodialog.h \
-           busiexp.h \
-           busiexpense.h \
            ClientSocket.h \
            commonutils.h \
-           costexp.h \
-           costexpense.h \
            databaseutils.h \
-           expensehead.h \
            facemangedialog.h \
            idcardthread.h \
            Information.h \
            Instructions.h \
            mainwindow.h \
-           payinfo.h \
            qaudiolevel.h \
            Serial.h \
            ServerSocket.h \
@@ -80,7 +73,8 @@ HEADERS += abroadexp.h \
     windows/itemViews/abroadfeeitem.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
-    payinfomanager.h
+    payinfomanager.h \
+    costbaseinfo.h
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
          mainwindow.ui \
@@ -92,25 +86,18 @@ FORMS += billinfodialog.ui \
     windows/itemViews/abroadfeeitem.ui \
     windows/itemViews/paymethodsitem.ui \
     windows/addpaydialog.ui
-SOURCES += abroadexp.cpp \
-           abroadexpense.cpp \
+SOURCES += \
            billcheck.cpp \
            billinfodialog.cpp \
-           busiexp.cpp \
-           busiexpense.cpp \
            ClientSocket.cpp \
            commonutils.cpp \
-           costexp.cpp \
-           costexpense.cpp \
            databaseutils.cpp \
-           expensehead.cpp \
            facemangedialog.cpp \
            idcardthread.cpp \
            Information.cpp \
            Instructions.cpp \
            main.cpp \
            mainwindow.cpp \
-           payinfo.cpp \
            qaudiolevel.cpp \
            Serial.cpp \
            ServerSocket.cpp \
@@ -132,4 +119,5 @@ SOURCES += abroadexp.cpp \
     windows/itemViews/abroadfeeitem.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
-    payinfomanager.cpp
+    payinfomanager.cpp \
+    costbaseinfo.cpp
