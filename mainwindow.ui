@@ -225,7 +225,6 @@
      </property>
      <property name="currentIndex">
       <number>14</number>
-      <number>10</number>
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -1759,8 +1758,8 @@
         <rect>
          <x>81</x>
          <y>174</y>
-         <width>541</width>
-         <height>41</height>
+         <width>361</width>
+         <height>171</height>
         </rect>
        </property>
       </widget>
@@ -2037,7 +2036,7 @@
          <property name="styleSheet">
           <string notr="true"/>
          </property>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="copyDetailBtn">
           <property name="geometry">
            <rect>
             <x>500</x>
@@ -2050,7 +2049,7 @@
            <string>复制</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="deleteDetailBtn">
           <property name="geometry">
            <rect>
             <x>590</x>
@@ -2063,7 +2062,7 @@
            <string>删除</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="addDetailBtn">
           <property name="geometry">
            <rect>
             <x>410</x>
@@ -2099,7 +2098,7 @@
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="saveDetailBtn">
           <property name="geometry">
            <rect>
             <x>600</x>

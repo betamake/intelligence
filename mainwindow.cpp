@@ -3106,13 +3106,13 @@ void MainWindow::modifyPayInfoItem(payItemInfo *info)
 
     addPayInfoItem(info);
 }
+
 /**
 * @brief
 * @brief       支付信息窗口保存退出后，在列表里添加支付信息
 * @author      黄梦君
 * @date        2019-07-02
 */
-
 void MainWindow::costbaseRead ()
 {
     costBinfo.setcostRnumEidt (ui->costRnumEdit->text ());
@@ -3122,4 +3122,66 @@ void MainWindow::costbaseRead ()
     costBinfo.setcostRdate (ui->costRdateEdit->text());
     costBinfo.setcostHandpd (ui->costHandpdEdit->text ());
     costBinfo.setcostUse (ui->costUseEdit->text ());
+}
+
+/**
+* @brief
+* @brief       添加费用报销明细按钮
+* @author      黄梦君
+* @date        2019-07-09
+*/
+void MainWindow::on_addDetailBtn_clicked()
+{
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setSizeHint(QSize(645, 210));
+    reimDetailItem *detailItem = new reimDetailItem();
+
+    ui->feeDetailList->addItem(item);
+    ui->feeDetailList->setItemWidget(item, detailItem);
+
+    connect(this, &MainWindow::saveReimDetail, detailItem, &reimDetailItem::saveDetail);
+
+}
+
+/**
+* @brief
+* @brief       复制费用报销明细按钮
+* @author      黄梦君
+* @date        2019-07-09
+*/
+void MainWindow::on_copyDetailBtn_clicked()
+{
+    //尚未实现
+}
+
+/**
+* @brief
+* @brief       删除费用报销明细按钮
+* @author      黄梦君
+* @date        2019-07-09
+*/
+void MainWindow::on_deleteDetailBtn_clicked()
+{
+    int row = ui->feeDetailList->currentRow();
+    QListWidgetItem *item = ui->feeDetailList->takeItem(row);
+    delete item;
+}
+
+/**
+* @brief
+* @brief       保存费用报销明细按钮
+* @author      黄梦君
+* @date        2019-07-09
+*/
+void MainWindow::on_saveDetailBtn_clicked()
+{
+    emit saveReimDetail();
+
+    int count = ui->feeDetailList->count();
+    for (int i=0; i < count; i++) {
+        QListWidgetItem *item = ui->feeDetailList->item(i);
+
+    }
+
+
 }

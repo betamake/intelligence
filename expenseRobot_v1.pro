@@ -75,7 +75,8 @@ HEADERS += \
     windows/addpaydialog.h \
     payinfomanager.h \
     windows/itemViews/billitem.h \
-    windows/itemViews/reimdetailitem.h
+    windows/itemViews/reimdetailitem.h \
+    reimdetailmanager.h
     costbaseinfo.h
 FORMS += billinfodialog.ui \
          facemangedialog.ui \
@@ -126,4 +127,5 @@ SOURCES += \
     windows/addpaydialog.cpp \
     payinfomanager.cpp \
     windows/itemViews/billitem.cpp \
-    windows/itemViews/reimdetailitem.cpp
+    windows/itemViews/reimdetailitem.cpp \
+    reimdetailmanager.cpp

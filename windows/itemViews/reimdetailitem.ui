@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>641</width>
-    <height>207</height>
+    <height>215</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -604,6 +604,22 @@ border-color: rgb(186, 189, 182);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>200</y>
+     <width>641</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
   </widget>
  </widget>
  <resources/>

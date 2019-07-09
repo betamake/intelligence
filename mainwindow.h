@@ -20,6 +20,7 @@
 #include "windows/addpaydialog.h"
 #include "windows/itemViews/paymethodsitem.h"
 #include "windows/itemViews/billitem.h"
+#include "windows/itemViews/reimdetailitem.h"
 #include "payinfomanager.h"
 //#include "networkthread.h"
 //#include "networkhandler.h"
@@ -62,6 +63,7 @@ class QAudioBuffer;
 class QNetworkRequest;
 class QMediaPlayer;
 class QAudioLevel;
+
 QT_END_NAMESPACE
 
 class MainWindow : public QWidget
@@ -120,6 +122,8 @@ signals:
 //    void costDone(); //发票识别完成发送信号.
 //    void busiDone(); //差旅报销
 //    void abroadDone();//出国报销
+
+    void saveReimDetail();      //保存费用报销明细
 
 private slots:
     void on_faceBtn_clicked();
@@ -204,6 +208,14 @@ private slots:
     void openPayInfoItem(payItemInfo *info, int index);        //打开要修改的支付信息的窗口
     void modifyPayInfoItem(payItemInfo *info);      //修改支付信息
 
+
+    void on_addDetailBtn_clicked();
+
+    void on_copyDetailBtn_clicked();
+
+    void on_deleteDetailBtn_clicked();
+
+    void on_saveDetailBtn_clicked();
 
 private:
     void setBasePage(int expenseType);
