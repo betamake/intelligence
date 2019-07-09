@@ -7,6 +7,7 @@ payMethodsItem::payMethodsItem(QWidget *parent) :
     ui(new Ui::payMethodsItem)
 {
     currentIndex = 0;
+    curItem = new payItemInfo();
     ui->setupUi(this);
 
 }

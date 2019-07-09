@@ -3032,5 +3032,6 @@ void MainWindow::addPayInfoItem(payItemInfo *info)
 */
 void modifyPayInfoItem(payItemInfo *info)
 {
+    //payMethodsItem *item = new payMethodsItem();
 
 }
