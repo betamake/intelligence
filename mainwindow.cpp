@@ -589,9 +589,9 @@ void MainWindow::toNextStep(){
     {
         ui->nextStepBtn->show ();
         ui->lastStepBtn->show ();
-//        currentIndex =  expenseType; //当在选择报销类型时,应该注意到
         currentIndex =  13;
         ui->mainWidget->setCurrentIndex (currentIndex);
+        this->costbaseRead ();
 
     }
     else if(currentIndex ==12)
@@ -1798,21 +1798,21 @@ void MainWindow::billReply(QNetworkReply * reply){
 
 }
 
-/**
-* @brief      查看电子版票据
-* @author        ljh
-* @date        2018-09-12
-*/
-void MainWindow::showBillimg(QTableWidgetItem *img)
-{
-    billInfoDialog = new billinfodialog(this);
+///**
+//* @brief      查看电子版票据
+//* @author        ljh
+//* @date        2018-09-12
+//*/
+//void MainWindow::showBillimg(QTableWidgetItem *img)
+//{
+//    billInfoDialog = new billinfodialog(this);
 
-    int index=img->row();
-    if(img->column()==1){
-        billInfoDialog->showbill(blpath.at(index));
-        billInfoDialog->show();
-    }
-}
+//    int index=img->row();
+//    if(img->column()==1){
+//        billInfoDialog->showbill(blpath.at(index));
+//        billInfoDialog->show();
+//    }
+//}
 
 /**
 * @brief      语音识别返回处理
@@ -3121,21 +3121,29 @@ void MainWindow::modifyPayInfoItem(payItemInfo *info)
     addPayInfoItem(info);
 }
 
-/**
-* @brief
-* @brief       支付信息窗口保存退出后，在列表里添加支付信息
-* @author      黄梦君
-* @date        2019-07-02
-*/
-void MainWindow::costbaseRead ()
+void MainWindow::costbaseRead () //获取费用基本报销信息
 {
     costBinfo.setcostRnumEidt (ui->costRnumEdit->text ());
     costBinfo.setcostConname (ui->costConnameEdit->text ());
-    costBinfo.setcostCono (ui->costConoEdit->text ().toInt ());
+    costBinfo.setcostCono (ui->costConoEdit->text ());
     costBinfo.setcostHandp (ui->costHandpEdit->text ());
     costBinfo.setcostRdate (ui->costRdateEdit->text());
     costBinfo.setcostHandpd (ui->costHandpdEdit->text ());
     costBinfo.setcostUse (ui->costUseEdit->text ());
+    database.insertCostBaseInfo (costBinfo);
+}
+void MainWindow::travelbaseRead (){
+    travelBinfo.settravelNumber (0);
+    travelBinfo.settraveldate ("");
+    travelBinfo.settravelPeople ("");
+    travelBinfo.settravelPdpart ("");
+    travelBinfo.settravelUse ("");
+//    travelBinfo.setisSchool ();
+//    travelBinfo.setstaffName ();
+//    travelBinfo.setstaffNumber ();
+//    travelBinfo.setleaveDate ();
+
+
 }
 
 /**

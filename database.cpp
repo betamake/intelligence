@@ -1,4 +1,4 @@
-#include "databaseutils.h"
+#include "database.h"
 #include "Information.h"
 #include <QDebug>
 #include <QCryptographicHash>
@@ -11,43 +11,14 @@
 #define SQLPASS    "123456"
 #define DatabaseName  "mydata"
 
-
-databaseUtils::databaseUtils()
+database::database(QObject *parent) : QObject(parent)
 {
-    //    createConnectionByName("MyConnection");
-    //    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL", "MyConnection");
-    //    db.setHostName(IP);
-    //    db.setDatabaseName(DatabaseName);
-    //    db.setUserName(SQLUSER);
-    //    db.setPassword(SQLPASS);
 
-    //    if (!db.open()) {
-    //        qDebug() << "Connect to MySql error: " << db.lastError().text();
-    //        return;
-    //    }
-    //    qDebug() << "数据库连接成功"<<endl;
 }
 
-//创建连接
-//void databaseUtils::createConnectionByName(const QString &connectionName) {
-
-//}
-//获取连接
-//QSqlDatabase databaseUtils::getConnectionByName(const QString &connectionName) {
-//    //    qDebug() << "获得数据库连接"<<endl;
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL",connectionName);
-
-//    if (QSqlDatabase::contains(connectionName)) {
-//        db = QSqlDatabase::database(connectionName);
-//    } else {
-//        db = QSqlDatabase::addDatabase("QMYSQL", connectionName);
-//    }
-
-//    return db;
-//}
 
 bool databaseUtils::verificationLogin(QString username, QString password)
-{   
+{
     User user = SearchUserByUsername(username);
     if(md5Encode(password) == user.getPassword())
     {
@@ -145,11 +116,57 @@ void databaseUtils::outputUserInfo() {
     // 3. 连接使用完后需要释放回数据库连接池
     ConnectionPool::closeConnection(db);
 }
+//QString user;//当前用户',
+//QString billValue;//票据金额',
+//QString billNumber;//'票据号',
+//QString billContent;// '发票内容',
+//QString billRemark;// '发票备注',
+//QString sellerTitle;//'销售方抬头',
+//QString sellerNumber;//销售方税号',
+//QString sellerOpenBank;//'销售方开户行',
+//QString sellerBankNumber;// '销售方银行账号',
+//QString sellerPhoneNumber;//'销售方电话',
+//QString sellerAdress;//'销售方地址',
+//QString buyerTitle;//'购买方抬头',
+//QString buyerNumber;// '购买方税号',
+//QString buyerOpenBank;//'购买方开户行',
+//QString buyerBankNumber;// '购买方银行账号',
+//QString buyerPhoneNumber;//'购买方电话',
+//QString buyerAdress;//'购买方地址'
+bool database::insertBillInfo (billInfo billinfo){
+    QSqlDatabase db = ConnectionPool::openConnection ();
+    QSqlQuery query(db);
+    query.prepare ("insert into mydata.billBaseInfo(user,billValue,billNumber,billContent,billRemark,sellerTitle,sellerNumber,sellerOpenBank,sellerBankNumber,sellerPhoneNumber,sellerAdress,buyerTitle,buyerNumber,buyerOpenBank,buyerBankNumber,buyerPhoneNumber,buyerAdress) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    query.addBindValue (billinfo.getuser ());
+    query.addBindValue (billinfo.getbillValue ());
+    query.addBindValue (billinfo.getbillNumber ());
+    query.addBindValue (billinfo.getbillContent ());
+    query.addBindValue (billinfo.getbillRemark ());
+    query.addBindValue (billinfo.getsellerTitle ());
+    query.addBindValue (billinfo.getsellerNumber ());
+    query.addBindValue (billinfo.getsellerOpenBank ());
+    query.addBindValue (billinfo.getsellerBankNumber ());
+    query.addBindValue (billinfo.getsellerPhoneNumber ());
+    query.addBindValue (billinfo.getsellerAdress ());
+    query.addBindValue (billinfo.getbuyerTitle ());
+    query.addBindValue (billinfo.getbuyerrNumber ());
+    query.addBindValue (billinfo.getbuyerOpenBank ());
+    query.addBindValue (billinfo.getbuyerBankNumber ());
+    query.addBindValue (billinfo.getbuyerPhoneNumber ());
+    query.addBindValue (billinfo.getbuyerAdress ());
+    bool result = query.exec();
+    if(!result){
+        QSqlError lastError = query.lastError();
+        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+        return false;
+    }
+    return true;
+    // 3. 连接使用完后需要释放回数据库连接池
+    ConnectionPool::closeConnection(db);
 
+}
 
 /**
- * @brief databaseUtils::insertUser
- * @param user
  * 插入用户
  */
 bool databaseUtils::insertUser(User user)
@@ -179,9 +196,6 @@ bool databaseUtils::insertUser(User user)
     query.addBindValue(user.getCreateTime());
     query.addBindValue(user.getUpdateTime());
     bool result = query.exec();
-
-    //        QSqlDatabase::database().commit();
-
     if(!result){
         QSqlError lastError = query.lastError();
         qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
@@ -232,11 +246,29 @@ bool databaseUtils::insertIdCard(Information information)
 }
 
 
-/**
- * @brief databaseUtils::insertUser
- * @param user
- * 插入差旅报销单数据
- */
+//插入费用报销基本信息
+bool databaseUtils::insertCostBaseInfo (costBase costBinfo)
+{
+    QSqlDatabase db = ConnectionPool::openConnection ();
+    QSqlQuery query(db);
+    query.prepare ("insert into costBaseInfo(costRnumEdit,costConname,costCono,costHandp,costRdate,costHandpd,costUse) values(?,?,?,?,?,?,?)");
+    query.addBindValue (costBinfo.getcostRnumEidt ());
+    query.addBindValue (costBinfo.getcostConname ());
+    query.addBindValue (costBinfo.getcostCono ());
+    query.addBindValue (costBinfo.getcostHandp ());
+    query.addBindValue (costBinfo.getcostRdate ());
+    query.addBindValue (costBinfo.getcostHandpd ());
+    query.addBindValue (costBinfo.getcostUse ());
+
+    bool result = query.exec();
+    if (!result){
+        QSqlError lastError = query.lastError();
+        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+    }
+    qDebug() << "插入费用基本报销信息成功";
+    return result;
+    ConnectionPool::closeConnection(db);
+}
 //bool databaseUtils::insertBusiexp(busiExp busiexp)
 //{
 //    //    if(db.open())
@@ -873,6 +905,4 @@ QString databaseUtils::md5Encode(QString string)
 
     return md5hash_string;
 }
-
-
 

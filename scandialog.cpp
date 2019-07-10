@@ -44,6 +44,7 @@ void scanDialog::on_buttonScan_clicked()
 
 void scanDialog::on_buttonClose_clicked()
 {
+    this->billInfoRead ();
     this->dealDone ();
     close();
 }
@@ -60,3 +61,46 @@ void scanDialog::dealThread ()
     thread->wait ();
 
 }
+//读取票据信息
+void scanDialog::billInfoRead ()
+{
+    billinfo.setuser ("");
+    billinfo.setbillValue (ui->lineEdit->text ());
+    billinfo.setbillNumber (ui->lineEdit_2->text ());
+    billinfo.setbillContent (ui->lineEdit_3->text ());
+    billinfo.setbillRemark (ui->lineEdit_4->text ());
+    billinfo.setsellerTitle (ui->lineEdit_5->text ());
+    billinfo.setsellerNumber (ui->lineEdit_6->text ());
+    billinfo.setsellerOpenBank (ui->lineEdit_7->text ());
+    billinfo.setsellerBankNumber (ui->lineEdit_8->text ());
+    billinfo.setsellerPhoneNumber (ui->lineEdit_9->text ());
+    billinfo.setsellerAdress (ui->lineEdit_10->text ());
+    billinfo.setbuyerTitle (ui->lineEdit_24->text ());
+    billinfo.setbuyerNumber (ui->lineEdit_26->text ());
+    billinfo.setbuyerOpenBank (ui->lineEdit_27->text ());
+    billinfo.setbuyerBankNumber (ui->lineEdit_23->text ());
+    billinfo.setbuyerPhoneNumber (ui->lineEdit_25->text ());
+    billinfo.setbuyerAdress (ui->lineEdit_28->text ());
+    emit saveBillInfo (billinfo);
+}
+//备用
+//void scanDialog::billInfoRead ()
+//{
+//    billinfo.setuser ("");
+//    billinfo.setbillValue ("");
+//    billinfo.setbillNumber ("");
+//    billinfo.setbillContent ("");
+//    billinfo.setbillRemark ("");
+//    billinfo.setsellerTitle ("");
+//    billinfo.setsellerNumber ("");
+//    billinfo.setsellerOpenBank ("");
+//    billinfo.setsellerBankNumber ("");
+//    billinfo.setsellerPhoneNumber ("");
+//    billinfo.setsellerAdress ("");
+//    billinfo.setbuyerTitle ("");
+//    billinfo.setbuyerNumber ("");
+//    billinfo.setbuyerOpenBank ("");
+//    billinfo.setbuyerBankNumber ("");
+//    billinfo.setbuyerPhoneNumber ("");
+//    billinfo.setbuyerAdress ("");
+//}
