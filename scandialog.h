@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QThread>
 #include "scanthread.h"
+#include "billcheck.h"
 namespace Ui {
 class scanDialog;
 }
@@ -15,6 +16,9 @@ class scanDialog : public QDialog
 public:
     explicit scanDialog(QWidget *parent = 0);
     ~scanDialog();
+
+    void setBillCheck(BillCheck info);
+
 signals:
     void scanDone();
 
@@ -30,6 +34,8 @@ private slots:
 private:
     Ui::scanDialog *ui;
     ScanThread *thread;
+
+    BillCheck bill;
 };
 
 

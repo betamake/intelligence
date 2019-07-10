@@ -30,7 +30,8 @@ private slots:
     void on_saveEditBtn_clicked();
 
 private:
-
+    //规定金额处只能输入int类型
+    void initInput();
 
 private:
     Ui::addPayDialog *ui;

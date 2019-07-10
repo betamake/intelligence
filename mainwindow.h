@@ -208,6 +208,7 @@ private slots:
     void openPayInfoItem(payItemInfo *info, int index);        //打开要修改的支付信息的窗口
     void modifyPayInfoItem(payItemInfo *info);      //修改支付信息
 
+    void openBillItemDialog(BillCheck info);
 
     void on_addDetailBtn_clicked();
 

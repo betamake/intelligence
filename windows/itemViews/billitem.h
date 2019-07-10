@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "billcheck.h"
+
 namespace Ui {
 class billItem;
 }
@@ -21,8 +23,20 @@ public:
 
     void setBillPixmap(QPixmap image);
 
+    void setBillInfo(BillCheck bill) { mBill = bill;}
+
+    BillCheck getBillInfo() { return mBill;}
+
+signals:
+    void openBillItem(BillCheck bill);
+
+private slots:
+    void on_modifyBtn_clicked();
+
 private:
     Ui::billItem *ui;
+
+    BillCheck mBill;
 };
 
 #endif // BILLITEM_H

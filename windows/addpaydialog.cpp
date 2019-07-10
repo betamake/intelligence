@@ -9,6 +9,8 @@ addPayDialog::addPayDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    initInput();
+
     curItem = new payItemInfo();
     beginModify = false;
     currentType = 0;
@@ -26,6 +28,16 @@ void addPayDialog::on_comboBox_currentIndexChanged(int index)
 {
     currentType = index;
     ui->stackedWidget->setCurrentIndex(index);
+}
+
+void addPayDialog::initInput()
+{
+    QRegExp rx("[0-9]+$");
+    QValidator *validator = new QRegExpValidator(rx, this);
+
+    ui->bankAccount->setValidator(validator);
+    ui->cardAccount->setValidator(validator);
+    ui->cashAccount->setValidator(validator);
 }
 
 //设置要修改的项目的内容

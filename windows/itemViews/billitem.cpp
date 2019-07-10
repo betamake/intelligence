@@ -7,6 +7,8 @@ billItem::billItem(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mBill.init();
+
     ui->accountLabel->setText("");
     ui->typeLabel->setText("");
 }
@@ -29,4 +31,9 @@ void billItem::setBillAccount(const QString &money)
 void billItem::setBillPixmap(QPixmap image)
 {
     ui->label->setPixmap(image);
+}
+
+void billItem::on_modifyBtn_clicked()
+{
+    emit openBillItem(mBill);
 }

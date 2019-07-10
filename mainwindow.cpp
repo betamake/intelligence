@@ -510,6 +510,9 @@ void MainWindow::toLastStep(){
             currentIndex = 13;
         }
     else if(currentIndex == 13){
+        if (expenseType == 11)
+            currentIndex = 11;
+        else if (expenseType == 12 || expenseType == 14)
             currentIndex = 12;
         }
     else if (currentIndex==11)//身份认证的上一页是
@@ -600,14 +603,16 @@ void MainWindow::toNextStep(){
         ui->mainWidget->setCurrentIndex (currentIndex);
     }
     else if(currentIndex == 13){
-        currentIndex=14;
+        if (expenseType == 11)
+            currentIndex=14;
+        else if (expenseType == 12 || expenseType == 14)
+            currentIndex=17;
         ui->mainWidget->setCurrentIndex (currentIndex);
 
     }
-    else if(currentIndex == 14){
+    else if(currentIndex == 14 || currentIndex == 17){
         currentIndex=15;
         ui->mainWidget->setCurrentIndex (currentIndex);
-
     }
     else if(currentIndex == 15){
         currentIndex=16;
@@ -741,7 +746,7 @@ void MainWindow::on_nextStepBtn_clicked()
    7:faceReg 人脸注册 //上一步
    8:accountReg:账号注册 //上一步
    9:begin:即将开始报销页 //上一步 下一步
-   10:bill 票据录入 //上下
+   10: 票据录入 //上下
    11:expenseChoice 报销类别 //上一步
    12:busiExpense  差旅报销单 //上下
    13:costExpense 费用报销单 //上下
@@ -760,6 +765,8 @@ void MainWindow::on_mainWidget_currentChanged(int arg1)
     if(currentIndex >1 && currentIndex <16){
         ui->lastStepBtn->show();
     }
+    if(currentIndex == 17)
+        ui->lastStepBtn->show();
     if(currentIndex == 8 || currentIndex == 9 || currentIndex == 10  ||currentIndex==15){
         ui->nextStepBtn->show();
     }
@@ -773,6 +780,9 @@ void MainWindow::on_mainWidget_currentChanged(int arg1)
 
   }
     if(currentIndex == 14){
+        ui->nextStepBtn->show();
+    }
+    if(currentIndex == 17) {
         ui->nextStepBtn->show();
     }
 }
@@ -1718,9 +1728,13 @@ void MainWindow::billReply(QNetworkReply * reply){
                         item->setSizeHint(QSize(760,90));
 
                         billItem *billItemView = new billItem();
+                        billItemView->setBillInfo(bill);
+
                         billItemView->setBillType(bill.getBilltype());
                         billItemView->setBillAccount(bill.getBillmoney());
                         billItemView->setBillPixmap(pixmap);
+
+                        connect(billItemView, &billItem::openBillItem, this, &MainWindow::openBillItemDialog);
 
                         ui->billListWidget->addItem(item);
                         ui->billListWidget->setItemWidget(item, billItemView);
@@ -3182,6 +3196,14 @@ void MainWindow::on_saveDetailBtn_clicked()
         QListWidgetItem *item = ui->feeDetailList->item(i);
 
     }
+}
 
+//打开要编辑的票据信息窗口
+void MainWindow::openBillItemDialog(BillCheck info)
+{
+    scanInfoDialog = new scanDialog(this);
 
+    scanInfoDialog->setBillCheck(info);
+    scanInfoDialog->show ();
+    //connect (scanInfoDialog,&scanDialog::scanDone,this,&MainWindow::billScanRelpy);
 }

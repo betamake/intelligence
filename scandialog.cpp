@@ -20,6 +20,12 @@ scanDialog::~scanDialog()
     delete ui;
 }
 
+void scanDialog::setBillCheck(BillCheck info)
+{
+    ui->accountEdit->setText(info.getBillmoney());
+    ui->typeEdit->setText(info.getBilltype());
+}
+
 void scanDialog::on_buttonScan_clicked()
 {
     qDebug() << "开始扫描";

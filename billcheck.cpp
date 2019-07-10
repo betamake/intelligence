@@ -45,6 +45,28 @@ void BillCheck::setEmpty ()
 {
     setBillattachmenttitle ("");
 }
+
+void BillCheck::init()
+{
+    setBillattachmenttitle ("");
+    setBillcheckcode ("");
+    setBillcode ("");
+    setBillcontent ("");
+    setBilldate ("");
+    setBillendplace ("");
+    setBillexpenseid ("");
+    setBillid ("");
+    setBillmoney ("");
+    setBillnumber ("");
+    setBillother ("");
+    setBillrealpath ("");
+    setBillstartplace ("");
+    setBilltype ("");
+    setBilluser ("");
+    setBusid ("");
+    setCostid ("");
+}
+
 QString BillCheck::getBillid()
 {
     return billID;

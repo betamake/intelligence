@@ -19,6 +19,8 @@ public:
 
     void setEmpty();
 
+    void init();
+
     QString getBillid();
     void setBillid(const QString billID);
 
