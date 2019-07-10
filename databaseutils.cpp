@@ -46,6 +46,7 @@ databaseUtils::databaseUtils()
 //    return db;
 //}
 
+
 bool databaseUtils::verificationLogin(QString username, QString password)
 {   
     User user = SearchUserByUsername(username);
@@ -232,11 +233,29 @@ bool databaseUtils::insertIdCard(Information information)
 }
 
 
-/**
- * @brief databaseUtils::insertUser
- * @param user
- * 插入差旅报销单数据
- */
+//插入费用报销基本信息
+bool databaseUtils::insertCostBaseInfo (costBase costBinfo)
+{
+    QSqlDatabase db = ConnectionPool::openConnection ();
+    QSqlQuery query(db);
+    query.prepare ("insert into costBaseInfo(costRnumEdit,costConname,costCono,costHandp,costRdate,costHandpd,costUse) values(?,?,?,?,?,?,?)");
+    query.addBindValue (costBinfo.getcostRnumEidt ());
+    query.addBindValue (costBinfo.getcostConname ());
+    query.addBindValue (costBinfo.getcostCono ());
+    query.addBindValue (costBinfo.getcostHandp ());
+    query.addBindValue (costBinfo.getcostRdate ());
+    query.addBindValue (costBinfo.getcostHandpd ());
+    query.addBindValue (costBinfo.getcostUse ());
+
+    bool result = query.exec();
+    if (!result){
+        QSqlError lastError = query.lastError();
+        qDebug() << "插入失败：" << lastError.driverText() << lastError.databaseText();
+    }
+    qDebug() << "插入费用基本报销信息成功";
+    return result;
+    ConnectionPool::closeConnection(db);
+}
 //bool databaseUtils::insertBusiexp(busiExp busiexp)
 //{
 //    //    if(db.open())

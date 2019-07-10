@@ -11,9 +11,9 @@
 #include <string>
 #include <QMessageBox>
 #include <QDebug>
+#include <costbaseinfo.h>
 #include "connectionpool.h"
-
-
+#include <costbaseinfo.h>
 class databaseUtils
 {
 public:
@@ -24,11 +24,15 @@ public:
     void outputUserInfo();
     QString md5Encode(QString string);
     bool insertUser(User user);
+  bool insertCostBaseInfo(costBase costBinfo);//插入费用报销信息
+
+    /* 无用信息
 //    bool insertBusiexp(busiExp busiexp);//插入出差报销单信息
 //    bool insertAbdexp(abroadExp abdexp);//插入出国报销单信息
 //    bool insertCostexp(costExp costexp);//插入费用报销单信息
 //    bool insertExpensehead(ExpenseHead exphead);//插入表头信息
 //    bool insertPayinfo(PayInfo payinfo);//插入支付信息
+*/
     bool insertBillcheck(BillCheck billinfo);
 
     bool checkUsername(QString username);//检查用户名是否重复
@@ -50,8 +54,6 @@ public:
     Information searchIdCardByIdNumber(QString idNumber);//修改用户信息
 
 private:
-//    QSqlDatabase db;
-//    User user1;
 };
 
 #endif // DATABASEUTILS_H
