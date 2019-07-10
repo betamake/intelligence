@@ -29,6 +29,7 @@ public:
     int getAccount() {return this->account;}
 
 private:
+//    QString user;               //
     QString budgetNumber;       //预算项目号/经费号
     QString budgetName;         //预算项目名称
     QString item;               //业务事项

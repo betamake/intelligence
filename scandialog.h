@@ -139,13 +139,10 @@ class scanDialog : public QDialog
 public:
     explicit scanDialog(QWidget *parent = 0);
     ~scanDialog();
-<<<<<<< HEAD
 
     void setBillCheck(BillCheck info);
 
-=======
     void billInfoRead();//读取票据信息.
->>>>>>> 38b85e90d1d2847e9e7a78ed5d80d652387d8bb2
 signals:
     void scanDone();
     void saveBillInfo(billInfo billinfo);//发送保存票据信息信号.
@@ -157,15 +154,13 @@ private slots:
     void dealDone();
     void dealThread();
 
+
 private:
     Ui::scanDialog *ui;
     ScanThread *thread;
-<<<<<<< HEAD
 
     BillCheck bill;
-=======
     billInfo billinfo;
->>>>>>> 38b85e90d1d2847e9e7a78ed5d80d652387d8bb2
 };
 
 

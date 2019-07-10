@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QPixmap>
 #include <QTime>
+#include "database.h"
 scanDialog::scanDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::scanDialog)
@@ -10,7 +11,9 @@ scanDialog::scanDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle ("扫描票据");
     thread = new ScanThread(this);
+    database *dataset = new database(this);
     connect (this,&scanDialog::destroyed,this,&scanDialog::dealThread);
+    connect (this,SIGNAL(saveBillInfo(billInfo)),dataset,SLOT(insertBillInfo(billInfo)));
 }
 
 
@@ -65,10 +68,10 @@ void scanDialog::dealThread ()
 void scanDialog::billInfoRead ()
 {
     billinfo.setuser ("");
-    billinfo.setbillValue (ui->lineEdit->text ());
+    billinfo.setbillValue ("ui->lineEdit->text ()");
     billinfo.setbillNumber (ui->lineEdit_2->text ());
     billinfo.setbillContent (ui->lineEdit_3->text ());
-    billinfo.setbillRemark (ui->lineEdit_4->text ());
+    billinfo.setbillRemark ("ui->lineEdit_4->text ()");
     billinfo.setsellerTitle (ui->lineEdit_5->text ());
     billinfo.setsellerNumber (ui->lineEdit_6->text ());
     billinfo.setsellerOpenBank (ui->lineEdit_7->text ());
@@ -104,3 +107,4 @@ void scanDialog::billInfoRead ()
 //    billinfo.setbuyerPhoneNumber ("");
 //    billinfo.setbuyerAdress ("");
 //}
+

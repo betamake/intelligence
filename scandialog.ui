@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>退出</string>
+    <string>保存并退出</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -441,19 +441,6 @@
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>610</y>
-     <width>89</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>继续添加</string>
    </property>
   </widget>
  </widget>
