@@ -1,5 +1,5 @@
 #include "costbaseinfo.h"
-#include <databaseutils.h>
+#include <database.h>
 costBaseInfo::costBaseInfo(QWidget *parent) : QWidget(parent)
 {
 

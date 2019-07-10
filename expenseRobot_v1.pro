@@ -39,10 +39,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Input
 HEADERS += \
            billcheck.h \
-           billinfodialog.h \
            ClientSocket.h \
            commonutils.h \
-           databaseutils.h \
            facemangedialog.h \
            idcardthread.h \
            Information.h \
@@ -53,7 +51,6 @@ HEADERS += \
            ServerSocket.h \
            Stream.h \
            Timestamp.h \
-#           ui_billinfodialog.h \
 #           ui_facemangedialog.h \
 #           ui_mainwindow.h \
 #           ui_userinfodialog.h \
@@ -78,9 +75,10 @@ HEADERS += \
     windows/itemViews/reimdetailitem.h \
     reimdetailmanager.h \
     costbaseinfo.h \
-    travelbaseinfo.h
+    travelbaseinfo.h \
+    database.h
     costbaseinfo.h
-FORMS += billinfodialog.ui \
+FORMS += \
          facemangedialog.ui \
          mainwindow.ui \
          userinfodialog.ui \
@@ -96,10 +94,8 @@ FORMS += billinfodialog.ui \
     windows/addpaydialog.ui
 SOURCES += \
            billcheck.cpp \
-           billinfodialog.cpp \
            ClientSocket.cpp \
            commonutils.cpp \
-           databaseutils.cpp \
            facemangedialog.cpp \
            idcardthread.cpp \
            Information.cpp \
@@ -132,4 +128,5 @@ SOURCES += \
     windows/itemViews/reimdetailitem.cpp \
     reimdetailmanager.cpp \
     costbaseinfo.cpp \
-    travelbaseinfo.cpp
+    travelbaseinfo.cpp \
+    database.cpp

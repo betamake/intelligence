@@ -65,3 +65,18 @@ QList<payItemInfo*> payInfoManager::getPayList()
 {
     return payList;
 }
+void payInfoManager::payInfoRead (){
+//    payinfo.setAccount ();
+//    payinfo.setBank ();
+//    payinfo.setBankcardNumber ();
+//    payinfo.setBankName ();
+//    payinfo.setCardAccount ();
+//    payinfo.setCardDealDate ();
+//    payinfo.setCity ();
+//    payinfo.setDepartment ();
+//    payinfo.setPayeeName ();
+//    payinfo.setProvince ();
+//    payinfo.setRemark ();
+//    payinfo.setType ();
+//    payinfo.setUsage ();
+}

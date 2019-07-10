@@ -71,6 +71,7 @@ public:
     void clearPayItem(payItemInfo *info);
 
     QList<payItemInfo*> getPayList();
+    void payInfoRead();//读取pay信息
 
 signals:
     void deletePayItem();
@@ -85,6 +86,8 @@ private:
     QList<payItemInfo*> payList;
 
     int itemNumber;         //支付信息项目总数
+    payItemInfo payinfo;
+
 };
 
 #endif // PAYINFOMANAGER_H

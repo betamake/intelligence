@@ -5,7 +5,7 @@
 #include<QTableWidget>
 #include<QMediaRecorder>
 #include "voicecheck.h"
-#include "databaseutils.h"
+#include "database.h"
 #include "qaudiolevel.h"
 #include "user.h"
 #include "commonutils.h"
@@ -13,7 +13,6 @@
 #include <QString>
 #include "idcardthread.h"
 #include "userinfodialog.h"
-#include "billinfodialog.h"
 #include "facemangedialog.h"
 #include "scandialog.h"
 #include "windows/insertpersonneldialog.h"
@@ -34,13 +33,13 @@
 #include "Instructions.h"
 //#include "ServerSocket.h"
 #include <pthread.h>
-#include "costbaseinfo.h"
 #include <QPaintEvent>
 #include <QTimer>
 #include<QKeyEvent>
 #include "scanthread.h" //扫面线程
 #include "costbaseinfo.h"//处理费用报销基本信息
 #include "travelbaseinfo.h"//处理差旅报销基本信息
+#include "database.h"
 #if _MSC_VER >= 1600
 
 #pragma execution_character_set("utf-8")
@@ -124,7 +123,6 @@ private slots:
     void faceReply(QNetworkReply * reply);
     void faceRegReply(QNetworkReply * reply);
     void billReply(QNetworkReply * reply);
-    void showBillimg(QTableWidgetItem * img);//显示票据图片
     void voiceReply(QNetworkReply * reply);
     void playReply(QNetworkReply * reply);
     void sendPhoto(int id,QImage image);
@@ -136,8 +134,6 @@ private slots:
     void on_costBtn_clicked();
     void on_busiBtn_clicked();
     void on_abroadBtn_clicked();
-//    void on_busiBodyAddBtn_clicked();
-//    void on_busiBodyDelBtn_clicked();
     void on_fileChooseBtn_clicked();
     void on_continueExpenseBtn_clicked();
     void on_logoutBtn_clicked();
@@ -236,7 +232,7 @@ private:
     bool busiType =false;
     bool abroadType = false;
     //表格
-    QTableWidget *table;
+//    QTableWidget *table;
     int expenseTypeId;
     BillCheck bill; // 票据数据
     BillCheck billinfo;
@@ -295,7 +291,7 @@ private:
     User loginUser;//当前在线用户
     int loginStatus;//登录状态 0未登录 1人脸 2身份证 3账号
     Information loginInformation;//当前用户身份信息
-    billinfodialog* billInfoDialog;//显示票据的弹框
+//    billinfodialog* billInfoDialog;//显示票据的弹框
     scanDialog *scanInfoDialog;
 
 

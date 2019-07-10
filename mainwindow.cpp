@@ -1784,21 +1784,21 @@ void MainWindow::billReply(QNetworkReply * reply){
 
 }
 
-/**
-* @brief      查看电子版票据
-* @author        ljh
-* @date        2018-09-12
-*/
-void MainWindow::showBillimg(QTableWidgetItem *img)
-{
-    billInfoDialog = new billinfodialog(this);
+///**
+//* @brief      查看电子版票据
+//* @author        ljh
+//* @date        2018-09-12
+//*/
+//void MainWindow::showBillimg(QTableWidgetItem *img)
+//{
+//    billInfoDialog = new billinfodialog(this);
 
-    int index=img->row();
-    if(img->column()==1){
-        billInfoDialog->showbill(blpath.at(index));
-        billInfoDialog->show();
-    }
-}
+//    int index=img->row();
+//    if(img->column()==1){
+//        billInfoDialog->showbill(blpath.at(index));
+//        billInfoDialog->show();
+//    }
+//}
 
 /**
 * @brief      语音识别返回处理
