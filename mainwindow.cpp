@@ -1734,10 +1734,14 @@ void MainWindow::billReply(QNetworkReply * reply){
                         billItemView->setBillAccount(bill.getBillmoney());
                         billItemView->setBillPixmap(pixmap);
 
-                        connect(billItemView, &billItem::openBillItem, this, &MainWindow::openBillItemDialog);
-
                         ui->billListWidget->addItem(item);
                         ui->billListWidget->setItemWidget(item, billItemView);
+
+                        int row = ui->billListWidget->row(item);
+                        billItemView->setIndex(row);
+
+                        connect(billItemView, &billItem::openBillItem, this, &MainWindow::openBillItemDialog);
+                        connect(billItemView, &billItem::deleteBillItem, this, &MainWindow::deleteBillItemView);
 
                         //添加一行数据
 //                        table = ui->billTable;
@@ -3085,6 +3089,7 @@ void MainWindow::addPayInfoItem(payItemInfo *info)
     }
 
     connect(widget, &payMethodsItem::openItem, this, &MainWindow::openPayInfoItem);
+    connect(widget, &payMethodsItem::deleteItem, this, &MainWindow::deletePayInfoItem);
 }
 
 /**
@@ -3119,6 +3124,12 @@ void MainWindow::modifyPayInfoItem(payItemInfo *info)
     delete item;
 
     addPayInfoItem(info);
+}
+
+//删除支付信息
+void MainWindow::deletePayInfoItem(int index)
+{
+    QListWidgetItem *item = ui->payInfoList->takeItem(index-1);
 }
 
 void MainWindow::costbaseRead () //获取费用基本报销信息
@@ -3214,4 +3225,12 @@ void MainWindow::openBillItemDialog(BillCheck info)
     scanInfoDialog->setBillCheck(info);
     scanInfoDialog->show ();
     //connect (scanInfoDialog,&scanDialog::scanDone,this,&MainWindow::billScanRelpy);
+}
+
+//删除票据信息
+void MainWindow::deleteBillItemView(int row)
+{
+    //int row = ui->billListWidget->currentRow();
+    QListWidgetItem *item = ui->billListWidget->takeItem(row);
+    delete item;
 }
