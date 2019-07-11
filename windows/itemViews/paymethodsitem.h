@@ -25,6 +25,8 @@ public:
 signals:
     void openItem(payItemInfo *info, int index);
 
+    void deleteItem(int index);
+
 private slots:
 
     void on_delBtn_clicked();

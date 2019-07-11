@@ -24,7 +24,7 @@ void payMethodsItem::setCurrentIndex(int index)
 
 void payMethodsItem::on_delBtn_clicked()
 {
-
+    emit deleteItem(currentIndex);
 }
 
 void payMethodsItem::on_modifyBtn_clicked()
