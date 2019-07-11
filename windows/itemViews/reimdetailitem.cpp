@@ -16,6 +16,7 @@ reimDetailItem::~reimDetailItem()
 
 void reimDetailItem::saveDetail()
 {
+    detail->setuser ("");
     detail->setBudgetNumber(ui->budgetNumber->text());
     detail->setBudgetName(ui->budgetName->text());
     detail->setItem(ui->items->text());

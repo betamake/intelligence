@@ -19,7 +19,11 @@ public:
     void setDepartment(const QString &department) { this->department = department;}
     void setFeeType(const QString &type) { this->feeType = type;}
     void setAccount(int account) { this->account = account;}
+    void setuser(QString const user){
+        this->user = user;
+    }
 
+    QString getuser(){return this->user;}
     QString getBudgetNumber() const { return this->budgetNumber;}
     QString getBudgetName() const { return this->budgetName;}
     QString getItem() const { return this->item;}
@@ -29,7 +33,7 @@ public:
     int getAccount() {return this->account;}
 
 private:
-//    QString user;               //
+    QString user;               //当前用户
     QString budgetNumber;       //预算项目号/经费号
     QString budgetName;         //预算项目名称
     QString item;               //业务事项
@@ -51,6 +55,7 @@ public:
     void clearList();                           //清空报销明细
 
     QList<reimDetail*> getReimDetialList() { return detailList;}        //获得所有保存下来的报销明细
+    void readReiDetiaList(QList <reimDetail*> detailList); //读取保存的信息
 
 signals:
 
