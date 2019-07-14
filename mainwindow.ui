@@ -310,7 +310,7 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>12</number>
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -1037,7 +1037,7 @@
       <zorder>idLabel3</zorder>
       <zorder>idLabel</zorder>
      </widget>
-     <widget class="QWidget" name="acountReg">
+     <widget class="QWidget" name="accountReg">
       <widget class="QLabel" name="welcomeLabel_5">
        <property name="geometry">
         <rect>
@@ -1688,19 +1688,6 @@
       </widget>
      </widget>
      <widget class="QWidget" name="costBaseInfo">
-      <widget class="QLabel" name="costRnumLabel">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>78</y>
-         <width>60</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>单据编号</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="costConoLabel">
        <property name="geometry">
         <rect>
@@ -1724,7 +1711,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*用途</string>
+        <string>用途*</string>
        </property>
       </widget>
       <widget class="QLabel" name="costRdateLabel">
@@ -1737,7 +1724,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*单据日期</string>
+        <string>单据日期*</string>
        </property>
       </widget>
       <widget class="QLabel" name="costHandpLabel">
@@ -1750,7 +1737,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*经办人</string>
+        <string>经办人*</string>
        </property>
       </widget>
       <widget class="QLabel" name="costConnameLabel">
@@ -1763,7 +1750,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*合同名称</string>
+        <string>合同名称*</string>
        </property>
       </widget>
       <widget class="QLabel" name="costHandpdLabel">
@@ -1776,7 +1763,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*经办人部门</string>
+        <string>经办人部门*</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="costRnumEdit">
@@ -1845,8 +1832,21 @@
          <x>81</x>
          <y>174</y>
          <width>541</width>
-         <height>41</height>
+         <height>101</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="costRnumLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>71</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>单据编号*</string>
        </property>
       </widget>
      </widget>
@@ -1871,7 +1871,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*单据编号</string>
+        <string>单据编号*</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="transactor">
@@ -1917,7 +1917,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*经办人部门</string>
+        <string>经办人部门*</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="tranDepartment">
@@ -1950,7 +1950,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*单据日期</string>
+        <string>单据日期*</string>
        </property>
       </widget>
       <widget class="QLabel" name="costHandpLabel_2">
@@ -1963,7 +1963,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>*经办人</string>
+        <string>经办人*</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="busiReason">
@@ -2311,6 +2311,154 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="otherItem">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1">
+        <spacer name="verticalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>23</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <widget class="QWidget" name="widget_2" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>701</width>
+           <height>431</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>701</width>
+           <height>431</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <widget class="QLabel" name="costItemdetailLabel_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>101</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>其他事项说明</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>410</x>
+            <y>0</y>
+            <width>141</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(46, 52, 54);</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="text">
+           <string>政府指令性任务*</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox">
+          <property name="geometry">
+           <rect>
+            <x>550</x>
+            <y>0</y>
+            <width>81</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>是</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>否</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QTextEdit" name="textEdit">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>50</y>
+            <width>611</width>
+            <height>251</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <spacer name="horizontalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>23</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="finish">
       <layout class="QGridLayout" name="gridLayout_23">
        <item row="3" column="2">
@@ -2489,154 +2637,6 @@
           <size>
            <width>20</width>
            <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="otherItem">
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <spacer name="verticalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>1</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>23</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1">
-        <widget class="QWidget" name="widget_2" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>701</width>
-           <height>431</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>701</width>
-           <height>431</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <widget class="QLabel" name="costItemdetailLabel_2">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>101</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>其他事项说明</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>410</x>
-            <y>0</y>
-            <width>141</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>13</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(46, 52, 54);</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="text">
-           <string>政府指令性任务*</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox">
-          <property name="geometry">
-           <rect>
-            <x>550</x>
-            <y>0</y>
-            <width>81</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <item>
-           <property name="text">
-            <string>是</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>否</string>
-           </property>
-          </item>
-         </widget>
-         <widget class="QTextEdit" name="textEdit">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>50</y>
-            <width>611</width>
-            <height>251</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <spacer name="horizontalSpacer_17">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>23</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="1">
-        <spacer name="verticalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>1</height>
           </size>
          </property>
         </spacer>

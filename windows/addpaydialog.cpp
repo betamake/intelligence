@@ -2,6 +2,7 @@
 #include "ui_addpaydialog.h"
 #include "windows/itemViews/paymethodsitem.h"
 #include "payinfomanager.h"
+#include <QMessageBox>
 
 addPayDialog::addPayDialog(QWidget *parent) :
     QDialog(parent),
@@ -87,49 +88,66 @@ void addPayDialog::on_saveEditBtn_clicked()
 {
     curItem->clear();
     if (currentType == 0) {
-        curItem->setType(0);
-        curItem->setAccount(ui->bankAccount->text().toInt());
-        curItem->setPayeeName(ui->bankPayee->text());
-        curItem->setProvince(ui->bankProvince->text());
-        curItem->setCity(ui->bankCity->text());
-        curItem->setBank(ui->bank->text());
-        curItem->setBankName(ui->bankName->text());
-        curItem->setBankcardNumber(ui->bankcardNumber->text());
-        curItem->setUsage(ui->bankUsage->text());
-        curItem->setRemark(ui->bankRemark->toPlainText());
+        if (ui->bankAccount->text().isEmpty() || ui->bankPayee->text().isEmpty() || ui->bankUsage->text().isEmpty()) {
+            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        } else {
+            curItem->setType(0);
+            curItem->setAccount(ui->bankAccount->text().toInt());
+            curItem->setPayeeName(ui->bankPayee->text());
+            curItem->setProvince(ui->bankProvince->text());
+            curItem->setCity(ui->bankCity->text());
+            curItem->setBank(ui->bank->text());
+            curItem->setBankName(ui->bankName->text());
+            curItem->setBankcardNumber(ui->bankcardNumber->text());
+            curItem->setUsage(ui->bankUsage->text());
+            curItem->setRemark(ui->bankRemark->toPlainText());
+        }
     }
     else if (currentType == 1) {
-        curItem->setType(1);
-        curItem->setAccount(ui->cardAccount->text().toInt());
-        curItem->setPayeeName(ui->cardPayee->text());
-        curItem->setDepartment(ui->cardDepartment->text());
-        curItem->setProvince(ui->cardProvince->text());
-        curItem->setCity(ui->cardCity->text());
-        curItem->setCardDealDate(ui->cardDealDate->text());
-        curItem->setCardAccount(ui->cardDealAccount->text().toInt());
-        curItem->setBank(ui->cardBank->text());
-        curItem->setBankName(ui->cardBankName->text());
-        curItem->setBankcardNumber(ui->cardBankcardNumber->text());
-        curItem->setUsage(ui->cardUsage->text());
-        curItem->setRemark(ui->cardRemark->toPlainText());
+        if (ui->cardAccount->text().isEmpty() || ui->cardPayee->text().isEmpty() || ui->cardUsage->text().isEmpty()) {
+            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        } else {
+            curItem->setType(1);
+            curItem->setAccount(ui->cardAccount->text().toInt());
+            curItem->setPayeeName(ui->cardPayee->text());
+            curItem->setDepartment(ui->cardDepartment->text());
+            curItem->setProvince(ui->cardProvince->text());
+            curItem->setCity(ui->cardCity->text());
+            curItem->setCardDealDate(ui->cardDealDate->text());
+            curItem->setCardAccount(ui->cardDealAccount->text().toInt());
+            curItem->setBank(ui->cardBank->text());
+            curItem->setBankName(ui->cardBankName->text());
+            curItem->setBankcardNumber(ui->cardBankcardNumber->text());
+            curItem->setUsage(ui->cardUsage->text());
+            curItem->setRemark(ui->cardRemark->toPlainText());
+        }
     }
     else if (currentType == 2) {
-        curItem->setType(2);
-        curItem->setAccount(ui->cashAccount->text().toInt());
-        curItem->setPayeeName(ui->cashPayee->text());
-        curItem->setUsage(ui->cashUsage->text());
-        curItem->setRemark(ui->cashRemark->toPlainText());
+        if (ui->cashAccount->text().isEmpty() || ui->cashPayee->text().isEmpty() || ui->cashUsage->text().isEmpty()) {
+            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        } else {
+            curItem->setType(2);
+            curItem->setAccount(ui->cashAccount->text().toInt());
+            curItem->setPayeeName(ui->cashPayee->text());
+            curItem->setUsage(ui->cashUsage->text());
+            curItem->setRemark(ui->cashRemark->toPlainText());
+        }
     }
 
-    if (true == beginModify) {
+    if (curItem->getPayeeName()=="" || curItem->getUsage()=="") {
+        //确认判断没有支付人信息和用途信息
+    }
+    else if (true == beginModify) {
         //在payInfoManager中也要修改对应的支付信息
 
         emit modifyPayItem(curItem);
         beginModify = false;
-    } else {
+        close();
+    }
+    else {
         payInfoManager::getInstance()->addPayItem(curItem);
         emit addPayItem(curItem);
+        close();
     }
 
-    close();
 }

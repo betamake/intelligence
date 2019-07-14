@@ -68,7 +68,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="searchStaffBtn">
+   <widget class="QPushButton" name="searchBudgetBtn">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -262,7 +262,7 @@ border-color: rgb(186, 189, 182);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="searchStaffBtn_6">
+   <widget class="QPushButton" name="searchItemBtn">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -433,7 +433,7 @@ border-color: rgb(186, 189, 182);</string>
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="searchStaffBtn_4">
+   <widget class="QPushButton" name="searchDepartmentBtn">
     <property name="geometry">
      <rect>
       <x>250</x>

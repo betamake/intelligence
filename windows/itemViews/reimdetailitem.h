@@ -22,6 +22,13 @@ public:
 public slots:
     void saveDetail();
 
+private slots:
+    void on_searchBudgetBtn_clicked();
+
+    void on_searchItemBtn_clicked();
+
+    void on_searchDepartmentBtn_clicked();
+
 private:
     Ui::reimDetailItem *ui;
 
