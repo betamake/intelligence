@@ -295,7 +295,7 @@ bool databaseUtils::insertCostBaseInfo (costBase costBinfo)
 //    query.addBindValue(busiexp.getBusienddate());
 //    query.addBindValue(busiexp.getBusiday());
 //    query.addBindValue(busiexp.getBusirelaxday());
-//    query.addBindValue(busiexp.getBusifromadres());
+//    query.addBindValue(busiexp.getBu核桃仁你`````sifromadres());
 //    query.addBindValue(busiexp.getBusitoadres());
 //    query.addBindValue(busiexp.getBusitranscost());
 //    query.addBindValue(busiexp.getBusitransbillnum());

@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    currentIndex = 10;
+    currentIndex = 0;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->faceManBtn->hide();//人脸库管理登陆后才展示
     ui->lastStepBtn->hide ();
