@@ -88,6 +88,8 @@ public:
 
     void setIndex(int index);
 
+    void saveItem();
+
 private:
     void addListItems();
 

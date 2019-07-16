@@ -624,7 +624,6 @@ User databaseUtils::SearchUserByUsername(QString username)
     // 3. 连接使用完后需要释放回数据库连接池
     ConnectionPool::closeConnection(db);
 }
-
 /**
  * @brief databaseUtils::SearchUserByIdNumber
  * @param user

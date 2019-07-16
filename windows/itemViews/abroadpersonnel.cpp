@@ -1,5 +1,6 @@
 #include "abroadpersonnel.h"
 #include "ui_abroadpersonnel.h"
+#include <QMessageBox>
 
 abroadPersonnel::abroadPersonnel(QWidget *parent) :
     QWidget(parent),
@@ -33,3 +34,14 @@ void abroadPersonnel::addListItems()
     }
 }
 
+void abroadPersonnel::saveItem()
+{
+    if (ui->staffName->text().isEmpty() || ui->staffNumber->text().isEmpty() || ui->department->text().isEmpty() ||
+           ui->startTime->text().isEmpty() || ui->endTime->text().isEmpty() || ui->days->text().isEmpty() ||
+           ui->country->text().isEmpty() || ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
+           ui->certificateType->text().isEmpty() || ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() ){
+        QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+    } else {
+        //保存信息
+    }
+}

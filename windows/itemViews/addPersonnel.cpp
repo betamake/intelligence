@@ -1,5 +1,6 @@
 #include "addPersonnel.h"
 #include "ui_addPersonnel.h"
+#include <QMessageBox>
 
 addPersonnel::addPersonnel(QWidget *parent) :
     QWidget(parent),
@@ -59,5 +60,12 @@ void addPersonnel::setNemberOnly()
 //保存人员的信息
 void addPersonnel::saveItem()
 {
-
+    if (ui->lineEdit->text().isEmpty() || ui->busiPerson->text().isEmpty() || ui->staffNumber->text().isEmpty() ||
+           ui->leaveDate->text().isEmpty() || ui->returnDate->text().isEmpty() || ui->departmentEdit->text().isEmpty() ||
+           ui->busiDays->text().isEmpty() || ui->leavePlace->text().isEmpty() || ui->arrivaPlace->text().isEmpty() ||
+           ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() || ui->fundsTypeEdit->text().isEmpty() ){
+        QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+    } else {
+        //保存信息
+    }
 }

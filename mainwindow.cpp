@@ -46,6 +46,7 @@
 #include<QRect>
 #include<QVariant>
 #include <QProcess>
+#include <QDateTime>
 
 static qreal getPeakValue(const QAudioFormat &format);
 static QVector<qreal> getBufferLevels(const QAudioBuffer &buffer);
@@ -222,10 +223,12 @@ void MainWindow::on_idLogin_clicked()
     {
         player->stop();
         this->sendPlayText("身份证登录成功");
-        ui->lastStepBtn->show ();
-        ui->nextStepBtn->show ();
+//        ui->lastStepBtn->show ();
+//        ui->nextStepBtn->show ();
         currentIndex = 9;
         ui->mainWidget->setCurrentIndex(currentIndex);//登录成功跳转到欢迎页
+        ui->lastStepBtn->hide ();
+        ui->nextStepBtn->hide ();
         //登录完成展示用户信息
         loginStatus = 2;
         this->showUserInfo(loginUser);
@@ -272,26 +275,29 @@ void MainWindow::on_user_loginBtn_clicked()
         {
             qDebug() << "验证结果："<< database.verificationLogin(username, password);
             //登录成功
-            QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("登录成功！"));
             //查数据库
             loginStatus = 3;//账号登录状态
             loginUser = database.SearchUserByUsername(username);
             this->showUserInfo(loginUser);
-
+            if (loginUser.getIdCard ().isEmpty ()){
+            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("请补录身份证信息"));
+                toCurrentPage (8);
+                player->stop();
+                this->sendPlayText("请补录身份证信息");
+            }else{
             player->stop();
             this->sendPlayText("账号登录成功");
-
-            //            currentIndex = 9;
-            //            this->toNextStep();
             currentIndex = 9;
             ui->mainWidget->setCurrentIndex (currentIndex);
-            ui->nextStepBtn->show();
-            ui->lastStepBtn->show ();
+//            ui->nextStepBtn->show();
+//            ui->lastStepBtn->show ();
+            ui->lastStepBtn->hide ();
+            ui->nextStepBtn->hide ();
 
             //下次进来的时候
             ui->user_loginEdit->clear();
             ui->user_pwdEdit->clear();
-            ui->user_loginEdit->setFocus();
+            ui->user_loginEdit->setFocus();}
         }
         else
         {
@@ -385,7 +391,7 @@ void MainWindow::on_RegAcountBtn_clicked()
                 ui->avaterRegBoxLabel->clear();
 
                 //                this->on_facePreBtn_clicked();
-                toCurrentPage (6);//init carmera
+//                toCurrentPage (6);
 
             }else
             {
@@ -498,40 +504,33 @@ void MainWindow::on_fileChooseBtn_clicked()
 
 void MainWindow::toLastStep(){
     //报销类型的上一步是页面
-    if(currentIndex == 11 || currentIndex == 12 ){
-        currentIndex = 10;
-    }else if(currentIndex == 16){
+    if(currentIndex == 17){
         currentIndex = 15;
     }
     else if(currentIndex == 15){
-            currentIndex = 14;
-        }
-    else if(currentIndex == 14){
-            currentIndex = 13;
-        }
+        if (expenseType==12||expenseType==14)
+        currentIndex = 14;
+        else
+            currentIndex=16;
+    }else if(currentIndex == 14 || currentIndex == 16 ){
+        currentIndex = 13;
+    }
     else if(currentIndex == 13){
         if (expenseType == 11)
             currentIndex = 11;
         else if (expenseType == 12 || expenseType == 14)
             currentIndex = 12;
         }
-    else if (currentIndex==11)//身份认证的上一页是
+    else if (currentIndex==11 || currentIndex==12)
     {
+        ui->lastStepBtn->hide();
         currentIndex=10;
     }
-    else if (currentIndex==10)//身份认证
+    else if (currentIndex==10)
     {
         currentIndex=9;
     }
-    else if (currentIndex==6)//人脸注册
-    {
-        currentIndex=5;
-    }
-    else if (currentIndex==5)//身份认证的上一步是人脸注册
-    {
-        currentIndex=2;
-    }
-    else if (currentIndex==3 || currentIndex==4 ||currentIndex==5)//登录方式
+    else if (currentIndex==3 || currentIndex==4 ||currentIndex==5 ||currentIndex==6)//登录方式
     {
         currentIndex=2;
     }
@@ -550,7 +549,7 @@ void MainWindow::toLastStep(){
    1:startpage  用户设置  登录还是注册// 显示上一步
    2:loginpage  登录方式 // 显示上一步
 
-   3:face 人脸登录  //
+   3:face 人脸登录  //上一步
    4:acount 账户登录  //上一步
    5:idCord 身份证登录  //上一步
 
@@ -558,16 +557,15 @@ void MainWindow::toLastStep(){
    7:faceReg 人脸注册 //上一步
    8:RegChoose 身份证认证 //上一步
 
-   9:welcomePage:欢迎页 //上一步 下一步
-   10:bill 票据录入 //上下
+   9:begin:即将开始报销页 //上一步 下一步
+   10:expenseChoice 报销类别 //上一步
 
-   11:expenseChoice 报销类别 //上一步
-   12:busiExpense  差旅报销单 //上下
-   13:costExpense 费用报销单 //上下
-   14:abroadExpense 出国报销单 //上下
-
-   15:payInfo  支付信息 // 上下
-   16:confirm 信息确认 // 上一步
+   11:costBaseInfo  费用报销基本信息 //上下,下一步要先确认已经填完内容，结束了本次报销的时候清除该页的信息
+   12:baseInfo 差旅和出国报销明细 //上下,下一步要先确认已经填完内容，结束了本次报销的时候清除该页的信息
+   13:bill 票据录入 //上下,结束了本次报销的时候清除该页的信息
+   14:costItem  费用报销明细 // 上下,结束了本次报销的时候清除该页的信息
+   15:payinfo 支付信息 // 上下,结束了本次报销的时候清除该页的信息
+   16:otherItem 其他事项	//上下，结束了本次报销的时候清除该页的信息
    17:finish 报销完成
 */
 //下一步
@@ -575,51 +573,63 @@ void MainWindow::toNextStep(){
     //选择身份验证的下一步是3
     if(currentIndex == 3 || currentIndex == 4 || currentIndex == 5){//在人脸识别或用户名密码登陆或身份证识别页面
         currentIndex = 9;//跳转到选择报销类别页面
-    }else if(currentIndex == 7 || currentIndex == 8) {
-        ui->nextStepBtn->hide();
     }
-    else if(currentIndex == 6){//注册成功的下一页是登录页1
-        currentIndex ++;
-    }else if(currentIndex == 9){//欢迎页
+//    else if(currentIndex == 7 || currentIndex == 8) {
+//        //ui->nextStepBtn->hide();
+//    }
+//    else if(currentIndex == 6){//注册成功的下一页是登录页1
+//        currentIndex ++;
+//    }
+    else if(currentIndex == 6 || currentIndex == 7 || currentIndex == 8){//注册成功后跳到开始报销页面
+//        currentIndex = 9;
+    }
+    else if(currentIndex == 9){//欢迎页
         currentIndex =10;
         ui->lastStepBtn->hide ();
         ui->nextStepBtn->hide ();
     }
     else if(currentIndex ==11)
     {
-        ui->nextStepBtn->show ();
-        ui->lastStepBtn->show ();
+//        ui->nextStepBtn->show ();
+//        ui->lastStepBtn->show ();
         currentIndex =  13;
-        ui->mainWidget->setCurrentIndex (currentIndex);
-        this->costbaseRead ();
-
+        if (ui->costRnumEdit->text().isEmpty() || ui->costConnameEdit->text().isEmpty() || ui->costHandpEdit->text().isEmpty() ||
+                ui->costRdateEdit->text().isEmpty() || ui->costHandpdEdit->text().isEmpty() || ui->costUseEdit->text().isEmpty()){
+            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        } else {
+            ui->mainWidget->setCurrentIndex (currentIndex);
+            this->costbaseRead ();
+        }
     }
     else if(currentIndex ==12)
     {
-        ui->nextStepBtn->show ();
-        ui->lastStepBtn->show ();
+//        ui->nextStepBtn->show ();
+//        ui->lastStepBtn->show ();
         //录入票据之后需要点击下一步需要进行判定  结合标志位
-        currentIndex=13; //在这三种报销中,发票肯定会有.所以先跳转到发票报销页面.
-        ui->mainWidget->setCurrentIndex (currentIndex);
+        if(ui->docuNumber->text().isEmpty() || ui->duckDate->text().isEmpty() ||
+                ui->transactor->text().isEmpty() || ui->tranDepartment->text().isEmpty()){
+            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        } else {
+            currentIndex=13;
+            ui->mainWidget->setCurrentIndex (currentIndex);
+        }
     }
     else if(currentIndex == 13){
         if (expenseType == 11)
             currentIndex=14;
         else if (expenseType == 12 || expenseType == 14)
-            currentIndex=17;
+            currentIndex=16;
         ui->mainWidget->setCurrentIndex (currentIndex);
 
     }
-    else if(currentIndex == 14 || currentIndex == 17){
+    else if(currentIndex == 14 || currentIndex == 16){
         currentIndex=15;
         ui->mainWidget->setCurrentIndex (currentIndex);
     }
     else if(currentIndex == 15){
-        currentIndex=16;
+        currentIndex=17;
         ui->mainWidget->setCurrentIndex (currentIndex);
     }
-
-
 }
 
 
@@ -732,27 +742,42 @@ void MainWindow::on_nextStepBtn_clicked()
 {
     player->stop();
     this->sendPlayText("下一步");
+    qDebug()<<currentIndex<<"111111111";
+//    switch (currentIndex) {
+//    case 3:
+//        this->deleteFace ();
+//        break;
+//    case 5:
+//        this->idCardThreadStop ();
+//        break;
+//    case 4:
+//        this->deleteAccountInfo ();
+//        break;
+
+//    default:
+//        break;
+//    }
     this->toNextStep();
 }
 /*
  * currentIndex：
-   0:welcomepage  //三个模块选择
+   0:welcomepage  //两个模块选择，不显示上下步
    1:startpage  用户设置  登录还是注册// 显示上一步
    2:loginpage  登录方式 // 显示上一步
-   3:face 人脸登录  //
+   3:face 人脸登录  // 上一步
    4:acount 账户登录  //上一步
    5:idCord 身份证登录  //上一步
-   6:RegChoose 身份证认证 //上一步
+   6:accountReg 帐号注册 //上一步
    7:faceReg 人脸注册 //上一步
-   8:accountReg:账号注册 //上一步
-   9:begin:即将开始报销页 //上一步 下一步
-   10: 票据录入 //上下
-   11:expenseChoice 报销类别 //上一步
-   12:busiExpense  差旅报销单 //上下
-   13:costExpense 费用报销单 //上下
-   14:abroadExpense 出国报销单 //上下
-   15:payInfo  支付信息 // 上下
-   16:confirm 信息确认 // 上一步
+   8:idCardReg:身份证注册 //上一步
+   9:begin:即将开始报销页 //上一步
+   10:expenseChoice 报销类别 //上一步
+   11:costBaseInfo  费用报销基本信息 //上下，下一步要先确认已经填完内容，结束了本次报销的时候清除该页的信息
+   12:baseInfo 差旅和出国报销明细 //上下，下一步要先确认已经填完内容，结束了本次报销的时候清除该页的信息
+   13:bill 票据录入 //上下，结束了本次报销的时候清除该页的信息
+   14:costItem  费用报销明细 // 上下，结束了本次报销的时候清除该页的信息
+   15:payinfo 支付信息 // 上下，结束了本次报销的时候清除该页的信息
+   16:otherItem 其他事项	//上下，下一页是15,结束了本次报销的时候清除该页的信息
    17:finish 报销完成
 */
 //当前页发生变化调用函数
@@ -760,37 +785,26 @@ void MainWindow::on_mainWidget_currentChanged(int arg1)
 {
     ui->lastStepBtn->hide();
     ui->nextStepBtn->hide();
-    //0、1/2/3/4
-    //页号为2、、5、6、7、9、10的时候显示上一步
-    if(currentIndex >1 && currentIndex <16){
+
+    //1-16显示上一步按钮
+    if(currentIndex >0 && currentIndex <17){
         ui->lastStepBtn->show();
     }
-    if(currentIndex == 17)
-        ui->lastStepBtn->show();
-    if(currentIndex == 8 || currentIndex == 9 || currentIndex == 10  ||currentIndex==15){
-        ui->nextStepBtn->show();
-    }
-    //页号为10,的时候可处理页面表格
-    if(currentIndex == 12 ){
 
+    //11-16显示下一步按钮
+    if(currentIndex > 10 && currentIndex < 17){
         ui->nextStepBtn->show();
     }
-    if(currentIndex == 13 ){
-       ui->nextStepBtn->show();
 
-  }
-    if(currentIndex == 14){
-        ui->nextStepBtn->show();
-    }
-    if(currentIndex == 17) {
-        ui->nextStepBtn->show();
-    }
 }
 //选择差旅报销
 void MainWindow::on_busiBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择差旅报销");
+    QDateTime local(QDateTime::currentDateTime());
+    ui->duckDate->setText (local.toString("yyyy-MM-dd"));
+    ui->transactor->setText (loginUser.getUsername());
     expenseType = 12;
     setBasePage(12);
 }
@@ -800,14 +814,17 @@ void MainWindow::on_costBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择费用报销");
-
+    QDateTime local(QDateTime::currentDateTime());
     expenseType = 11;
     currentIndex = 11;
+    ui->costHandpEdit->setText (loginUser.getUsername());
+    ui->costRdateEdit->setText (local.toString("yyyy-MM-dd"));
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
     //显示报销流程按钮
     this->isShowguiInforn ();
 }
+
 
 //选择出国保险单
 void MainWindow::on_abroadBtn_clicked()
@@ -815,6 +832,9 @@ void MainWindow::on_abroadBtn_clicked()
     player->stop();
     this->sendPlayText("已选择出国报销");
     expenseType = 14;
+    QDateTime local(QDateTime::currentDateTime());
+    ui->duckDate->setText (local.toString("yyyy-MM-dd"));
+    ui->transactor->setText (loginUser.getUsername());
     setBasePage(13);
 }
 
@@ -850,11 +870,11 @@ void MainWindow::on_continueExpenseBtn_clicked()
 {
     player->stop();
     this->sendPlayText("继续报销");
-    costRowcount= 1; //费用报销单rowcount为1
     //clear table
     // busi.init ();
-    currentIndex = 9;
-    expenseType = 9;
+    currentIndex = 10;
+    ui->mainWidget->setCurrentIndex (currentIndex);
+
 }
 /**
 * @brief         清空登录信息
@@ -901,6 +921,7 @@ void MainWindow::on_logoutBtn_clicked()
     player->stop();
     this->sendPlayText("退出");
     currentIndex =0;
+    ui->mainWidget->setCurrentIndex (currentIndex);
     expenseType = 9;
     ui->userInfo->hide();
 }
@@ -1060,13 +1081,13 @@ void MainWindow::faceCheck(){
         }else
         {
             qDebug() << "face check failed, stop send photos"<< endl;
-            //            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("人脸不存在，请重新注册"));
+            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("人脸不存在，请补录人脸信息"));
             if(timer->isActive ())
             {
                 timer->stop ();
             }
             camera->stop ();
-            currentIndex =2;
+            currentIndex =7;
             ui->mainWidget->setCurrentIndex(currentIndex);
         }
 
@@ -1178,9 +1199,11 @@ void MainWindow::faceReply(QNetworkReply *reply){
                                 timer->stop ();
                             }
                             currentIndex = 9;
-                            ui->lastStepBtn->show ();
-                            ui->nextStepBtn->show ();
+//                            ui->lastStepBtn->show ();
+//                            ui->nextStepBtn->show ();
                             ui->mainWidget->setCurrentIndex(currentIndex);
+                            ui->lastStepBtn->hide ();
+                            ui->nextStepBtn->hide ();
                         }
                     }
                 }
@@ -2952,13 +2975,16 @@ void MainWindow::on_talkBtn_clicked()
 
 void MainWindow::on_expenseBtn_clicked()
 {
-    toCurrentPage (1);
+    toCurrentPage (2);
+    ui->RegBtn_2->hide ();
 }
 
 void MainWindow::on_applyButton_clicked()
 {
     currentIndex = 10;
     ui->mainWidget->setCurrentIndex (currentIndex);
+    ui->lastStepBtn->hide ();
+    ui->nextStepBtn->hide ();
 }
 
 void MainWindow::on_advisoryButton_clicked()
@@ -2969,9 +2995,11 @@ void MainWindow::on_advisoryButton_clicked()
 
 void MainWindow::on_costBaseButton_clicked()
 {
-    currentIndex = 12;
+    if (expenseType == 11)
+        currentIndex=11;
+    else if (expenseType == 12 || expenseType == 14)
+        currentIndex=12;
     ui->mainWidget->setCurrentIndex (currentIndex);
-
 }
 
 void MainWindow::on_costScanButton_clicked()
@@ -2982,7 +3010,10 @@ void MainWindow::on_costScanButton_clicked()
 
 void MainWindow::on_costItemButton_clicked()
 {
-    currentIndex = 14;
+    if (expenseType == 11)
+        currentIndex=14;
+    else if (expenseType == 12 || expenseType == 14)
+        currentIndex=16;
     ui->mainWidget->setCurrentIndex (currentIndex);
 }
 

@@ -146,7 +146,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>银行卡号*</string>
+       <string>银行卡号</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1035,7 +1035,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>银行卡号*</string>
+       <string>银行卡号</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

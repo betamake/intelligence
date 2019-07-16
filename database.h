@@ -40,7 +40,10 @@ public:
      bool CheckUserByUid(QString uid);//检查用户名是否重复
      bool deleteUser(QString username);//删除用户信息
      bool updateUser(User user);//修改用户信息
-     User SearchUserByUsername(QString username);//修改用户信息
+     User SearchUserByUsername(QString username);//获取用户名
+//     User SearchUidByUsername(QString username);//获取Uid
+//     User SearchIdcardByUsername(QString username);//获取idcard
+
      User SearchUserByIdCard(QString idNumber);//修改用户信息
      User SearchUserByUid(QString uid);//修改用户信息
      User SearchUserByIdNumber(QString idCard);//修改用户信息
