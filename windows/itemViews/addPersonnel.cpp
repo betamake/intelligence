@@ -1,5 +1,6 @@
 #include "addPersonnel.h"
 #include "ui_addPersonnel.h"
+#include "managers/personnelmanager.h"
 #include <QMessageBox>
 
 addPersonnel::addPersonnel(QWidget *parent) :
@@ -7,6 +8,8 @@ addPersonnel::addPersonnel(QWidget *parent) :
     ui(new Ui::addPersonnel)
 {
     ui->setupUi(this);
+
+    traPerInfo = new traBusPersonInfo();
 
     setNemberOnly();
 }
@@ -66,6 +69,48 @@ void addPersonnel::saveItem()
            ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() || ui->fundsTypeEdit->text().isEmpty() ){
         QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
     } else {
-        //保存信息
+        //保存差旅人员信息
+        traPerInfo->setStaffName(ui->busiPerson->text());
+        traPerInfo->setStaffNumber(ui->staffNumber->text().toInt());
+        traPerInfo->setLeaveDate(ui->leaveDate->text());
+        traPerInfo->setReturnDate(ui->returnDate->text());
+        traPerInfo->setDays(ui->busiDays->text().toInt());
+        traPerInfo->setDepartment(ui->departmentEdit->text());
+        traPerInfo->setLeavePlace(ui->leavePlace->text());
+        traPerInfo->setArrivePlace(ui->arrivaPlace->text());
+
+        traPerInfo->setBudgetNumber(ui->budgetNumEdit->text().toInt());
+        traPerInfo->setBudgetName(ui->budgetNameEdit->text());
+        traPerInfo->setBudgetType(ui->fundsTypeEdit->text());
+
+        int     cityFee = ui->cityTraFee->text().toInt();            //城市间交通费
+        int     stayFee = ui->stayFee->text().toInt();            //住宿费
+        int     workFee = ui->workFee->text().toInt();            //会务费/注册费
+        int     lunchDays = ui->lunchDays->text().toInt();          //伙食补贴天数
+        int     lunchSubsidy = ui->lunchSubsidy->text().toInt();       //伙食补贴费
+        int     airportFee = ui->airportFee->text().toInt();         //往返机场交通费
+        int     traDays = ui->travelDays->text().toInt();            //交通补贴天数
+        int     traSubsidy = ui->travelSubsidy->text().toInt();         //交通补贴费
+        int     otherFee = ui->otherFees->text().toInt();           //其他费用
+
+        int totalFee = cityFee + stayFee + workFee + lunchSubsidy + airportFee + traSubsidy + otherFee;
+
+        traPerInfo->setCityFee(cityFee);
+        traPerInfo->setStayFee(stayFee);
+        traPerInfo->setWorkFee(workFee);
+        traPerInfo->setLunchDays(lunchDays);
+        traPerInfo->setLunchSubsidy(lunchSubsidy);
+        traPerInfo->setAirportFee(airportFee);
+        traPerInfo->setTraDays(traDays);
+        traPerInfo->setTraSubsidy(traSubsidy);
+        traPerInfo->setOtherFee(otherFee);
+
+        traPerInfo->setTotalFee(totalFee);
+
+
+        //将人员信息结构体保存起来
+        personnelManager::getInstance()->addTravelItem(traPerInfo);
+
+        emit added();
     }
 }

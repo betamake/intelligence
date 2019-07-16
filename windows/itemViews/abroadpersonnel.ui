@@ -1541,13 +1541,403 @@ border-color: rgb(186, 189, 182);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QLineEdit" name="waibi1">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>30</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv1">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>30</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox1">
      <property name="geometry">
       <rect>
        <x>220</x>
        <y>30</y>
-       <width>731</width>
-       <height>251</height>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb1">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>30</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi2">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>60</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv2">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>60</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox2">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>60</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb2">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>60</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi3">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>90</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv3">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>90</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox3">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>90</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb3">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>90</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi4">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>120</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv4">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>120</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox4">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>120</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb4">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>120</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi5">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>150</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv5">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>150</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox5">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>150</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb5">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>150</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi6">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>180</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv6">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>180</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox6">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>180</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb6">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>180</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi7">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>210</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv7">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>210</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox7">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>210</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb7">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>210</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="waibi8">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>240</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="huilv8">
+     <property name="geometry">
+      <rect>
+       <x>580</x>
+       <y>240</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox8">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>240</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>美元</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>英镑</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="rmb8">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>240</y>
+       <width>181</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>

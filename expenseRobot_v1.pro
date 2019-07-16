@@ -70,13 +70,14 @@ HEADERS += \
     windows/itemViews/abroadfeeitem.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
-    payinfomanager.h \
     windows/itemViews/billitem.h \
     windows/itemViews/reimdetailitem.h \
-    reimdetailmanager.h \
     costbaseinfo.h \
     travelbaseinfo.h \
-    database.h
+    database.h \
+    managers/reimdetailmanager.h \
+    managers/payinfomanager.h \
+    managers/personnelmanager.h
     costbaseinfo.h
 FORMS += \
          facemangedialog.ui \
@@ -123,10 +124,11 @@ SOURCES += \
     windows/itemViews/abroadfeeitem.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
-    payinfomanager.cpp \
     windows/itemViews/billitem.cpp \
     windows/itemViews/reimdetailitem.cpp \
-    reimdetailmanager.cpp \
     costbaseinfo.cpp \
     travelbaseinfo.cpp \
-    database.cpp
+    database.cpp \
+    managers/reimdetailmanager.cpp \
+    managers/payinfomanager.cpp \
+    managers/personnelmanager.cpp

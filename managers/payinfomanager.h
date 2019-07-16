@@ -66,17 +66,15 @@ public:
 public:
     void delCurrentItem();
 
-    void addPayItem(payItemInfo *info);     //添加支付信息
+    void addPayItem(payItemInfo *info) { payList.append(info);}     //添加支付信息
     void deletePayItem(payItemInfo *info);
     void clearPayItem(payItemInfo *info);
 
-    QList<payItemInfo*> getPayList();
+    QList<payItemInfo*> getPayList() { return payList;}
     void payInfoRead();//读取pay信息
 
 signals:
     void deletePayItem();
-
-    void addPayItemView(payItemInfo *info);
 
 public slots:
 

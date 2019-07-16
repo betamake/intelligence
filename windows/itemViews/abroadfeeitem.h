@@ -15,9 +15,16 @@ public:
     explicit abroadFeeItem(QWidget *parent = nullptr);
     ~abroadFeeItem();
 
+signals:
+    void sendFee(double fee);
+
+public slots:
+    //获得人民币金额
     double countValue();
     //清空金额输入栏
     void clearInput();
+    //将人民币金额发送给添加信息的窗口
+    void sendValue();
 
 private:
     //设置汇率值
@@ -28,6 +35,8 @@ private:
 private:
     Ui::abroadFeeItem *ui;
     double mHuilv;
+
+    double rmb;
 };
 
 #endif // ABROADFEEITEM_H

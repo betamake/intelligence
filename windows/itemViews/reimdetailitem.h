@@ -2,7 +2,7 @@
 #define REIMDETAILITEM_H
 
 #include <QWidget>
-#include "reimdetailmanager.h"
+#include "managers/reimdetailmanager.h"
 
 namespace Ui {
 class reimDetailItem;

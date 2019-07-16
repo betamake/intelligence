@@ -8,6 +8,7 @@ abroadFeeItem::abroadFeeItem(QWidget *parent) :
     ui->setupUi(this);
     getType();
     initInput();
+    rmb = 0;
 
     QComboBox *comboBox = ui->comboBox;
     connect(comboBox, &QComboBox::currentTextChanged, this, &abroadFeeItem::getType);
@@ -33,13 +34,18 @@ void abroadFeeItem::getType()
 
 double abroadFeeItem::countValue()
 {
-    double rmb = 0;
+//    double rmb = 0;
     QString str = ui->waibi->text();
     double val = str.toDouble();
     rmb = val * mHuilv;
     ui->rmb->setText(QString::number(rmb, 10, 4));
 
     return rmb;
+}
+
+void abroadFeeItem::sendValue()
+{
+    emit sendFee(rmb);
 }
 
 void abroadFeeItem::clearInput()
