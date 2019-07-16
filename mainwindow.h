@@ -12,6 +12,7 @@
 #include "billcheck.h"
 #include <QString>
 #include "idcardthread.h"
+
 #include "userinfodialog.h"
 #include "facemangedialog.h"
 #include "scandialog.h"
@@ -20,7 +21,11 @@
 #include "windows/itemViews/paymethodsitem.h"
 #include "windows/itemViews/billitem.h"
 #include "windows/itemViews/reimdetailitem.h"
-#include "payinfomanager.h"
+
+#include "managers/payinfomanager.h"
+#include "managers/personnelmanager.h"
+#include "managers/reimdetailmanager.h"
+
 //#include "networkthread.h"
 //#include "networkhandler.h"
 #include <QMap>
@@ -112,6 +117,8 @@ private:
     void setRecord();
     void sendPlayText(QByteArray text);
 //    void on_faceRegBtn_clicked();
+
+    void clearAllInput();       //一次报销完成后，将报销流程中的所有信息清空
 
 signals:
     //保存信息信号
@@ -298,7 +305,6 @@ private:
     scanDialog *scanInfoDialog;
 
 
-    //黄梦君，添加的成员的标记，勿删
     insertPersonnelDialog *insertPerDialog;
     addPayDialog *addPayDlg;
     int modifyItemIndex;        //要修改的支付信息的序号，从0开始，对应的是在list中的行数

@@ -9,6 +9,10 @@ insertPersonnelDialog::insertPersonnelDialog(QWidget *parent) :
 {
     perNum = 0;
     personType = 1;
+
+    totalCount = 0;
+    currentAddedCount = 0;
+
     ui->setupUi(this);
 }
 
@@ -25,7 +29,7 @@ void insertPersonnelDialog::setType(int type)
 void insertPersonnelDialog::on_addBtn_clicked()
 {
     QListWidgetItem *item = new QListWidgetItem;
-    if (personType == 2)
+    if (personType == 2)        //出国报销人员添加
     {
         item->setSizeHint(QSize(1000, 660));
         ui->listWidget->addItem(item);
@@ -35,8 +39,12 @@ void insertPersonnelDialog::on_addBtn_clicked()
         busiItem->setIndex(perNum);
 
         ui->listWidget->setItemWidget(item, busiItem);
+
+        connect(this, &insertPersonnelDialog::addAllAbroadPerson, busiItem, &abroadPersonnel::saveItem);
+        connect(busiItem, &abroadPersonnel::added, this, &insertPersonnelDialog::addPerCount);
     }
-    else {
+    else                        //差旅报销人员添加
+    {
         item->setSizeHint(QSize(1000, 560));
         ui->listWidget->addItem(item);
 
@@ -45,6 +53,9 @@ void insertPersonnelDialog::on_addBtn_clicked()
         busiItem->setIndex(perNum);
 
         ui->listWidget->setItemWidget(item, busiItem);
+
+        connect(this, &insertPersonnelDialog::addAllPerson, busiItem, &addPersonnel::saveItem);
+        connect(busiItem, &addPersonnel::added, this, &insertPersonnelDialog::addPerCount);
     }
 }
 
@@ -72,7 +83,16 @@ void insertPersonnelDialog::on_delBtn_clicked()
 
 void insertPersonnelDialog::on_saveBtn_clicked()
 {
+    totalCount = ui->listWidget->count();
 
+    if (personType == 2)        //出国报销人员添加
+    {
+        emit addAllAbroadPerson();
+    }
+    else                        //差旅报销人员添加
+    {
+        emit addAllPerson();
+    }
 }
 
 void insertPersonnelDialog::on_exitBtn_clicked()
@@ -84,4 +104,21 @@ void insertPersonnelDialog::on_exitBtn_clicked()
 void insertPersonnelDialog::on_copyBtn_clicked()
 {
 
+}
+
+//添加一条人员信息的时候就将count加1,当达到人员的数量的时候，就可以认为是已经完成了，此时关闭这个窗口
+void insertPersonnelDialog::addPerCount()
+{
+    if (totalCount = 0) {
+        currentAddedCount = 0;
+        close();
+    }
+
+    currentAddedCount ++;
+
+    if(currentAddedCount >= totalCount) {
+        totalCount = 0;
+        currentAddedCount = 0;
+        close();
+    }
 }

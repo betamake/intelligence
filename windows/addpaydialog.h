@@ -2,7 +2,7 @@
 #define ADDPAYDIALOG_H
 
 #include <QDialog>
-#include "payinfomanager.h"
+#include "managers/payinfomanager.h"
 
 namespace Ui {
 class addPayDialog;

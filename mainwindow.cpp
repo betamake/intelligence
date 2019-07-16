@@ -870,6 +870,13 @@ void MainWindow::on_continueExpenseBtn_clicked()
 {
     player->stop();
     this->sendPlayText("继续报销");
+<<<<<<< HEAD
+=======
+
+    clearAllInput();
+
+    costRowcount= 1; //费用报销单rowcount为1
+>>>>>>> 67b23e9566d1f06827b5cad8bf396cad8d2faf17
     //clear table
     // busi.init ();
     currentIndex = 10;
@@ -920,6 +927,9 @@ void MainWindow::on_logoutBtn_clicked()
 {
     player->stop();
     this->sendPlayText("退出");
+
+    clearAllInput();
+
     currentIndex =0;
     ui->mainWidget->setCurrentIndex (currentIndex);
     expenseType = 9;
@@ -3264,4 +3274,37 @@ void MainWindow::deleteBillItemView(int row)
     //int row = ui->billListWidget->currentRow();
     QListWidgetItem *item = ui->billListWidget->takeItem(row);
     delete item;
+}
+
+//一次报销完成后，将报销流程中的所有信息清空
+void MainWindow::clearAllInput()
+{
+    //costBaseInfo
+    ui->costRnumEdit->clear();
+    ui->costConnameEdit->clear();
+    ui->costConoEdit->clear();
+    ui->costHandpEdit->clear();
+    ui->costRdateEdit->clear();
+    ui->costHandpdEdit->clear();
+    ui->costUseEdit->clear();
+
+    //baseInfo
+    ui->docuNumber->clear();
+    ui->duckDate->clear();
+    ui->transactor->clear();
+    ui->tranDepartment->clear();
+    ui->requisition->clear();
+    ui->busiReason->clear();
+
+    //bill
+    ui->billListWidget->clear();
+
+    //costItem
+    ui->feeDetailList->clear();
+
+    //payinfo
+    ui->payInfoList->clear();
+
+    //otherItem
+    ui->textEdit->clear();
 }

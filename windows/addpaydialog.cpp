@@ -1,7 +1,6 @@
 #include "addpaydialog.h"
 #include "ui_addpaydialog.h"
 #include "windows/itemViews/paymethodsitem.h"
-#include "payinfomanager.h"
 #include <QMessageBox>
 
 addPayDialog::addPayDialog(QWidget *parent) :

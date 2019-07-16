@@ -44,13 +44,6 @@ void payInfoManager::delCurrentItem()
 
 }
 
-void payInfoManager::addPayItem(payItemInfo *info)     //添加支付信息
-{
-    payList.append(info);
-
-    emit addPayItemView(info);
-}
-
 void payInfoManager::deletePayItem(payItemInfo *info)
 {
 
@@ -61,10 +54,6 @@ void payInfoManager::clearPayItem(payItemInfo *info)
     //info->clear();
 }
 
-QList<payItemInfo*> payInfoManager::getPayList()
-{
-    return payList;
-}
 void payInfoManager::payInfoRead (){
 //    payinfo.setAccount ();
 //    payinfo.setBank ();
