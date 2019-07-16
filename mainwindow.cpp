@@ -588,7 +588,7 @@ void MainWindow::toNextStep(){
         ui->lastStepBtn->hide ();
         ui->nextStepBtn->hide ();
     }
-    else if(currentIndex ==11)
+    else if(currentIndex ==11 )
     {
 //        ui->nextStepBtn->show ();
 //        ui->lastStepBtn->show ();
@@ -870,13 +870,10 @@ void MainWindow::on_continueExpenseBtn_clicked()
 {
     player->stop();
     this->sendPlayText("继续报销");
-<<<<<<< HEAD
-=======
 
     clearAllInput();
 
     costRowcount= 1; //费用报销单rowcount为1
->>>>>>> 67b23e9566d1f06827b5cad8bf396cad8d2faf17
     //clear table
     // busi.init ();
     currentIndex = 10;
