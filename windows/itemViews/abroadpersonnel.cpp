@@ -188,27 +188,11 @@ void abroadPersonnel::setValue()
 
 }
 
-//void abroadPersonnel::addListItems()
-//{
-//    for (int i=0; i<8; i++) {
-//        QListWidgetItem *item = new QListWidgetItem;
-//        item->setSizeHint(QSize(721, 31));
-//        abroadFeeItem *feeItem = new abroadFeeItem();
-
-//        ui->listWidget->addItem(item);
-//        ui->listWidget->setItemWidget(item, feeItem);
-
-//        connect(this, &abroadPersonnel::addFee, feeItem, &abroadFeeItem::sendValue);
-//        connect(feeItem, &abroadFeeItem::sendFee, this, &abroadPersonnel::addOneFee);
-//    }
-//}
-
-
 void abroadPersonnel::saveItem()
 {
     if (ui->staffName->text().isEmpty() || ui->staffNumber->text().isEmpty() || ui->department->text().isEmpty() ||
            ui->startTime->text().isEmpty() || ui->endTime->text().isEmpty() || ui->days->text().isEmpty() ||
-           ui->country->text().isEmpty() || ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
+           ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
            ui->certificateType->text().isEmpty() || ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() ){
         QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
     } else {
@@ -218,7 +202,6 @@ void abroadPersonnel::saveItem()
         abroadPerInfo->setDepartment(ui->department->text());
         abroadPerInfo->setLeaveDate(ui->startTime->text());
         abroadPerInfo->setReturnDate(ui->endTime->text());
-        abroadPerInfo->setCountry(ui->country->text());
         abroadPerInfo->setLeaveCity(ui->leaveCity->text());
         abroadPerInfo->setArriveCity(ui->arriveCity->text());
         abroadPerInfo->setCertificateType(ui->certificateType->text());
