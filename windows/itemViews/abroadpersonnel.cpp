@@ -14,6 +14,9 @@ abroadPersonnel::abroadPersonnel(QWidget *parent) :
 
     abroadPerInfo = new abroadPersonInfo();
 
+    connect(ui->leaveDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
+    connect(ui->backDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
+
     connect(ui->comboBox1, &QComboBox::currentTextChanged, this, &abroadPersonnel::getCoinType);
     connect(ui->comboBox2, &QComboBox::currentTextChanged, this, &abroadPersonnel::getCoinType);
     connect(ui->comboBox3, &QComboBox::currentTextChanged, this, &abroadPersonnel::getCoinType);
@@ -48,10 +51,11 @@ void abroadPersonnel::getDays()
 {
     QDate date1 = ui->leaveDateEdit->date();
     QDate date2 = ui->backDateEdit->date();
-    qint64 days = date1.daysTo(date2);
 
+    qint64 days = date1.daysTo(date2);
     if(days < 0) {
         QMessageBox::warning(this, "waring", "启程时间不能比返回时间后", QMessageBox::Ok);
+        ui->days->setText("0");
     } else {
         qDebug() << "days大于或等于0" << endl;
         ui->days->setText(QString::number(days));
@@ -63,15 +67,18 @@ void abroadPersonnel::initInput()
     //设置日期控件
     ui->leaveDateEdit->setCalendarPopup(true);
     ui->backDateEdit->setCalendarPopup(true);
-
+    //设置日期显示形式
+    ui->leaveDateEdit->setDisplayFormat("yyyy/MM/dd");
+    ui->backDateEdit->setDisplayFormat("yyyy/MM/dd");
+    //设置为当天时间
     QDate date = QDate::currentDate();
     ui->leaveDateEdit->setDate(date);
     ui->backDateEdit->setDate(date);
+    //设置最大日期
+    ui->leaveDateEdit->setMaximumDate(date);
+    ui->backDateEdit->setMaximumDate(date);
+
     ui->days->setText("0");
-
-    connect(ui->leaveDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
-    connect(ui->backDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
-
 
     //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
     QDoubleValidator *validator = new QDoubleValidator();
@@ -108,6 +115,8 @@ void abroadPersonnel::initInput()
     ui->rmb6->setFocusPolicy(Qt::NoFocus);
     ui->rmb7->setFocusPolicy(Qt::NoFocus);
     ui->rmb8->setFocusPolicy(Qt::NoFocus);
+
+    ui->totalFee->setNum(0);
 }
 
 //设置汇率
@@ -214,7 +223,7 @@ void abroadPersonnel::setValue()
     ui->rmb8->setText(QString::number(rmb, 10, 2));
     total += rmb;
 
-    ui->totalFee->setText(QString::number(total, 10, 2));
+    ui->totalFee->setNum(total);
 }
 
 void abroadPersonnel::saveItem()

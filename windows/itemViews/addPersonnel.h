@@ -25,6 +25,7 @@ public:
 private:
     void initItemView();    //初始化页面显示
 
+
 signals:
     void added();
 
@@ -33,7 +34,8 @@ private slots:
     void isSchool();        //是否院内人员
     void getDays();         //计算出差天数，填入天数，补贴天数的输入框中
     void confirmDays();     //修改补贴天数的时候要保证天数不得多于出差天数
-
+    void confirmSub();      //修改补贴金额不能超过标准x天数
+    void addAllFee();       //添加所有金额
 
 public slots:
     void saveItem();
@@ -50,6 +52,10 @@ private:
     int lunchSub;           //伙食补贴，由天数x每日补贴自动获得
     int travelPerDay;       //交通每日补贴
     int travelSub;          //交通补贴，由天数x每日补贴自动获得
+    int stayPerday;         //住宿每日补贴
+    int staySub;            //住宿补贴，由(天数-1)x每日补贴自动获得
+
+    int totalFee;           //总费用
 
     QButtonGroup *groupBtn1;
 };
