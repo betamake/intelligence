@@ -15,6 +15,7 @@ void payItemInfo::clear()
     this->bankcardNumber = "";
     this->usage = "";
     this->remark = "";
+    this->cardDate = QDate::currentDate();
     this->cardDealDate = "";
     this->cardAccount = 0;
 }

@@ -61,7 +61,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    currentIndex = 0;
+
+    initObjects();
+
+    currentIndex = 10;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->faceManBtn->hide();//人脸库管理登陆后才展示
     ui->lastStepBtn->hide ();
@@ -84,6 +87,11 @@ MainWindow::MainWindow(QWidget *parent) :
     qRegisterMetaType<QMap<QString,QString>>("QMap<QString,QString>");//注册information类
     qRegisterMetaType<QByteArray>("QByteArray");//注册QByteArray类
 
+    feeNum = 0;
+
+    mPersonType = 1;
+    perNum = 0;
+
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
     this->initMedia();
@@ -96,6 +104,24 @@ MainWindow::~MainWindow()
     qDebug() << "start destroy widget";
     delete ui;
     qDebug() << "end destroy widget";
+}
+
+//初始化控件
+void MainWindow::initObjects()
+{
+    //costBaseinfo
+    ui->costRnumEdit->setFocusPolicy(Qt::NoFocus);      //单据编号不允许修改
+    ui->costRdateEdit->setFocusPolicy(Qt::NoFocus);     //单据日期不允许修改
+    ui->costHandpEdit->setFocusPolicy(Qt::NoFocus);     //经办人不允许修改
+    ui->costHandpdEdit->setFocusPolicy(Qt::NoFocus);    //经办人部门
+
+    //baseinfo
+    ui->docuNumber->setFocusPolicy(Qt::NoFocus);        //单据编号不允许修改
+    ui->duckDate->setFocusPolicy(Qt::NoFocus);          //单据日期不允许修改
+    ui->transactor->setFocusPolicy(Qt::NoFocus);        //经办人
+    ui->tranDepartment->setFocusPolicy(Qt::NoFocus);    //经办人部门
+
+    //
 }
 
 //初始化多媒体
@@ -558,7 +584,7 @@ void MainWindow::toLastStep(){
    13:bill 票据录入 //上下,结束了本次报销的时候清除该页的信息
    14:costItem  费用报销明细 // 上下,结束了本次报销的时候清除该页的信息
    15:payinfo 支付信息 // 上下,结束了本次报销的时候清除该页的信息
-   16:otherItem 其他事项	//上下，结束了本次报销的时候清除该页的信息
+   16:addPersonnelWidget 添加人员信息	//上下，结束了本次报销的时候清除该页的信息
    17:finish 报销完成
 */
 //下一步
@@ -583,26 +609,61 @@ void MainWindow::toNextStep(){
     }
     else if(currentIndex ==11 )
     {
-//        ui->nextStepBtn->show ();
-//        ui->lastStepBtn->show ();
-        currentIndex =  13;
-        if (ui->costRnumEdit->text().isEmpty() || ui->costConnameEdit->text().isEmpty() || ui->costHandpEdit->text().isEmpty() ||
-                ui->costRdateEdit->text().isEmpty() || ui->costHandpdEdit->text().isEmpty() || ui->costUseEdit->text().isEmpty()){
-            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
+        bool finished = true;
+        QString str = "请填写：";
+
+        //由于还没有结合接口导入单据编号，人员信息，省略这三个必填项的判断
+//        if(ui->costRnumEdit->text().isEmpty()) {
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("单据编号");
+//        }
+//        if(ui->costHandpEdit->text().isEmpty()) {
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("经办人");
+//        }
+//        if(ui->costHandpdEdit->text().isEmpty()){
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("经办人部门");
+//        }
+        if(ui->costUseEdit->text().isEmpty()){
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("用途");
+        }
+        if (!finished){
+            QMessageBox::warning(this, "warning", str, QMessageBox::Ok);
         } else {
+            currentIndex =  13;
             ui->mainWidget->setCurrentIndex (currentIndex);
             this->costbaseRead ();
         }
     }
     else if(currentIndex ==12)
     {
-//        ui->nextStepBtn->show ();
-//        ui->lastStepBtn->show ();
+        bool finished = true;
+        QString str = "请填写：";
+//        QString unFixedStr = "";
         //录入票据之后需要点击下一步需要进行判定  结合标志位
-        if(ui->docuNumber->text().isEmpty() || ui->duckDate->text().isEmpty() ||
-                ui->transactor->text().isEmpty() || ui->tranDepartment->text().isEmpty()){
-            QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
-        } else {
+
+        //由于还没有结合接口导入单据编号，人员信息，省略这三个必填项的判断
+//        if(ui->docuNumber->text().isEmpty()) {
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("单据编号");
+//        }
+//        if(ui->transactor->text().isEmpty()) {
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("经办人");
+//        }
+//        if(ui->tranDepartment->text().isEmpty()){
+//            finished = false;
+//            str = QString("%1 %2 ").arg(str).arg("经办人部门");
+//        }
+        if(ui->busiReason->toPlainText().isEmpty()){
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("出差事由");
+        }
+        if(!finished)
+            QMessageBox::warning(this, "warning", str, QMessageBox::Ok);
+        else {
             currentIndex=13;
             ui->mainWidget->setCurrentIndex (currentIndex);
         }
@@ -799,7 +860,11 @@ void MainWindow::on_busiBtn_clicked()
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
     ui->transactor->setText (loginUser.getUsername());
     expenseType = 12;
+    mPersonType = 1;        //添加的人员类型是1，差旅人员
     setBasePage(12);
+    ui->personnelList->clear();
+    perNum = 0;
+    on_addPerBtn_clicked();
 }
 
 //选择费用报销单
@@ -816,6 +881,10 @@ void MainWindow::on_costBtn_clicked()
     ui->nextStepBtn->show ();
     //显示报销流程按钮
     this->isShowguiInforn ();
+
+    ui->feeDetailList->clear();
+    feeNum = 0;
+    on_addDetailBtn_clicked();
 }
 
 
@@ -825,10 +894,14 @@ void MainWindow::on_abroadBtn_clicked()
     player->stop();
     this->sendPlayText("已选择出国报销");
     expenseType = 14;
+    mPersonType = 2;        //添加的人员类型是2,出国人员
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
     ui->transactor->setText (loginUser.getUsername());
     setBasePage(13);
+    ui->personnelList->clear();
+    perNum = 0;
+    on_addPerBtn_clicked();
 }
 
 /**
@@ -1754,7 +1827,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                         billItem *billItemView = new billItem();
                         billItemView->setBillInfo(bill);
 
-                        billItemView->setBillType(bill.getBilltype());
+                        billItemView->setBillType(billType);
                         billItemView->setBillAccount(bill.getBillmoney());
                         billItemView->setBillPixmap(pixmap);
 
@@ -2978,6 +3051,8 @@ void MainWindow::on_expenseBtn_clicked()
 {
     toCurrentPage (2);
     ui->RegBtn_2->hide ();
+    player->stop();
+    this->sendPlayText("请选择登录方式");
 }
 
 void MainWindow::on_applyButton_clicked()
@@ -3059,23 +3134,6 @@ void MainWindow::noShowguiInforn ()
 void MainWindow::on_costAgainButton_clicked()
 {
     this->on_scanBillbtn_clicked();
-}
-
-/**
-* @brief       人员信息录入按钮,打开对应的Dialog
-* @author      黄梦君
-* @date        2019-06-22
-*/
-void MainWindow::on_addPersonnel_clicked()
-{
-    insertPerDialog = new insertPersonnelDialog(this);
-    if (expenseType == 12) {
-        insertPerDialog->setType(1);
-    }
-    else if (expenseType == 14) {
-        insertPerDialog->setType(2);
-    }
-    insertPerDialog->show();
 }
 
 /**
@@ -3199,6 +3257,8 @@ void MainWindow::on_addDetailBtn_clicked()
 {
     QListWidgetItem *item = new QListWidgetItem();
     item->setSizeHint(QSize(645, 210));
+
+    feeNum += 1;
     reimDetailItem *detailItem = new reimDetailItem();
 
     ui->feeDetailList->addItem(item);
@@ -3227,9 +3287,24 @@ void MainWindow::on_copyDetailBtn_clicked()
 */
 void MainWindow::on_deleteDetailBtn_clicked()
 {
-    int row = ui->feeDetailList->currentRow();
-    QListWidgetItem *item = ui->feeDetailList->takeItem(row);
-    delete item;
+    //只有一条报销明细的时候，提示至少保留一条，并添加在页面上
+    if(feeNum == 1) {
+        if (QMessageBox::warning(this, "删除提醒", "至少要保留一条报销明细！", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+            ui->feeDetailList->clear();
+            feeNum = 0;
+            on_addDetailBtn_clicked();
+        }
+    }
+    else {
+        QListWidgetItem *item = ui->feeDetailList->currentItem();
+        ui->feeDetailList->removeItemWidget(item);
+        delete item;
+
+        feeNum -= 1;
+        if (feeNum != ui->feeDetailList->count())
+            qDebug() << "number error";
+    }
+
 }
 
 /**
@@ -3281,10 +3356,8 @@ void MainWindow::clearAllInput()
 
     //baseInfo
     ui->docuNumber->clear();
-    ui->duckDate->clear();
     ui->transactor->clear();
     ui->tranDepartment->clear();
-    ui->requisition->clear();
     ui->busiReason->clear();
 
     //bill
@@ -3296,6 +3369,69 @@ void MainWindow::clearAllInput()
     //payinfo
     ui->payInfoList->clear();
 
-    //otherItem
-    ui->textEdit->clear();
+    //addPersonnelWidget
+    ui->personnelList->clear();
+}
+
+//将添加人员信息放在主窗口中
+//添加人员
+void MainWindow::on_addPerBtn_clicked()
+{
+    QListWidgetItem *item = new QListWidgetItem;
+    if (mPersonType == 2)        //出国报销人员添加
+    {
+        item->setSizeHint(QSize(940, 550));
+        ui->personnelList->addItem(item);
+
+        perNum += 1;
+        abroadPersonnel *busiItem = new abroadPersonnel();
+        busiItem->setIndex(perNum);
+
+        ui->personnelList->setItemWidget(item, busiItem);
+    }
+    else                        //差旅报销人员添加
+    {
+        item->setSizeHint(QSize(960, 430));
+        ui->personnelList->addItem(item);
+
+        perNum += 1;
+        addPersonnel *busiItem = new addPersonnel();
+        busiItem->setIndex(perNum);
+
+        ui->personnelList->setItemWidget(item, busiItem);
+    }
+}
+
+//删除人员
+void MainWindow::on_delPerBtn_clicked()
+{
+    //只有一条人员信息的时候，提示至少保留一条，并添加在页面上
+    if (perNum == 1){
+        if (QMessageBox::warning(this, "删除提醒", "至少要保留一个人员信息！", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+            ui->personnelList->clear();
+            perNum = 0;
+            on_addPerBtn_clicked();
+        }
+    }
+    else {
+        QListWidgetItem *currentItem = ui->personnelList->currentItem();
+        ui->personnelList->removeItemWidget(currentItem);
+        delete currentItem;
+
+        perNum -= 1;
+        if (perNum != ui->personnelList->count())
+            qDebug() << "number error";
+    }
+}
+
+//复制人员
+void MainWindow::on_copyPerBtn_clicked()
+{
+
+}
+
+//保存人员信息
+void MainWindow::on_savePerBtn_clicked()
+{
+
 }

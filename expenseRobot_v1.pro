@@ -65,7 +65,6 @@ HEADERS += \
     windows/insertpersonneldialog.h \
     windows/itemViews/abroadpersonnel.h \
     common/commondefs.h \
-    windows/itemViews/abroadfeeitem.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
     windows/itemViews/billitem.h \
@@ -86,7 +85,6 @@ FORMS += \
     windows/itemViews/addPersonnel.ui \
     windows/insertpersonneldialog.ui \
     windows/itemViews/abroadpersonnel.ui \
-    windows/itemViews/abroadfeeitem.ui \
     windows/itemViews/paymethodsitem.ui \
     windows/addpaydialog.ui \
     windows/itemViews/billitem.ui \
@@ -118,7 +116,6 @@ SOURCES += \
     windows/insertpersonneldialog.cpp \
     windows/itemViews/abroadpersonnel.cpp \
     common/commondefs.cpp \
-    windows/itemViews/abroadfeeitem.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
     windows/itemViews/billitem.cpp \

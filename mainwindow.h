@@ -16,11 +16,12 @@
 #include "userinfodialog.h"
 #include "facemangedialog.h"
 #include "scandialog.h"
-#include "windows/insertpersonneldialog.h"
 #include "windows/addpaydialog.h"
 #include "windows/itemViews/paymethodsitem.h"
 #include "windows/itemViews/billitem.h"
 #include "windows/itemViews/reimdetailitem.h"
+#include "windows/itemViews/addPersonnel.h"
+#include "windows/itemViews/abroadpersonnel.h"
 
 #include "managers/payinfomanager.h"
 #include "managers/personnelmanager.h"
@@ -121,6 +122,7 @@ private:
 //    void on_faceRegBtn_clicked();
 
     void clearAllInput();       //一次报销完成后，将报销流程中的所有信息清空
+    void initObjects();         //初始化控件，一些控件的固定属性
 
 signals:
     //保存信息信号
@@ -197,8 +199,6 @@ private slots:
 
     void on_costAgainButton_clicked();
 
-    void on_addPersonnel_clicked();
-
     void on_addPayInfoBtn_clicked();
 
     void addPayInfoItem(payItemInfo *info);      //添加支付信息，参数后续添加
@@ -218,6 +218,14 @@ private slots:
 
     void on_saveDetailBtn_clicked();
     void userLogin();
+
+    void on_addPerBtn_clicked();
+
+    void on_delPerBtn_clicked();
+
+    void on_copyPerBtn_clicked();
+
+    void on_savePerBtn_clicked();
 
 private:
     void setBasePage(int expenseType);
@@ -308,8 +316,6 @@ private:
 //    billinfodialog* billInfoDialog;//显示票据的弹框
     scanDialog *scanInfoDialog;
 
-
-    insertPersonnelDialog *insertPerDialog;
     addPayDialog *addPayDlg;
     int modifyItemIndex;        //要修改的支付信息的序号，从0开始，对应的是在list中的行数
 
@@ -337,6 +343,14 @@ private:
     allInterface *interface;
 //    userInterface *UserInfo;
 //    InterfaceInfo info;
+
+    //添加费用报销明细
+    int feeNum;             //报销明细数量
+
+    //添加人员信息
+    int mPersonType;         //人员类型，1为出差，2为出国
+    int perNum;             //人员数
+    int currentPerIndex;       //当前被选中的人员
 
 };
 

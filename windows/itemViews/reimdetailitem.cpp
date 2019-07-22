@@ -1,6 +1,7 @@
 #include "reimdetailitem.h"
 #include "ui_reimdetailitem.h"
 #include <QMessageBox>
+#include <QDoubleValidator>
 
 reimDetailItem::reimDetailItem(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +9,15 @@ reimDetailItem::reimDetailItem(QWidget *parent) :
 {
     detail = new reimDetail();
     ui->setupUi(this);
+
+    ui->budgetName->setFocusPolicy(Qt::NoFocus);        //项目名称不可修改
+    ui->itemDetails->setFocusPolicy(Qt::NoFocus);       //项目明细不可修改
+    ui->feeType->setFocusPolicy(Qt::NoFocus);           //经费类型不可修改
+
+    //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
+    QDoubleValidator *validator = new QDoubleValidator();
+    ui->reimAccount->setValidator(validator);
+
 }
 
 reimDetailItem::~reimDetailItem()

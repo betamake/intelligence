@@ -29,6 +29,8 @@ private slots:
 
     void on_saveEditBtn_clicked();
 
+    void on_cardUsageCom_currentTextChanged(const QString &arg1);
+
 private:
     //规定金额处只能输入int类型
     void initInput();

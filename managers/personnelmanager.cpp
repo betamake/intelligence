@@ -12,7 +12,7 @@ void abroadPersonInfo::setEmpty()
     this->department = "";
     this->leaveDate = "";
     this->returnDate = "";
-    this->country = "";
+//    this->country = "";
     this->leaveCity = "";
     this->arriveCity = "";
     this->certificateType = "";

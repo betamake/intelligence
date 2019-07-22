@@ -2,6 +2,7 @@
 #define PAYINFOMANAGER_H
 
 #include <QObject>
+#include <QDate>
 
 class payItemInfo
 {
@@ -17,6 +18,7 @@ public:
     void setBankcardNumber(const QString &bankcardNum) { this->bankcardNumber = bankcardNum;}
     void setUsage(const QString &usage) { this->usage = usage;}
     void setRemark(const QString &remark) { this->remark = remark;}
+    void setCardDate(const QDate date) { this->cardDate = date;}
     void setCardDealDate(const QString &cardDealDate) { this->cardDealDate = cardDealDate;}
     void setCardAccount(int cardAccount) { this->cardAccount = cardAccount;}
 
@@ -33,6 +35,7 @@ public:
     QString getBankcardNumber() const { return this->bankcardNumber;}
     QString getUsage() const { return this->usage;}
     QString getRemark() const { return this->remark;}
+    QDate getCardDate() const { return this->cardDate;}
     QString getCardDealDate() const { return this->cardDealDate;}
     int getCardAccount() const { return this->cardAccount;}
 
@@ -49,6 +52,7 @@ private:
     QString usage;          //汇款用途
     QString remark;         //备注
 
+    QDate cardDate;         //交易日期,QDate格式
     QString cardDealDate;   //公务卡交易日期
     int cardAccount;        //公务卡交易金额
 };

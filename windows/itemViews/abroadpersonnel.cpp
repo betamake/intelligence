@@ -1,18 +1,18 @@
 #include "abroadpersonnel.h"
 #include "ui_abroadpersonnel.h"
 #include <QMessageBox>
+#include <QDebug>
 
 abroadPersonnel::abroadPersonnel(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::abroadPersonnel)
 {
     ui->setupUi(this);
-//    addListItems();
+
     initInput();
+    getCoinType();
 
     abroadPerInfo = new abroadPersonInfo();
-
-    getCoinType();
 
     connect(ui->comboBox1, &QComboBox::currentTextChanged, this, &abroadPersonnel::getCoinType);
     connect(ui->comboBox2, &QComboBox::currentTextChanged, this, &abroadPersonnel::getCoinType);
@@ -44,15 +44,41 @@ void abroadPersonnel::setIndex(int index)
     ui->indexLab2->setNum(index);
 }
 
+void abroadPersonnel::getDays()
+{
+    QDate date1 = ui->leaveDateEdit->date();
+    QDate date2 = ui->backDateEdit->date();
+    qint64 days = date1.daysTo(date2);
+
+    if(days < 0) {
+        QMessageBox::warning(this, "waring", "启程时间不能比返回时间后", QMessageBox::Ok);
+    } else {
+        qDebug() << "days大于或等于0" << endl;
+        ui->days->setText(QString::number(days));
+    }
+}
+
 void abroadPersonnel::initInput()
 {
-    //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
-//    QDoubleValidator *doubleValidator = new QDoubleValidator();
-//    ui->waibi->setValidator(doubleValidator);
-//    ui->rmb->setValidator(doubleValidator);
+    //设置日期控件
+    ui->leaveDateEdit->setCalendarPopup(true);
+    ui->backDateEdit->setCalendarPopup(true);
 
-    QRegExp rx("[0-9]+$");
-    QValidator *validator = new QRegExpValidator(rx, this);
+    QDate date = QDate::currentDate();
+    ui->leaveDateEdit->setDate(date);
+    ui->backDateEdit->setDate(date);
+    ui->days->setText("0");
+
+    connect(ui->leaveDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
+    connect(ui->backDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
+
+
+    //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
+    QDoubleValidator *validator = new QDoubleValidator();
+
+    //设置只能输入Int类型
+//    QRegExp rx("[0-9]+$");
+//    QValidator *validator = new QRegExpValidator(rx, this);
 
     ui->waibi1->setValidator(validator);
     ui->waibi2->setValidator(validator);
@@ -63,14 +89,15 @@ void abroadPersonnel::initInput()
     ui->waibi7->setValidator(validator);
     ui->waibi8->setValidator(validator);
 
-    ui->rmb1->setValidator(validator);
-    ui->rmb2->setValidator(validator);
-    ui->rmb3->setValidator(validator);
-    ui->rmb4->setValidator(validator);
-    ui->rmb5->setValidator(validator);
-    ui->rmb6->setValidator(validator);
-    ui->rmb7->setValidator(validator);
-    ui->rmb8->setValidator(validator);
+//    //汇率框不允许输入
+//    ui->huilv1->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv2->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv3->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv4->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv5->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv6->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv7->setFocusPolicy(Qt::NoFocus);
+//    ui->huilv8->setFocusPolicy(Qt::NoFocus);
 
     //人民币金额框不允许输入
     ui->rmb1->setFocusPolicy(Qt::NoFocus);
@@ -81,18 +108,9 @@ void abroadPersonnel::initInput()
     ui->rmb6->setFocusPolicy(Qt::NoFocus);
     ui->rmb7->setFocusPolicy(Qt::NoFocus);
     ui->rmb8->setFocusPolicy(Qt::NoFocus);
-
-    //汇率框不允许输入
-    ui->huilv1->setFocusPolicy(Qt::NoFocus);
-    ui->huilv2->setFocusPolicy(Qt::NoFocus);
-    ui->huilv3->setFocusPolicy(Qt::NoFocus);
-    ui->huilv4->setFocusPolicy(Qt::NoFocus);
-    ui->huilv5->setFocusPolicy(Qt::NoFocus);
-    ui->huilv6->setFocusPolicy(Qt::NoFocus);
-    ui->huilv7->setFocusPolicy(Qt::NoFocus);
-    ui->huilv8->setFocusPolicy(Qt::NoFocus);
 }
 
+//设置汇率
 void abroadPersonnel::getCoinType()
 {
     QString feeType = "";
@@ -100,35 +118,35 @@ void abroadPersonnel::getCoinType()
 
     feeType = ui->comboBox1->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv1->setText(QString::number(huilv, 10, 3));
+    ui->huilv1->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox2->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv2->setText(QString::number(huilv, 10, 3));
+    ui->huilv2->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox3->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv3->setText(QString::number(huilv, 10, 3));
+    ui->huilv3->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox4->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv4->setText(QString::number(huilv, 10, 3));
+    ui->huilv4->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox5->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv5->setText(QString::number(huilv, 10, 3));
+    ui->huilv5->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox6->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv6->setText(QString::number(huilv, 10, 3));
+    ui->huilv6->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox7->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv7->setText(QString::number(huilv, 10, 3));
+    ui->huilv7->setText(QString::number(huilv, 10, 4));
 
     feeType = ui->comboBox8->currentText();
     huilv = chooseCoinType(feeType);
-    ui->huilv8->setText(QString::number(huilv, 10, 3));
+    ui->huilv8->setText(QString::number(huilv, 10, 4));
 }
 
 double abroadPersonnel::chooseCoinType(QString &str)
@@ -140,88 +158,82 @@ double abroadPersonnel::chooseCoinType(QString &str)
     return 0;
 }
 
+//计算人民币金额
 void abroadPersonnel::setValue()
 {
     double val = 0;
     double huilv = 0;
     double rmb = 0;
+    double total = 0;
 
     val = ui->waibi1->text().toDouble();
     huilv = ui->huilv1->text().toDouble();
     rmb = val * huilv;
-    ui->rmb1->setText(QString::number(rmb, 10, 4));
+    ui->rmb1->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi2->text().toDouble();
     huilv = ui->huilv2->text().toDouble();
     rmb = val * huilv;
-    ui->rmb2->setText(QString::number(rmb, 10, 4));
+    ui->rmb2->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi3->text().toDouble();
     huilv = ui->huilv3->text().toDouble();
     rmb = val * huilv;
-    ui->rmb3->setText(QString::number(rmb, 10, 4));
+    ui->rmb3->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi4->text().toDouble();
     huilv = ui->huilv4->text().toDouble();
     rmb = val * huilv;
-    ui->rmb4->setText(QString::number(rmb, 10, 4));
+    ui->rmb4->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi5->text().toDouble();
     huilv = ui->huilv5->text().toDouble();
     rmb = val * huilv;
-    ui->rmb5->setText(QString::number(rmb, 10, 4));
+    ui->rmb5->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi6->text().toDouble();
     huilv = ui->huilv6->text().toDouble();
     rmb = val * huilv;
-    ui->rmb6->setText(QString::number(rmb, 10, 4));
+    ui->rmb6->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi7->text().toDouble();
     huilv = ui->huilv7->text().toDouble();
     rmb = val * huilv;
-    ui->rmb7->setText(QString::number(rmb, 10, 4));
+    ui->rmb7->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
     val = ui->waibi8->text().toDouble();
     huilv = ui->huilv8->text().toDouble();
     rmb = val * huilv;
-    ui->rmb8->setText(QString::number(rmb, 10, 4));
+    ui->rmb8->setText(QString::number(rmb, 10, 2));
+    total += rmb;
 
+    ui->totalFee->setText(QString::number(total, 10, 2));
 }
-
-//void abroadPersonnel::addListItems()
-//{
-//    for (int i=0; i<8; i++) {
-//        QListWidgetItem *item = new QListWidgetItem;
-//        item->setSizeHint(QSize(721, 31));
-//        abroadFeeItem *feeItem = new abroadFeeItem();
-
-//        ui->listWidget->addItem(item);
-//        ui->listWidget->setItemWidget(item, feeItem);
-
-//        connect(this, &abroadPersonnel::addFee, feeItem, &abroadFeeItem::sendValue);
-//        connect(feeItem, &abroadFeeItem::sendFee, this, &abroadPersonnel::addOneFee);
-//    }
-//}
-
 
 void abroadPersonnel::saveItem()
 {
     if (ui->staffName->text().isEmpty() || ui->staffNumber->text().isEmpty() || ui->department->text().isEmpty() ||
-           ui->startTime->text().isEmpty() || ui->endTime->text().isEmpty() || ui->days->text().isEmpty() ||
-           ui->country->text().isEmpty() || ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
-           ui->certificateType->text().isEmpty() || ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() ){
+           ui->days->text().isEmpty() ||
+           ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
+           ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() ){
         QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
     } else {
         //保存信息
         abroadPerInfo->setStaffName(ui->staffName->text());
         abroadPerInfo->setStaffNumber(ui->staffNumber->text().toInt());
         abroadPerInfo->setDepartment(ui->department->text());
-        abroadPerInfo->setLeaveDate(ui->startTime->text());
-        abroadPerInfo->setReturnDate(ui->endTime->text());
-        abroadPerInfo->setCountry(ui->country->text());
+        abroadPerInfo->setLeaveDate(ui->leaveDateEdit->text());
+        abroadPerInfo->setReturnDate(ui->backDateEdit->text());
         abroadPerInfo->setLeaveCity(ui->leaveCity->text());
         abroadPerInfo->setArriveCity(ui->arriveCity->text());
-        abroadPerInfo->setCertificateType(ui->certificateType->text());
+//        abroadPerInfo->setCertificateType(ui->certificateType->text());
         abroadPerInfo->setBudgetNum(ui->budgetNumEdit->text().toInt());
         abroadPerInfo->setBudgetName(ui->budgetNameEdit->text());
         abroadPerInfo->setBudgetType(ui->budgetTypeEdit->text());

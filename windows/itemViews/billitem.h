@@ -17,7 +17,7 @@ public:
     explicit billItem(QWidget *parent = nullptr);
     ~billItem();
 
-    void setBillType(const QString &str);
+    void setBillType(const int type);
 
     void setBillAccount(const QString &money);
 
@@ -43,6 +43,8 @@ private:
     Ui::billItem *ui;
 
     BillCheck mBill;
+
+    int billType;           //票据的类型，当为火车票和飞机票的时候，要显示始发站和到达站; 1为发票，2为火车票，3为机票，4为出租车票
 
     int iRow;
 };

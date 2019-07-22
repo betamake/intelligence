@@ -28,8 +28,8 @@ public:
     QString getReturnDate() { return this->returnDate;}
     void setReturnDate(const QString returnDate) { this->returnDate = returnDate;}
 
-    QString getCountry() { return this->country;}
-    void setCountry(const QString country) { this->country = country;}
+//    QString getCountry() { return this->country;}
+//    void setCountry(const QString country) { this->country = country;}
 
     QString getLeaveCity() { return this->leaveCity;}
     void setLeaveCity(const QString leaveCity) { this->leaveCity = leaveCity;}
@@ -60,7 +60,7 @@ private:
     QString department;         //部门
     QString leaveDate;          //出访起始时间
     QString returnDate;         //出访终止时间
-    QString country;            //出访国家
+//    QString country;            //出访国家
     QString leaveCity;          //出发城市
     QString arriveCity;         //到达城市
     QString certificateType;    //证件类型
