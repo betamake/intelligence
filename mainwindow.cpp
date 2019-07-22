@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
     this->initMedia();
+    interface = new allInterface(this);
 
 }
 
@@ -264,58 +265,50 @@ void MainWindow::on_accountBtn_clicked()
 void MainWindow::on_user_loginBtn_clicked()
 {
     ui->lastStepBtn->show ();//显示上一步按钮
-    //连接数据库
-    database.outputUserInfo();
-    //判断用户名和密码是否正确
+    ui->nextStepBtn->show ();
     QString username = ui->user_loginEdit->text().trimmed();
     QString password = ui->user_pwdEdit->text().trimmed();
-    if(!(username.isEmpty() && password.isEmpty()))
-    {
-        if(database.verificationLogin(username, password))
-        {
-            qDebug() << "验证结果："<< database.verificationLogin(username, password);
-            //登录成功
-            //查数据库
-            loginStatus = 3;//账号登录状态
-            loginUser = database.SearchUserByUsername(username);
-            this->showUserInfo(loginUser);
-            if (loginUser.getIdCard ().isEmpty ()){
-            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("请补录身份证信息"));
-                toCurrentPage (8);
-                player->stop();
-                this->sendPlayText("请补录身份证信息");
-            }else{
-            player->stop();
-            this->sendPlayText("账号登录成功");
-            currentIndex = 9;
-            ui->mainWidget->setCurrentIndex (currentIndex);
-//            ui->nextStepBtn->show();
-//            ui->lastStepBtn->show ();
-            ui->lastStepBtn->hide ();
-            ui->nextStepBtn->hide ();
-
-            //下次进来的时候
-            ui->user_loginEdit->clear();
-            ui->user_pwdEdit->clear();
-            ui->user_loginEdit->setFocus();}
-        }
-        else
-        {
-            //登录失败，清空用户编辑框，密码编辑框，设置光标到用户编辑框
-            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("登录失败！"));
-            player->stop();
-            this->sendPlayText("账号有误，请重新登录");
-            //清空内容并定位光标
-            ui->user_loginEdit->clear();
-            ui->user_pwdEdit->clear();
-            ui->user_loginEdit->setFocus();
-        }
+    if(!(username.isEmpty() && password.isEmpty())){
+       interface->info.setusername (username);
+       interface->info.setpassword (password);
+       interface->userInterface ();
+       connect (interface,SIGNAL(readUserDone()),this,SLOT(userLogin()));
     }else
     {
         QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("用户名密码不能为空！"));
         player->stop();
         this->sendPlayText("用户名密码不能为空");
     }
+
+}
+
+void MainWindow::userLogin ()
+{
+    if (interface->info.getmsg ()=="success")
+    {
+        player->stop();
+        this->sendPlayText("账号登录成功");
+        currentIndex = 9;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+        ui->lastStepBtn->hide ();
+        ui->nextStepBtn->hide ();
+        ui->user_loginEdit->clear();
+        ui->user_pwdEdit->clear();
+        ui->user_loginEdit->setFocus();
+    }
+    else
+    {
+        qDebug()<<"获取msg信息:"<<endl;
+        //登录失败，清空用户编辑框，密码编辑框，设置光标到用户编辑框
+        QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("登录失败！"));
+        player->stop();
+        this->sendPlayText("账号有误，请重新登录");
+        //清空内容并定位光标
+        ui->user_loginEdit->clear();
+        ui->user_pwdEdit->clear();
+        ui->user_loginEdit->setFocus();
+    }
+
 }
 
 //首页注册方式选择
@@ -1604,6 +1597,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                                 if(goodsVal.isString()){
                                     billContent = goodsVal.toString();
                                     billGoods = billContent;
+                                    qDebug()<<"billGoods:"<<billGoods;
                                     bill.setBillcontent(billContent);
                                 }
                             }

@@ -57,9 +57,7 @@ HEADERS += \
            user.h \
            userinfodialog.h \
            voicecheck.h \
-    networkthread.h \
     connectionpool.h \
-    networkhandler.h  \
     turing.h \
     scandialog.h \
     scanthread.h \
@@ -77,7 +75,8 @@ HEADERS += \
     database.h \
     managers/reimdetailmanager.h \
     managers/payinfomanager.h \
-    managers/personnelmanager.h
+    managers/personnelmanager.h \
+    allinterface.h
     costbaseinfo.h
 FORMS += \
          facemangedialog.ui \
@@ -111,9 +110,7 @@ SOURCES += \
            user.cpp \
            userinfodialog.cpp \
            voicecheck.cpp \
-    networkthread.cpp \
     connectionpool.cpp \
-    networkhandler.cpp \
     turing.cpp \
     scandialog.cpp \
     scanthread.cpp \
@@ -131,4 +128,5 @@ SOURCES += \
     database.cpp \
     managers/reimdetailmanager.cpp \
     managers/payinfomanager.cpp \
-    managers/personnelmanager.cpp
+    managers/personnelmanager.cpp \
+    allinterface.cpp

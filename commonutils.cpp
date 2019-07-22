@@ -1,4 +1,4 @@
-﻿#include "commonutils.h"
+#include "commonutils.h"
 #include <QImage>
 #include <QBuffer>
 #include <QDateTime>
@@ -37,6 +37,7 @@ QNetworkRequest CommonUtils::getHttpRequest(QString url){
     QNetworkRequest request;
     request.setUrl(QUrl(url));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded;charset=utf-8");
+    qDebug() <<"getHttpRequest"<<url;
     //    request.setRawHeader("Accept","text/html, application/xhtml+xml, */*");
     //    request.setRawHeader("Accept-Language","zh-CN");
     //    request.setRawHeader("X-Requested-With","XMLHttpRequest");

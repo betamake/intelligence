@@ -45,6 +45,8 @@
 #include "costbaseinfo.h"//处理费用报销基本信息
 #include "travelbaseinfo.h"//处理差旅报销基本信息
 #include "database.h"
+#include "allinterface.h"
+//#include "userinterface.h"
 #if _MSC_VER >= 1600
 
 #pragma execution_character_set("utf-8")
@@ -123,6 +125,7 @@ private:
 signals:
     //保存信息信号
     void saveReimDetail();      //保存费用报销明细
+//    void emitLoginInfo(QString username,QString password);       //给userinterface 发送账号信息;
 private slots:
     void on_faceBtn_clicked();
     void on_idBtn_clicked();
@@ -214,6 +217,7 @@ private slots:
     void on_deleteDetailBtn_clicked();
 
     void on_saveDetailBtn_clicked();
+    void userLogin();
 
 private:
     void setBasePage(int expenseType);
@@ -330,6 +334,9 @@ private:
     //
     costBase costBinfo; //费用报销基本信息
     travelBase travelBinfo;//差旅报销基本信息
+    allInterface *interface;
+//    userInterface *UserInfo;
+//    InterfaceInfo info;
 
 };
 
