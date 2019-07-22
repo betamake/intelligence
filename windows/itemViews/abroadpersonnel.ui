@@ -379,7 +379,7 @@ border-color: rgb(186, 189, 182);</string>
    <widget class="QWidget" name="widget_3" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>310</x>
       <y>0</y>
       <width>301</width>
       <height>41</height>
@@ -574,34 +574,6 @@ border-color: rgb(186, 189, 182);</string>
       <height>41</height>
      </size>
     </property>
-    <widget class="QLineEdit" name="startTime">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>0</y>
-       <width>171</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
@@ -623,6 +595,16 @@ border-color: rgb(186, 189, 182);</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QDateEdit" name="leaveDateEdit">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>0</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -653,34 +635,6 @@ border-color: rgb(186, 189, 182);</string>
       <height>41</height>
      </size>
     </property>
-    <widget class="QLineEdit" name="endTime">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>0</y>
-       <width>171</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_23">
      <property name="geometry">
       <rect>
@@ -704,11 +658,97 @@ border-color: rgb(186, 189, 182);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QDateEdit" name="backDateEdit">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>0</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget_14" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>301</width>
+      <height>41</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>301</width>
+      <height>41</height>
+     </size>
+    </property>
+    <widget class="QLabel" name="label_20">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(186, 189, 182);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="text">
+      <string>证件类型*</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>0</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>普通护照</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>公务护照</string>
+      </property>
+     </item>
+    </widget>
    </widget>
    <widget class="QWidget" name="widget_4" native="true">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>0</x>
       <y>0</y>
       <width>301</width>
       <height>41</height>
@@ -778,85 +818,6 @@ border-color: rgb(186, 189, 182);</string>
      </property>
      <property name="text">
       <string>员工姓名*</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="widget_14" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>100</y>
-      <width>301</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>301</width>
-      <height>41</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>301</width>
-      <height>41</height>
-     </size>
-    </property>
-    <widget class="QLineEdit" name="certificateType">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>0</y>
-       <width>171</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>171</width>
-       <height>41</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_20">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>131</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(186, 189, 182);</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="text">
-      <string>证件类型*</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -1940,6 +1901,19 @@ border-color: rgb(186, 189, 182);</string>
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QLabel" name="totalFee">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>190</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>totalFee</string>
+   </property>
   </widget>
  </widget>
  <resources/>

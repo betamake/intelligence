@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QTextEdit" name="bankRemark">
@@ -500,7 +500,7 @@ border-color: rgb(186, 189, 182);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="bankUsage">
+     <widget class="QComboBox" name="bankUsageCom">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -509,24 +509,21 @@ border-color: rgb(186, 189, 182);</string>
         <height>41</height>
        </rect>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
+      <item>
+       <property name="text">
+        <string>请选择</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>货款</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>报销</string>
+       </property>
+      </item>
      </widget>
     </widget>
    </widget>
@@ -679,7 +676,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>省</string>
+       <string>省*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -730,7 +727,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>市</string>
+       <string>市*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -852,13 +849,13 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>公务卡交易日期</string>
+       <string>公务卡交易日期*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="cardDealDate">
+     <widget class="QDateEdit" name="cardDate">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -866,24 +863,6 @@ border-color: rgb(186, 189, 182);</string>
         <width>171</width>
         <height>41</height>
        </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
       </property>
      </widget>
     </widget>
@@ -913,7 +892,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>公务卡交易金额</string>
+       <string>公务卡交易金额*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -974,7 +953,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>开户行名称</string>
+       <string>开户行名称*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1035,7 +1014,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>银行卡号</string>
+       <string>银行卡号*</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1145,7 +1124,7 @@ border-color: rgb(186, 189, 182);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="cardUsage">
+     <widget class="QComboBox" name="cardUsageCom">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -1154,24 +1133,21 @@ border-color: rgb(186, 189, 182);</string>
         <height>41</height>
        </rect>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
+      <item>
+       <property name="text">
+        <string>请选择</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>货款</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>报销</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QLabel" name="label_21">
@@ -1264,7 +1240,7 @@ border-color: rgb(186, 189, 182);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="cashUsage">
+     <widget class="QComboBox" name="cashUsageCom">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -1273,24 +1249,21 @@ border-color: rgb(186, 189, 182);</string>
         <height>41</height>
        </rect>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>171</width>
-        <height>41</height>
-       </size>
-      </property>
+      <item>
+       <property name="text">
+        <string>请选择</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>货款</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>报销</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="widget_21" native="true">

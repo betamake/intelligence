@@ -120,6 +120,7 @@ private:
 //    void on_faceRegBtn_clicked();
 
     void clearAllInput();       //一次报销完成后，将报销流程中的所有信息清空
+    void initObjects();         //初始化控件，一些控件的固定属性
 
 signals:
     //保存信息信号
@@ -335,6 +336,9 @@ private:
     //
     costBase costBinfo; //费用报销基本信息
     travelBase travelBinfo;//差旅报销基本信息
+
+    //添加费用报销明细
+    int feeNum;             //报销明细数量
 
     //添加人员信息
     int mPersonType;         //人员类型，1为出差，2为出国

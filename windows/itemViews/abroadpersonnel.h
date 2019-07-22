@@ -32,6 +32,8 @@ private slots:
     void getCoinType();
     void setValue();
 
+    void getDays();
+
 private:
     void initInput();
 //    void addListItems();
