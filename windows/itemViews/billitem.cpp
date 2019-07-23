@@ -56,6 +56,15 @@ void billItem::setBillPixmap(QPixmap image)
     ui->label->setPixmap(image);
 }
 
+void billItem::setDeparture(const QString &departure)
+{
+    ui->departure->setText(departure);
+}
+void billItem::setDestination(const QString &destination)
+{
+    ui->destination->setText(destination);
+}
+
 void billItem::setIndex(int row)
 {
     if (row < 0)

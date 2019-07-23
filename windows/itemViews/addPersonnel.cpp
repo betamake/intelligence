@@ -15,10 +15,15 @@ addPersonnel::addPersonnel(QWidget *parent) :
 
     traPerInfo = new traBusPersonInfo();
     businessdays = 0;           //出差天数
-    lunchPerDay = 0;
+
     lunchSub = 0;
-    travelPerDay = 0;
     travelSub = 0;
+    staySub = 0;
+
+    //每日补贴先设定固定值，之后获得
+    lunchPerDay = 100;      //伙食补贴按每天100来算
+    travelPerDay = 50;      //交通补贴按每天50来算
+    stayPerday = 300;       //住宿补贴按每天300来算
 
     //选择是否为院内人员
     connect(ui->yesRadioBtn, SIGNAL(clicked(bool)), this, SLOT(isSchool));
@@ -32,6 +37,16 @@ addPersonnel::addPersonnel(QWidget *parent) :
     connect(ui->lunchDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
     connect(ui->travelDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
 
+    //修改补贴金额，不能超过标准
+    connect(ui->lunchSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    connect(ui->travelSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    connect(ui->stayFee, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+
+    //修改除了上3种补贴金额时，实时更新总金额
+    connect(ui->cityTraFee, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
+    connect(ui->workFee, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
+    connect(ui->airportFee, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
+    connect(ui->otherFees, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
 }
 
 addPersonnel::~addPersonnel()
@@ -53,15 +68,29 @@ void addPersonnel::initItemView()
     //首先设置下拉选择日期
     ui->leaveDateEdit->setCalendarPopup(true);
     ui->backDateEdit->setCalendarPopup(true);
+    //设置日期显示形式
+    ui->leaveDateEdit->setDisplayFormat("yyyy/MM/dd");
+    ui->backDateEdit->setDisplayFormat("yyyy/MM/dd");
     //给日期框分配当天的日期
     QDate date = QDate::currentDate();
     ui->leaveDateEdit->setDate(date);
     ui->backDateEdit->setDate(date);
+    //设置最大日期
+    ui->leaveDateEdit->setMaximumDate(date);
+    ui->backDateEdit->setMaximumDate(date);
     //出差天数，补贴天数初始化为0
     ui->busiDays->setText("0");
     ui->lunchDays->setText("0");
     ui->travelDays->setText("0");
-
+    //各种补贴初始化为0
+    ui->cityTraFee->setText("0");
+    ui->stayFee->setText("0");
+    ui->workFee->setText("0");
+    ui->lunchSubsidy->setText("0");
+    ui->airportFee->setText("0");
+    ui->travelSubsidy->setText("0");
+    ui->otherFees->setText("0");
+    ui->totalFee->setNum(0);
 
     //设置lineEdit只能输入数字，以免出现问题，目前只能输入整数，小数等之后完善
     QRegExp regx("[0-9]+$");
@@ -105,27 +134,43 @@ void addPersonnel::getDays()
 {
     QDate date1 = ui->leaveDateEdit->date();
     QDate date2 = ui->backDateEdit->date();
-    qint64 days = date1.daysTo(date2);
 
+    qint64 days = date1.daysTo(date2);
     if(days < 0) {
         QMessageBox::warning(this, "waring", "启程时间不能比返回时间后", QMessageBox::Ok);
         businessdays = 0;
         ui->busiDays->setText("0");
         ui->lunchDays->setText("0");
         ui->travelDays->setText("0");
+
+        addAllFee();
     } else {
         qDebug() << "days大于或等于0" << endl;
         businessdays = days;
         ui->busiDays->setText(QString::number(days));
-        ui->lunchDays->setText(QString::number(days));      //伙食补贴天数
-        ui->travelDays->setText(QString::number(days));     //交通补贴天数
+        ui->lunchDays->setText(QString::number(days));      //伙食补贴天数先设置为出差天数
+        ui->travelDays->setText(QString::number(days));     //交通补贴天数先设置为出差天数
+
+        travelSub = businessdays * travelPerDay;
+        lunchSub = businessdays * lunchPerDay;
+        staySub = (businessdays-1) * stayPerday;
+
+        ui->travelSubsidy->setText(QString::number(travelSub));
+        ui->lunchSubsidy->setText(QString::number(lunchSub));
+        ui->stayFee->setText(QString::number(staySub));
+
+        addAllFee();
     }
+
 }
 
 void addPersonnel::confirmDays()
 {
     int lunchDays = ui->lunchDays->text().toInt();          //伙食补贴天数
     int traDays = ui->travelDays->text().toInt();           //交通补贴天数
+
+    disconnect(ui->lunchDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
+    disconnect(ui->travelDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
 
     if (lunchDays > businessdays) {
         QMessageBox::warning(this, "waring", "伙食补贴天数不得多于出差天数", QMessageBox::Ok);
@@ -136,12 +181,60 @@ void addPersonnel::confirmDays()
         ui->travelDays->setText(QString::number(businessdays));
     }
 
-    //每日补贴先设定固定值，之后获得
-    lunchPerDay = 100;      //伙食补贴按每天100来算
-    travelPerDay = 50;      //交通补贴按每天50来算
     lunchSub = lunchDays * lunchPerDay;
     travelSub = traDays * travelPerDay;
 
+    ui->lunchSubsidy->setText(QString::number(lunchSub));
+    ui->travelSubsidy->setText(QString::number(travelSub));
+
+    connect(ui->lunchDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
+    connect(ui->travelDays, &QLineEdit::editingFinished, this, &addPersonnel::confirmDays);
+
+    addAllFee();
+}
+
+void addPersonnel::confirmSub()
+{
+    int lunchSubs = ui->lunchSubsidy->text().toInt();
+    int traverSubs = ui->travelSubsidy->text().toInt();
+    int staySubs = ui->stayFee->text().toInt();
+
+    disconnect(ui->lunchSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    disconnect(ui->travelSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    disconnect(ui->stayFee, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+
+    if(lunchSubs > lunchSub) {
+        QMessageBox::warning(this, "warning", "伙食补贴不得超过标准", QMessageBox::Ok);
+        ui->lunchSubsidy->setText(QString::number(lunchSub));
+    }
+    if(traverSubs > travelSub) {
+        QMessageBox::warning(this, "warning", "伙食补贴不得超过标准", QMessageBox::Ok);
+        ui->travelSubsidy->setText(QString::number(travelSub));
+    }
+    if(staySubs > staySub) {
+        QMessageBox::warning(this, "warning", "伙食补贴不得超过标准", QMessageBox::Ok);
+        ui->stayFee->setText(QString::number(staySub));
+    }
+    connect(ui->lunchSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    connect(ui->travelSubsidy, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+    connect(ui->stayFee, &QLineEdit::editingFinished, this, &addPersonnel::confirmSub);
+
+    addAllFee();
+}
+
+void addPersonnel::addAllFee()
+{
+    int cityTraFee = ui->cityTraFee->text().toInt();
+    int stayFee = ui->stayFee->text().toInt();
+    int workFee = ui->workFee->text().toInt();
+    int lunchSubsidy = ui->lunchSubsidy->text().toInt();
+    int airportFee = ui->airportFee->text().toInt();
+    int travelSubsidy = ui->travelSubsidy->text().toInt();
+    int otherFees = ui->otherFees->text().toInt();
+
+    totalFee = cityTraFee + stayFee + workFee + lunchSubsidy + airportFee + travelSubsidy + otherFees;
+
+    ui->totalFee->setNum(totalFee);
 }
 
 //设置是否院内人员，是的话必须输入员工号和编码等信息，不是的话就不用输

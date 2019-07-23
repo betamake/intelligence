@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QTextEdit" name="bankRemark">
@@ -654,7 +654,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>110</y>
+       <y>120</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -676,7 +676,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>省*</string>
+       <string>省</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -727,7 +727,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>市*</string>
+       <string>市</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -766,7 +766,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>110</y>
+       <y>120</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -827,7 +827,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>160</y>
+       <y>180</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -870,7 +870,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>160</y>
+       <y>180</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -931,7 +931,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>210</y>
+       <y>240</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -953,7 +953,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>开户行名称*</string>
+       <string>开户行名称</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -992,7 +992,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>260</y>
+       <y>300</y>
        <width>721</width>
        <height>51</height>
       </rect>
@@ -1014,7 +1014,7 @@ border-color: rgb(186, 189, 182);</string>
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>银行卡号*</string>
+       <string>银行卡号</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1035,7 +1035,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>210</y>
+       <y>240</y>
        <width>331</width>
        <height>51</height>
       </rect>
@@ -1092,64 +1092,6 @@ border-color: rgb(186, 189, 182);</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="widget_19" native="true">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>310</y>
-       <width>331</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="label_40">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>131</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(186, 189, 182);</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="text">
-       <string>汇款用途*</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="cardUsageCom">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>0</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>请选择</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>货款</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>报销</string>
-       </property>
-      </item>
-     </widget>
-    </widget>
     <widget class="QLabel" name="label_21">
      <property name="geometry">
       <rect>
@@ -1189,7 +1131,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>270</y>
+       <y>200</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -1207,64 +1149,6 @@ border-color: rgb(186, 189, 182);</string>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-    </widget>
-    <widget class="QWidget" name="widget_20" native="true">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>200</y>
-       <width>331</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="label_42">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>131</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(186, 189, 182);</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="text">
-       <string>汇款用途*</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="cashUsageCom">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>0</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>请选择</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>货款</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>报销</string>
-       </property>
-      </item>
-     </widget>
     </widget>
     <widget class="QWidget" name="widget_21" native="true">
      <property name="geometry">
@@ -1392,7 +1276,7 @@ border-color: rgb(186, 189, 182);</string>
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>270</y>
+       <y>200</y>
        <width>631</width>
        <height>41</height>
       </rect>

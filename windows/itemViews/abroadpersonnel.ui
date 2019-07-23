@@ -1908,8 +1908,14 @@ border-color: rgb(186, 189, 182);</string>
      <x>390</x>
      <y>190</y>
      <width>121</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
    </property>
    <property name="text">
     <string>totalFee</string>

@@ -1833,6 +1833,10 @@ void MainWindow::billReply(QNetworkReply * reply){
                         billItemView->setBillType(billType);
                         billItemView->setBillAccount(bill.getBillmoney());
                         billItemView->setBillPixmap(pixmap);
+                        if(billType == 2 || billType == 3) {
+                            billItemView->setDeparture(bill.getBillstartplace());
+                            billItemView->setDestination(bill.getBillendplace());
+                        }
 
                         ui->billListWidget->addItem(item);
                         ui->billListWidget->setItemWidget(item, billItemView);

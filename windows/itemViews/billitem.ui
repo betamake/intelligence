@@ -76,7 +76,7 @@
      <string>到达站：</string>
     </property>
    </widget>
-   <widget class="QLabel" name="leavePlace">
+   <widget class="QLabel" name="departure">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -94,7 +94,7 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="arrivePlace">
+   <widget class="QLabel" name="destination">
     <property name="geometry">
      <rect>
       <x>110</x>
