@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initObjects();
 
-    currentIndex = 10;
+    currentIndex = 0;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->faceManBtn->hide();//人脸库管理登陆后才展示
     ui->lastStepBtn->hide ();
@@ -858,7 +858,8 @@ void MainWindow::on_busiBtn_clicked()
     this->sendPlayText("已选择差旅报销");
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (loginUser.getUsername());
+    ui->transactor->setText (interface->info.getname ());
+    ui->tranDepartment->setText (interface->info.getofficeName ());
     expenseType = 12;
     mPersonType = 1;        //添加的人员类型是1，差旅人员
     setBasePage(12);
@@ -875,7 +876,8 @@ void MainWindow::on_costBtn_clicked()
     QDateTime local(QDateTime::currentDateTime());
     expenseType = 11;
     currentIndex = 11;
-    ui->costHandpEdit->setText (loginUser.getUsername());
+    ui->costHandpEdit->setText (interface->info.getname ());
+    ui->costHandpdEdit->setText (interface->info.getofficeName ());
     ui->costRdateEdit->setText (local.toString("yyyy-MM-dd"));
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
@@ -897,7 +899,8 @@ void MainWindow::on_abroadBtn_clicked()
     mPersonType = 2;        //添加的人员类型是2,出国人员
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (loginUser.getUsername());
+    ui->transactor->setText (interface->info.getname ());
+    ui->tranDepartment->setText (interface->info.getofficeName ());
     setBasePage(13);
     ui->personnelList->clear();
     perNum = 0;

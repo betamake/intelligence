@@ -310,11 +310,7 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-<<<<<<< HEAD
-      <number>4</number>
-=======
       <number>14</number>
->>>>>>> 9dd0e0639fbfcedd9af2eae32993ca04b14e74e0
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">

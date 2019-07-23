@@ -129,6 +129,36 @@ void allInterface::setuserdatalist (QNetworkReply *reply)
                     {
                         QJsonValue dataVal=dataArray.at (i);
                         QJsonObject dataObject = dataVal.toObject ();
+                        QJsonValue userAcountListVal = dataObject.value ("userAccountList");
+                        QJsonArray userAcountListArray = userAcountListVal.toArray ();
+                        for (int i =0;i<userAcountListArray.size ();i++)
+                        {
+                            QJsonValue userAcountListVal = userAcountListArray.at (i);
+                            QJsonObject userAcountListObject = userAcountListVal.toObject ();
+                            if(userAcountListObject.contains ("province"))
+                            {
+                                userProvince = userAcountListObject.take ("province").toString ();
+                                info.setprovince (userProvince);
+                                qDebug()<<"userprovince:"<<info.getprovice ();
+
+                            }
+                            if(userAcountListObject.contains ("city"))
+                            {
+                                userCity = userAcountListObject.take("city").toString ();
+                                info.setcity (userCity);
+                            }
+                            if(userAcountListObject.contains ("bankName"))
+                            {
+                                userBankName = userAcountListObject.take ("bankName").toString ();
+                                info.setbankName (userBankName);
+                            }
+                            if(userAcountListObject.contains ("bankAccount"))
+
+                            {
+                                userBankAccount = userAcountListObject.take ("bankAccount").toString ();
+                                info.setbankAccount (userBankAccount);
+                            }
+                        }
                         if(dataObject.contains ("office"))
                         {
                             qDebug()<<"dataobject包含office";
@@ -150,16 +180,105 @@ void allInterface::setuserdatalist (QNetworkReply *reply)
         }
      }
 }
-//保存cookie
+////获取院外人员信息
 //void allInterface::getDataPeopleOut ()
 //{
 //    manager = new QNetworkAccessManager(this);
-//    QObject::connect (manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(setuserdatalist(QNetworkReply*)));
+//    QObject::connect (manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(setDatapeopleOut(QNetworkReply*)));
 //    QUrlQuery params;
 //    params.addQueryItem("name",info.getname ());
 //    QString  data = params.toString();
-//    QNetworkRequest request = commonutils.getHttpRequest(ipAddress.left(26).append("/basedata/dataPeopleOut/dataList?").append (data.toUtf8()));
+//    QNetworkRequest request = commonutils.getHttpRequest(ipAddress.left(26).append("/erpbeidakouqiang/index/basedata/dataPeopleOut/dataList?").append (data.toUtf8()));
 //    request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
 //    manager->setCookieJar (managerJar);
 //    QNetworkReply *reply = manager->get (request);
 //}
+////保存院外人员信息
+//void allInterface::setDatapeopleOut (QNetworkReply *reply)
+//{
+//    if(reply->error() == QNetworkReply::NoError)
+//    {
+//        QByteArray all = reply->readAll();
+//        qDebug()<<"111111111111"<<all;
+//}
+void allInterface::getDataProject ()
+{
+    manager = new QNetworkAccessManager(this);
+    QObject::connect (manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(setDataProject(QNetworkReply*)));
+    QUrlQuery params;
+    params.addQueryItem("fundVersion",info.getfundVersion ());
+    QString  data = params.toString();
+    QNetworkRequest request = commonutils.getHttpRequest(ipAddress.left(26).append("/erpbeidakouqiang/index/basedata/dataProject/dataList?").append (data.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
+    manager->setCookieJar (managerJar);
+    QNetworkReply *reply = manager->get (request);
+}
+void allInterface::setDataProject (QNetworkReply *reply){
+        if(reply->error() == QNetworkReply::NoError)
+        {
+            QByteArray all = reply->readAll();
+            qDebug()<<"111111111111"<<all;
+            QString userprojectName;
+            QString usermoneyOriginName;
+            QJsonParseError jsonError;
+            QJsonDocument doucment = QJsonDocument::fromJson(all, &jsonError);
+            if (!doucment.isEmpty ()&&jsonError.error== QJsonParseError::NoError)
+            {
+                QJsonObject object = doucment.object ();
+                if(object.contains ("data"))
+                {
+                    QJsonValue dataVal = object.value ("data");
+                    QJsonArray dataArray = dataVal.toArray ();
+                    QJsonObject dataObject = dataArray.at (0).toObject ();
+                    if(dataObject.contains ("projectName"))
+                    {
+                        userprojectName = dataObject.take ("projectName").toString ();
+                        info.setprojectName (userprojectName);
+                    }
+                    if(dataObject.contains ("moneyOriginName"))
+                    {
+                        usermoneyOriginName = dataObject.take ("moneyOriginName").toString ();
+                        info.setmoneyOriginName (usermoneyOriginName);
+                    }
+                }
+
+            }
+
+        }
+        emit setDataProjectDone ();
+
+}
+void allInterface::getDataReimberse ()
+{
+    manager = new QNetworkAccessManager(this);
+    QObject::connect (manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(setDataReimberse(QNetworkReply*)));
+    QUrlQuery params;
+    params.addQueryItem("reimburseName",info.getfundVersion ());
+    QString  data = params.toString();
+    QNetworkRequest request = commonutils.getHttpRequest(ipAddress.left(26).append("/erpbeidakouqiang/index/basedata/dataReimburse/dataList?").append (data.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
+    manager->setCookieJar (managerJar);
+    QNetworkReply *reply = manager->get (request);
+}
+void allInterface::setDataReimberse (QNetworkReply *reply)
+{
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        QByteArray all = reply->readAll();
+        qDebug()<<"111111111111"<<all;
+        QString userReimburseName;
+        QJsonParseError jsonError;
+        QJsonDocument doucment = QJsonDocument::fromJson(all, &jsonError);
+        if(!doucment.isEmpty ()&&jsonError.error==QJsonParseError::NoError )
+        {
+            QJsonObject object = doucment.object ();
+            if(object.contains ("data"))
+            {
+                QJsonValue dataVal = object.value ("data");
+                QJsonArray dataArray = dataVal.toArray ();
+                QJsonObject dataObject = dataArray.at (0).toObject ();
+            }
+        }
+    }
+
+}

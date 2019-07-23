@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "managers/reimdetailmanager.h"
-
+#include "allinterface.h"
 namespace Ui {
 class reimDetailItem;
 }
@@ -28,11 +28,13 @@ private slots:
     void on_searchItemBtn_clicked();
 
     void on_searchDepartmentBtn_clicked();
+    void setDataProjectInfo();
 
 private:
     Ui::reimDetailItem *ui;
 
     reimDetail *detail;
+    allInterface *interface;
 };
 
 #endif // REIMDETAILITEM_H

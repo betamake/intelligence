@@ -2,7 +2,7 @@
 #include "ui_reimdetailitem.h"
 #include <QMessageBox>
 #include <QDoubleValidator>
-
+#include <QString>
 reimDetailItem::reimDetailItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::reimDetailItem)
@@ -17,6 +17,7 @@ reimDetailItem::reimDetailItem(QWidget *parent) :
     //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
     QDoubleValidator *validator = new QDoubleValidator();
     ui->reimAccount->setValidator(validator);
+    interface = new allInterface();
 
 }
 
@@ -46,6 +47,11 @@ void reimDetailItem::saveDetail()
 
 void reimDetailItem::on_searchBudgetBtn_clicked()
 {
+    QString budgetNumber = ui->budgetNumber->text ();
+    interface->info.setfundVersion (budgetNumber);
+    interface->getDataProject ();
+    connect (interface,SIGNAL(setDataProjectDone()),this,SLOT(setDataProjectInfo()));
+
 
 }
 
@@ -57,4 +63,9 @@ void reimDetailItem::on_searchItemBtn_clicked()
 void reimDetailItem::on_searchDepartmentBtn_clicked()
 {
 
+}
+void reimDetailItem::setDataProjectInfo ()
+{
+    ui->budgetName->setText (interface->info.getprojectName ());
+    ui->feeType->setText (interface->info.getmoneyOriginName ());
 }
