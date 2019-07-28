@@ -13,6 +13,7 @@ addPersonnel::addPersonnel(QWidget *parent) :
 
     initItemView();
 
+    mIndex = -1;
     traPerInfo = new traBusPersonInfo();
     businessdays = 0;           //出差天数
 
@@ -58,9 +59,9 @@ addPersonnel::~addPersonnel()
 void addPersonnel::initItemView()
 {
     //是否社内人员选择
-    groupBtn1 = new QButtonGroup(this);
-    groupBtn1->addButton(ui->yesRadioBtn, 0);
-    groupBtn1->addButton(ui->noRadioBtn, 1);
+    groupBtn = new QButtonGroup(this);
+    groupBtn->addButton(ui->yesRadioBtn, 0);
+    groupBtn->addButton(ui->noRadioBtn, 1);
     ui->yesRadioBtn->setChecked(true);          //默认是社内人员
     isInSchool = true;
 
@@ -80,6 +81,7 @@ void addPersonnel::initItemView()
     ui->backDateEdit->setMaximumDate(date);
     //出差天数，补贴天数初始化为0
     ui->busiDays->setText("0");
+    ui->busiDays->setFocusPolicy(Qt::NoFocus);      //出差天数不允许手动修改
     ui->lunchDays->setText("0");
     ui->travelDays->setText("0");
     //各种补贴初始化为0
@@ -110,6 +112,7 @@ void addPersonnel::initItemView()
 
 void addPersonnel::setIndex(int index)
 {
+    mIndex = index;
     ui->indexLab1->setNum(index);
     ui->indexLab2->setNum(index);
 }
@@ -241,18 +244,58 @@ void addPersonnel::addAllFee()
 //同时，院内人员和院外人员的补贴是不一样的
 void addPersonnel::isSchool()
 {
-
+    if (ui->yesRadioBtn->isChecked())
+        isInSchool = true;
+    if (ui->noRadioBtn->isChecked())
+        isInSchool = false;
 }
 
 //保存人员的信息
 void addPersonnel::saveItem()
 {
-    if (ui->busiPerson->text().isEmpty() || ui->staffNumber->text().isEmpty() ||
-           ui->departmentEdit->text().isEmpty() ||
-           ui->busiDays->text().isEmpty() || ui->leavePlace->text().isEmpty() || ui->arrivaPlace->text().isEmpty() ||
-           ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() || ui->fundsTypeEdit->text().isEmpty() ){
-        QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
-    } else {
+    bool finished = true;
+    QString str = "请填写：";
+
+    //是院内人员的时候，必须输入人员名和人员工号
+    if (isInSchool) {
+        if (ui->busiPerson->text().isEmpty()) {
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("出差人员");
+//            QMessageBox::warning(this, "warning", "请输入出差人员", QMessageBox::Ok);
+        }
+        if (ui->staffNumber->text().isEmpty()) {
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("员工工号");
+        }
+        if (ui->departmentEdit->text().isEmpty()) {
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("部门");
+        }
+    }
+    if (ui->leavePlace->text().isEmpty()) {
+        finished = false;
+        str = QString("%1 %2 ").arg(str).arg("出发地点");
+    }
+    if (ui->arrivaPlace->text().isEmpty()) {
+        finished = false;
+        str = QString("%1 %2 ").arg(str).arg("到达地点");
+    }
+    if (ui->budgetNumEdit->text().isEmpty()) {
+        finished = false;
+        str = QString("%1 %2 ").arg(str).arg("预算项目号");
+    }
+    if (ui->budgetNameEdit->text().isEmpty()) {
+        finished = false;
+        str = QString("%1 %2 ").arg(str).arg("预算项目名");
+    }
+    if (ui->fundsTypeEdit->text().isEmpty() ){
+        finished = false;
+        str = QString("%1 %2 ").arg(str).arg("经费类型");
+    }
+
+    if(!finished)
+        QMessageBox::warning(this, "warning", str, QMessageBox::Ok);
+    else {
         QString leaveDateStr = ui->leaveDateEdit->text();
         QString backDateStr = ui->backDateEdit->text();
 
@@ -265,8 +308,10 @@ void addPersonnel::saveItem()
         //保存差旅人员信息
         traPerInfo->setStaffName(ui->busiPerson->text());
         traPerInfo->setStaffNumber(ui->staffNumber->text().toInt());
-//        traPerInfo->setLeaveDate(ui->leaveDate->text());
-//        traPerInfo->setReturnDate(ui->returnDate->text());
+        traPerInfo->setLeaveDate(ui->leaveDateEdit->text());
+        traPerInfo->setLeaveDate1(ui->leaveDateEdit->date());
+        traPerInfo->setReturnDate(ui->backDateEdit->text());
+        traPerInfo->setReturnDate1(ui->backDateEdit->date());
         traPerInfo->setDays(ui->busiDays->text().toInt());
         traPerInfo->setDepartment(ui->departmentEdit->text());
         traPerInfo->setLeavePlace(ui->leavePlace->text());
@@ -300,10 +345,27 @@ void addPersonnel::saveItem()
 
         traPerInfo->setTotalFee(totalFee);
 
+        emit addToMainWindow(mIndex, traPerInfo);
 
-        //将人员信息结构体保存起来
-        personnelManager::getInstance()->addTravelItem(traPerInfo);
+//        //将人员信息结构体保存起来
+//        personnelManager::getInstance()->addTravelItem(traPerInfo);
 
-        emit added();
+//        emit added();
     }
+}
+
+void addPersonnel::setPerson(traBusPersonInfo *info)
+{
+    ui->busiPerson->setText(info->getStaffName());
+    ui->staffNumber->setText(QString::number(info->getStaffNumber()));
+//    ui->leaveDateEdit->setDate(info->getLeaveDate1());
+//    ui->backDateEdit->setDate(info->getReturnDate1());
+//    ui->busiDays->setText(QString::number(info->getDays()));
+    ui->departmentEdit->setText(info->getDepartment());
+    ui->leavePlace->setText(info->getLeavePlace());
+    ui->arrivaPlace->setText(info->getArrivePlace());
+    ui->budgetNumEdit->setText(QString::number(info->getBudgetNumber()));
+    ui->budgetNameEdit->setText(info->getBudgetName());
+    ui->fundsTypeEdit->setText(info->getBudgetType());
+
 }

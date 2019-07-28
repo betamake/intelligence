@@ -12,6 +12,7 @@ abroadPersonnel::abroadPersonnel(QWidget *parent) :
     initInput();
     getCoinType();
 
+    mIndex = -1;
     abroadPerInfo = new abroadPersonInfo();
 
     connect(ui->leaveDateEdit, &QDateEdit::dateChanged, this, &abroadPersonnel::getDays);
@@ -43,6 +44,7 @@ abroadPersonnel::~abroadPersonnel()
 
 void abroadPersonnel::setIndex(int index)
 {
+    mIndex = index;
     ui->indexLab1->setNum(index);
     ui->indexLab2->setNum(index);
 }
@@ -79,6 +81,7 @@ void abroadPersonnel::initInput()
     ui->backDateEdit->setMaximumDate(date);
 
     ui->days->setText("0");
+    ui->days->setFocusPolicy(Qt::NoFocus);
 
     //浮点小数控制，这里有点问题，可以输入字母a-e，等待解决
     QDoubleValidator *validator = new QDoubleValidator();
@@ -228,18 +231,30 @@ void abroadPersonnel::setValue()
 
 void abroadPersonnel::saveItem()
 {
-    if (ui->staffName->text().isEmpty() || ui->staffNumber->text().isEmpty() || ui->department->text().isEmpty() ||
-           ui->days->text().isEmpty() ||
-           ui->leaveCity->text().isEmpty() || ui->arriveCity->text().isEmpty() ||
-           ui->budgetNumEdit->text().isEmpty() || ui->budgetNameEdit->text().isEmpty() ){
-        QMessageBox::warning(this, "warning", "还有信息未输入", QMessageBox::Ok);
-    } else {
+    if (ui->staffName->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入员工姓名", QMessageBox::Ok);
+    else if (ui->staffNumber->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入员工工号", QMessageBox::Ok);
+    else if (ui->department->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入部门", QMessageBox::Ok);
+    else if (ui->leaveCity->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入出发城市", QMessageBox::Ok);
+    else if (ui->arriveCity->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入到达城市", QMessageBox::Ok);
+    else if (ui->budgetNumEdit->text().isEmpty())
+        QMessageBox::warning(this, "warning", "请输入项目经费号", QMessageBox::Ok);
+    else if (ui->budgetNameEdit->text().isEmpty() ){
+        QMessageBox::warning(this, "warning", "请输入项目名", QMessageBox::Ok);
+    }
+    else {
         //保存信息
         abroadPerInfo->setStaffName(ui->staffName->text());
         abroadPerInfo->setStaffNumber(ui->staffNumber->text().toInt());
         abroadPerInfo->setDepartment(ui->department->text());
         abroadPerInfo->setLeaveDate(ui->leaveDateEdit->text());
+        abroadPerInfo->setLeaveDate1(ui->leaveDateEdit->date());
         abroadPerInfo->setReturnDate(ui->backDateEdit->text());
+        abroadPerInfo->setReturnDate1(ui->backDateEdit->date());
         abroadPerInfo->setLeaveCity(ui->leaveCity->text());
         abroadPerInfo->setArriveCity(ui->arriveCity->text());
 //        abroadPerInfo->setCertificateType(ui->certificateType->text());
@@ -260,11 +275,32 @@ void abroadPersonnel::saveItem()
 
         abroadPerInfo->setTotalFee(total);
 
+        addToMainWindow(mIndex, abroadPerInfo);
 
-        //将人员信息的结构体保存起来
-        personnelManager::getInstance()->addAbroadItem(abroadPerInfo);
-
-        emit added();
+//        //将人员信息的结构体保存起来
+//        personnelManager::getInstance()->addAbroadItem(abroadPerInfo);
+//        emit added();
 
     }
+}
+
+void abroadPersonnel::setPerson(abroadPersonInfo *info)
+{
+    ui->staffName->setText(info->getStaffName());
+//    ui->staffNumber->setText(QString::number(info->getStaffNumber()));
+    ui->department->setText(info->getDepartment());
+
+    QDate leaveDate = info->getLeaveDate1();
+    QDate backDate = info->getReturnDate1();
+    qint64 days = leaveDate.daysTo(backDate);
+    ui->leaveDateEdit->setDate(leaveDate);
+    ui->backDateEdit->setDate(backDate);
+    ui->days->setText(QString::number(days));
+
+    ui->leaveCity->setText(info->getLeaveCity());
+    ui->arriveCity->setText(info->getArriveCity());
+
+    ui->budgetNumEdit->setText(QString::number(info->getBudgetNum()));
+    ui->budgetNameEdit->setText(info->getBudgetName());
+    ui->budgetTypeEdit->setText(info->getBudgetType());
 }

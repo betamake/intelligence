@@ -42,6 +42,8 @@
 #include <QPaintEvent>
 #include <QTimer>
 #include<QKeyEvent>
+#include <QMap>
+#include <QList>
 #include "scanthread.h" //扫面线程
 #include "costbaseinfo.h"//处理费用报销基本信息
 #include "travelbaseinfo.h"//处理差旅报销基本信息
@@ -125,6 +127,9 @@ private:
 signals:
     //保存信息信号
     void saveReimDetail();      //保存费用报销明细
+
+    void savePerson();          //保存更新人员列表
+
 private slots:
     void on_faceBtn_clicked();
     void on_idBtn_clicked();
@@ -198,14 +203,17 @@ private slots:
 
     void on_addPayInfoBtn_clicked();
 
-    void addPayInfoItem(payItemInfo *info);      //添加支付信息，参数后续添加
+    void addPayInfoItem(payItemInfo *info);                     //添加支付信息，参数后续添加
 
-    void openPayInfoItem(payItemInfo *info, int index);        //打开要修改的支付信息的窗口
-    void modifyPayInfoItem(payItemInfo *info);      //修改支付信息
-    void deletePayInfoItem(int index);              //删除支付信息
+    void openPayInfoItem(payItemInfo *info, int index);         //打开要修改的支付信息的窗口
+    void modifyPayInfoItem(payItemInfo *info);                  //修改支付信息
+    void deletePayInfoItem(int index);                          //删除支付信息
 
     void openBillItemDialog(BillCheck info);
-    void deleteBillItemView(int row);              //删除选中的票据item
+    void deleteBillItemView(int row);                           //删除选中的票据item
+
+    void insertAbroadPer(int index, abroadPersonInfo *info);       //在出国人员Map中添加相应的人员信息
+    void insertTravelPer(int index, traBusPersonInfo *info);        //在出差人员Map中添加相应的人员信息
 
     void on_addDetailBtn_clicked();
 
@@ -221,7 +229,7 @@ private slots:
 
     void on_copyPerBtn_clicked();
 
-    void on_savePerBtn_clicked();
+    void on_totalAccountBtn_clicked();
 
 private:
     void setBasePage(int expenseType);
@@ -343,8 +351,13 @@ private:
     //添加人员信息
     int mPersonType;         //人员类型，1为出差，2为出国
     int perNum;             //人员数
+    int perIndex;           //每个添加的人员的序号，从1开始增加，删除人员不会减少这个序号
     int currentPerIndex;       //当前被选中的人员
 
+    QMap<int, abroadPersonInfo*> mAbroadPerMap;
+    QMap<int, traBusPersonInfo*> mTravelPerMap;
+//    QList<abroadPersonInfo*> mAbroadPerList;        //出国人员列表
+//    QList<traBusPersonInfo*> mTravelPerList;        //出差人员列表
 };
 
 #endif // MAINWINDOW_H

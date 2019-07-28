@@ -310,7 +310,7 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-      <number>14</number>
+      <number>16</number>
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -2410,8 +2410,72 @@
      </widget>
      <widget class="QWidget" name="addPersonnelWidget">
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="6">
+        <widget class="QPushButton" name="copyPerBtn">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>复制人员</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="3">
         <spacer name="horizontalSpacer_26">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="delPerBtn">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>删除人员</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <spacer name="horizontalSpacer_21">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -2465,51 +2529,6 @@ border-color: rgb(211, 215, 207);</string>
          </widget>
         </widget>
        </item>
-       <item row="2" column="2">
-        <spacer name="horizontalSpacer_23">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="5">
-        <widget class="QPushButton" name="delPerBtn">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>41</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>41</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>删除人员</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_17">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="1">
         <spacer name="horizontalSpacer_22">
          <property name="orientation">
@@ -2522,6 +2541,16 @@ border-color: rgb(211, 215, 207);</string>
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="1" colspan="6">
+        <widget class="QListWidget" name="personnelList">
+         <property name="minimumSize">
+          <size>
+           <width>970</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="0" column="4">
         <widget class="QPushButton" name="addPerBtn">
@@ -2542,27 +2571,21 @@ border-color: rgb(211, 215, 207);</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="5">
-        <widget class="QPushButton" name="savePerBtn">
-         <property name="minimumSize">
+       <item row="2" column="1">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>0</width>
-           <height>41</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>41</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>保存</string>
-         </property>
-        </widget>
+        </spacer>
        </item>
-       <item row="1" column="7">
-        <spacer name="horizontalSpacer_21">
+       <item row="2" column="2">
+        <spacer name="horizontalSpacer_23">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -2587,45 +2610,10 @@ border-color: rgb(211, 215, 207);</string>
          </property>
         </spacer>
        </item>
-       <item row="1" column="1" colspan="6">
-        <widget class="QListWidget" name="personnelList">
-         <property name="minimumSize">
-          <size>
-           <width>970</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="6">
-        <widget class="QPushButton" name="copyPerBtn">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>41</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>41</height>
-          </size>
-         </property>
+       <item row="2" column="5">
+        <widget class="QPushButton" name="totalAccountBtn">
          <property name="text">
-          <string>复制人员</string>
+          <string>合计</string>
          </property>
         </widget>
        </item>

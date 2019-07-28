@@ -31,6 +31,8 @@ private slots:
 
     void on_cardUsageCom_currentTextChanged(const QString &arg1);
 
+    void on_searchBtn_clicked();
+
 private:
     //规定金额处只能输入int类型
     void initInput();

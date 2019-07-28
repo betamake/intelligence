@@ -2,6 +2,7 @@
 #define PERSONNELMANAGER_H
 
 #include <QObject>
+#include <QDate>
 
 //出国人员信息，经费来源和报销明细
 class abroadPersonInfo {
@@ -25,8 +26,14 @@ public:
     QString getLeaveDate() {return this->leaveDate;}
     void setLeaveDate(const QString leaveDate) { this->leaveDate = leaveDate;}
 
+    QDate getLeaveDate1() { return this->leaveDate1;}
+    void setLeaveDate1(const QDate leaveDate) { this->leaveDate1 = leaveDate;}
+
     QString getReturnDate() { return this->returnDate;}
     void setReturnDate(const QString returnDate) { this->returnDate = returnDate;}
+
+    QDate getReturnDate1() { return this->returnDate1;}
+    void setReturnDate1(const QDate returnDate) { this->returnDate1 = returnDate;}
 
 //    QString getCountry() { return this->country;}
 //    void setCountry(const QString country) { this->country = country;}
@@ -59,7 +66,9 @@ private:
     int     staffNumber;        //员工工号
     QString department;         //部门
     QString leaveDate;          //出访起始时间
+    QDate   leaveDate1;
     QString returnDate;         //出访终止时间
+    QDate   returnDate1;
 //    QString country;            //出访国家
     QString leaveCity;          //出发城市
     QString arriveCity;         //到达城市
@@ -88,8 +97,14 @@ public:
     QString getLeaveDate() { return this->leaveDate;}
     void setLeaveDate(const QString leaveDate) { this->leaveDate = leaveDate;}
 
+    QDate getLeaveDate1() { return this->leaveDate1;}
+    void setLeaveDate1(const QDate leaveDate) { this->leaveDate1 = leaveDate;}
+
     QString getReturnDate() { return this->returnDate;}
     void setReturnDate(const QString returnDate) { this->returnDate = returnDate;}
+
+    QDate getReturnDate1() { return this->returnDate1;}
+    void setReturnDate1(const QDate returnDate) { this->returnDate1 = returnDate;}
 
     int getDays() { return this->days;}
     void setDays(const int days) { this->days = days;}
@@ -148,7 +163,9 @@ private:
     QString staffName;          //出差人员名
     int     staffNumber;        //员工工号
     QString leaveDate;          //出发时间
+    QDate   leaveDate1;
     QString returnDate;         //返回时间
+    QDate   returnDate1;
     int     days;               //出差天数
     QString department;         //部门
     QString leavePlace;         //出发地点
@@ -180,11 +197,11 @@ public:
     ~personnelManager();
 
     void addAbroadItem(abroadPersonInfo *info) { abroadList.append(info);}
-    void delAbroadItem(abroadPersonInfo *info);
+//    void delAbroadItem(abroadPersonInfo *info);
     QList<abroadPersonInfo*> getAbroadList() { return abroadList;}
 
     void addTravelItem(traBusPersonInfo *info) { travelList.append(info);}
-    void delTravelItem(traBusPersonInfo *info);
+//    void delTravelItem(traBusPersonInfo *info);
     QList<traBusPersonInfo*> getTravelList() { return travelList;}
 
 private:

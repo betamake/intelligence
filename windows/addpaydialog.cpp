@@ -181,3 +181,8 @@ void addPayDialog::on_cardUsageCom_currentTextChanged(const QString &arg1)
 {
 
 }
+
+void addPayDialog::on_searchBtn_clicked()
+{
+
+}
