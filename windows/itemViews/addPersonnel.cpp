@@ -244,10 +244,18 @@ void addPersonnel::addAllFee()
 //同时，院内人员和院外人员的补贴是不一样的
 void addPersonnel::isSchool()
 {
-    if (ui->yesRadioBtn->isChecked())
+    if (ui->yesRadioBtn->isChecked()) {
         isInSchool = true;
-    if (ui->noRadioBtn->isChecked())
+        ui->busiPerson->setFocus();
+        ui->searchPerson->setEnabled(false);
+        ui->staffNumber->setFocus();
+    }
+    if (ui->noRadioBtn->isChecked()){
         isInSchool = false;
+        ui->busiPerson->setFocusPolicy(Qt::NoFocus);
+        ui->searchPerson->setEnabled(false);
+        ui->staffNumber->setFocusPolicy(Qt::NoFocus);
+    }
 }
 
 //保存人员的信息

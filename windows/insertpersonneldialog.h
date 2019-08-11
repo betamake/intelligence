@@ -2,6 +2,7 @@
 #define INSERTPERSONNELDIALOG_H
 
 #include <QDialog>
+#include <QButtonGroup>
 #include "windows/itemViews/addPersonnel.h"
 #include "windows/itemViews/abroadpersonnel.h"
 
@@ -21,6 +22,7 @@ public:
     void setType(int type);
 
 private:
+    void initItemView();
 
 
 signals:
@@ -28,12 +30,10 @@ signals:
     void addAllAbroadPerson();     //添加出国人员的信号
 
 private slots:
-    void on_addBtn_clicked();
-    void on_delBtn_clicked();
     void on_saveBtn_clicked();
     void on_exitBtn_clicked();
 
-    void on_copyBtn_clicked();
+    void isSchool();
 
     void addPerCount();         //添加一条人员信息的时候就将count加1,当达到人员的数量的时候，就可以认为是已经完成了，此时关闭这个窗口
 
@@ -42,14 +42,12 @@ private:
 
     int personType;         //人员类型，1为出差，2为出国
 
-    int perNum;             //人员数
-    int currentIndex;       //当前被选中的人员
+    QButtonGroup *groupBtn;
+    bool isInSchool;
 
-    QList<addPersonnel*> traPerList;
-    QList<abroadPersonnel*> abroadPerList;
+    addPersonnel* traPerson;
+    abroadPersonnel* abroadPerson;
 
-    int totalCount;         //人员的总数
-    int currentAddedCount;  //现在已经添加的人员的数量
 };
 
 #endif // INSERTPERSONNELDIALOG_H

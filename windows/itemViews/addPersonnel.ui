@@ -70,7 +70,7 @@
      <height>151</height>
     </rect>
    </property>
-   <widget class="QWidget" name="widget_5" native="true">
+   <widget class="QWidget" name="perNumWidget" native="true">
     <property name="geometry">
      <rect>
       <x>640</x>
@@ -466,7 +466,7 @@
      </item>
     </widget>
    </widget>
-   <widget class="QWidget" name="widget_4" native="true">
+   <widget class="QWidget" name="personWidget" native="true">
     <property name="geometry">
      <rect>
       <x>330</x>

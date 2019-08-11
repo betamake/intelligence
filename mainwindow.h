@@ -17,6 +17,7 @@
 #include "facemangedialog.h"
 #include "scandialog.h"
 #include "windows/addpaydialog.h"
+#include "windows/insertpersonneldialog.h"
 #include "windows/itemViews/paymethodsitem.h"
 #include "windows/itemViews/billitem.h"
 #include "windows/itemViews/reimdetailitem.h"
@@ -229,8 +230,6 @@ private slots:
 
     void on_copyPerBtn_clicked();
 
-    void on_totalAccountBtn_clicked();
-
 private:
     void setBasePage(int expenseType);
 
@@ -323,6 +322,15 @@ private:
     addPayDialog *addPayDlg;
     int modifyItemIndex;        //要修改的支付信息的序号，从0开始，对应的是在list中的行数
 
+    insertPersonnelDialog *addPerDlg;   //添加人员弹窗
+
+    //添加人员信息
+    int mPersonType;         //人员类型，1为出差，2为出国
+    int perNum;             //人员数
+    int perIndex;           //每个添加的人员的序号，从1开始增加，删除人员不会减少这个序号
+    int currentPerIndex;       //当前被选中的人员
+
+
     QByteArray getPixmapData(QString filePath,QImage image);
     QString avaterFilePath;
 
@@ -348,14 +356,8 @@ private:
     //添加费用报销明细
     int feeNum;             //报销明细数量
 
-    //添加人员信息
-    int mPersonType;         //人员类型，1为出差，2为出国
-    int perNum;             //人员数
-    int perIndex;           //每个添加的人员的序号，从1开始增加，删除人员不会减少这个序号
-    int currentPerIndex;       //当前被选中的人员
 
-    QMap<int, abroadPersonInfo*> mAbroadPerMap;
-    QMap<int, traBusPersonInfo*> mTravelPerMap;
+
 //    QList<abroadPersonInfo*> mAbroadPerList;        //出国人员列表
 //    QList<traBusPersonInfo*> mTravelPerList;        //出差人员列表
 };

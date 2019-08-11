@@ -92,10 +92,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mPersonType = 1;
     perNum = 0;
     perIndex = 0;
-    mAbroadPerMap.clear();
-    mTravelPerMap.clear();
-//    mAbroadPerList.clear();
-//    mTravelPerList.clear();
 
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
@@ -881,7 +877,6 @@ void MainWindow::on_busiBtn_clicked()
     perNum = 0;
     perIndex = 0;
 //    mTravelPerList.clear();
-    mTravelPerMap.clear();
     on_addPerBtn_clicked();
 }
 
@@ -920,8 +915,6 @@ void MainWindow::on_abroadBtn_clicked()
     ui->personnelList->clear();
     perNum = 0;
     perIndex = 0;
-//    mAbroadPerList.clear();
-    mAbroadPerMap.clear();
     on_addPerBtn_clicked();
 }
 
@@ -3397,98 +3390,19 @@ void MainWindow::clearAllInput()
     ui->personnelList->clear();
 }
 
-//将添加人员信息放在主窗口中
+
 //添加人员
 void MainWindow::on_addPerBtn_clicked()
 {
-    if (perNum > 0)
-        emit savePerson();
-
-    QListWidgetItem *item = new QListWidgetItem;
-    perNum += 1;
-    perIndex += 1;
-    if (mPersonType == 2)        //出国报销人员添加
-    {
-        item->setSizeHint(QSize(940, 550));
-
-        QString text = QString::number(perIndex);
-        item->setText(text);
-        ui->personnelList->addItem(item);
-
-        abroadPersonnel *busiItem = new abroadPersonnel();
-        busiItem->setIndex(perIndex);
-
-        connect(this, &MainWindow::savePerson, busiItem, &abroadPersonnel::saveItem);
-        connect(busiItem, &abroadPersonnel::addToMainWindow, this, &MainWindow::insertAbroadPer);
-        ui->personnelList->setItemWidget(item, busiItem);
-    }
-    else                        //差旅报销人员添加
-    {
-        item->setSizeHint(QSize(960, 430));
-
-        QString text = QString::number(perIndex);
-        item->setText(text);
-        ui->personnelList->addItem(item);
-
-        addPersonnel *busiItem = new addPersonnel();
-        busiItem->setIndex(perIndex);
-
-        connect(this, &MainWindow::savePerson, busiItem, &addPersonnel::saveItem);
-        connect(busiItem, &addPersonnel::addToMainWindow, this, &MainWindow::insertTravelPer);
-        ui->personnelList->setItemWidget(item, busiItem);
-    }
+    addPerDlg = new insertPersonnelDialog(this);
+    addPerDlg->setType(mPersonType);
+    addPayDlg->show();
 }
 
 //删除人员
 void MainWindow::on_delPerBtn_clicked()
 {
-    //只有一条人员信息的时候，提示至少保留一条，并添加在页面上
-    if (perNum == 1){
-        if (QMessageBox::warning(this, "删除提醒", "至少要保留一个人员信息！", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
-            ui->personnelList->clear();
-            mAbroadPerMap.clear();
-            mTravelPerMap.clear();
-            perNum = 0;
-            on_addPerBtn_clicked();
-        }
-    }
-    else {
-        QListWidgetItem *currentItem = ui->personnelList->currentItem();
-        int delIndex = currentItem->text().toInt();
-        QWidget *delW = ui->personnelList->itemWidget(currentItem);
-        delete delW;
 
-        ui->personnelList->removeItemWidget(currentItem);
-
-        delete currentItem;
-
-        if (mPersonType == 2) {     //出国人员
-            QMap<int, abroadPersonInfo*>::iterator it;
-
-            it = mAbroadPerMap.find(delIndex);
-            mAbroadPerMap.erase(it);
-
-            for (it=mAbroadPerMap.begin(); it!=mAbroadPerMap.end(); it++) {
-                qDebug() << "Person Name is:" << it.value()->getStaffName() << endl;
-            }
-        } else {
-            QMap<int, traBusPersonInfo*>::iterator it;
-
-            it = mTravelPerMap.find(delIndex);
-            mTravelPerMap.erase(it);
-
-            for (it=mTravelPerMap.begin(); it!=mTravelPerMap.end(); it++) {
-                qDebug() << "Person Name is:" << it.value()->getStaffName() << endl;
-            }
-        }
-
-        perNum -= 1;
-        if (perNum != ui->personnelList->count())
-            qDebug() << "number error";
-
-        if (perNum > 0)
-            emit savePerson();
-    }
 }
 
 //复制人员
@@ -3496,98 +3410,18 @@ void MainWindow::on_copyPerBtn_clicked()
 {
 //    emit savePerson();
 
-//    //这里有个问题就是复制的时候，如果选择的是最后面那一个item的时候，其实在Map里是没有它的值的
-////    if (mPersonType == 2) {
-////        if (ui->personnelList->count() < mAbroadPerMap.size()) {
 
-////        }
-////    }
-
-//    QListWidgetItem *currentItem = ui->personnelList->currentItem();
-//    int delIndex = currentItem->text().toInt();
-
-//    if (mPersonType == 2) {
-//        QMap<int, abroadPersonInfo*>::iterator it;
-//        it = mAbroadPerMap.find(delIndex);
-//        if (it != mAbroadPerMap.end())
-//        {
-//            QListWidgetItem *item = new QListWidgetItem;
-//            perNum += 1;
-//            perIndex += 1;
-//            QString text = QString::number(perIndex);
-//            item->setSizeHint(QSize(940, 550));
-//            item->setText(text);
-
-//            abroadPersonInfo *info = it.value();
-
-//            abroadPersonnel *busiItem = new abroadPersonnel();
-//            busiItem->setPerson(info);
-//            busiItem->setIndex(perIndex);
-
-//            connect(this, &MainWindow::savePerson, busiItem, &abroadPersonnel::saveItem);
-//            connect(busiItem, &abroadPersonnel::addToMainWindow, this, &MainWindow::insertAbroadPer);
-//            ui->personnelList->setItemWidget(item, busiItem);
-//        }
-
-//    }
-//    else {
-//        QMap<int, traBusPersonInfo*>::iterator it;
-//        it = mTravelPerMap.find(delIndex);
-//        if (it != mTravelPerMap.end())
-//        {
-//            QListWidgetItem *item = new QListWidgetItem;
-//            perNum += 1;
-//            perIndex += 1;
-//            QString text = QString::number(perIndex);
-//            item->setSizeHint(QSize(960, 430));
-//            item->setText(text);
-
-//            traBusPersonInfo *info = it.value();
-
-//            addPersonnel *busiItem = new addPersonnel();
-//            busiItem->setPerson(info);
-//            busiItem->setIndex(perIndex);
-
-//            connect(this, &MainWindow::savePerson, busiItem, &addPersonnel::saveItem);
-//            connect(busiItem, &addPersonnel::addToMainWindow, this, &MainWindow::insertTravelPer);
-//            ui->personnelList->setItemWidget(item, busiItem);
-//        }
-//    }
 
 }
 
 //在出国人员Map中添加相应的人员信息
 void MainWindow::insertAbroadPer(int index, abroadPersonInfo *info)
 {
-    mAbroadPerMap.insert(index, info);
 }
 
 //在出差人员Map中添加相应的人员信息
 void MainWindow::insertTravelPer(int index, traBusPersonInfo *info)
 {
-    mTravelPerMap.insert(index, info);
 }
 
-void MainWindow::on_totalAccountBtn_clicked()
-{
-//    if (perNum > 0)
-//        emit savePerson();
 
-//    //这里有点问题，列表上的item比Map中已经存放的要多最后一个，应该使用线程阻塞这里，将所有的数据放入Map中，才行
-
-//    int totalAccount = 0;
-//    if (mPersonType == 2) {     //出国人员
-//        QMap<int, abroadPersonInfo*>::iterator it;
-
-//        for (it=mAbroadPerMap.begin(); it!=mAbroadPerMap.end(); it++) {
-//            totalAccount += it.value()->getTotalFee();
-//        }
-//    } else {
-//        QMap<int, traBusPersonInfo*>::iterator it;
-
-//        for (it=mTravelPerMap.begin(); it!=mTravelPerMap.end(); it++) {
-//            totalAccount += it.value()->getTotalFee();
-//        }
-//    }
-//    ui->totalAccount->setNum(totalAccount);
-}
