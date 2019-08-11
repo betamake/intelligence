@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QButtonGroup>
 #include "managers/personnelmanager.h"
+#include <allinterface.h>
 
 //差旅报销人员信息录入
 
@@ -37,8 +38,14 @@ private slots:
     void confirmSub();      //修改补贴金额不能超过标准x天数
     void addAllFee();       //添加所有金额
 
+    void on_searchPerson_clicked();
+
+    void on_arrivaPlace_editingFinished();
+
 public slots:
     void saveItem();
+    void dealUserList();//处理返回的user信息;
+    void dealDataTravel();//处理差旅标准信息;
 
 private:
     Ui::addPersonnel *ui;

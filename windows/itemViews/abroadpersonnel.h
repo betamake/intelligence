@@ -5,7 +5,7 @@
 
 //#include "windows/itemViews/abroadfeeitem.h"
 #include "managers/personnelmanager.h"
-
+#include "allinterface.h"
 namespace Ui {
 class abroadPersonnel;
 }
@@ -33,6 +33,14 @@ private slots:
     void setValue();
 
     void getDays();
+
+    void on_searchStaffBtn_clicked();
+
+    void on_staffNumber_editingFinished();
+    void dealUserData();
+
+    void on_arriveCity_editingFinished();
+    void dealdataCountriesExpense();
 
 private:
     void initInput();

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "managers/payinfomanager.h"
-
+#include <allinterface.h>
 namespace Ui {
 class addPayDialog;
 }
@@ -30,6 +30,10 @@ private slots:
     void on_saveEditBtn_clicked();
 
     void on_cardUsageCom_currentTextChanged(const QString &arg1);
+
+    void on_searchPeopleButtop_clicked();
+    void dealPayInfo();
+
 
 private:
     //规定金额处只能输入int类型

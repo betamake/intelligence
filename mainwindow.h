@@ -340,7 +340,6 @@ private:
     //
     costBase costBinfo; //费用报销基本信息
     travelBase travelBinfo;//差旅报销基本信息
-    allInterface *interface;
 //    userInterface *UserInfo;
 //    InterfaceInfo info;
 

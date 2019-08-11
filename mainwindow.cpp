@@ -95,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent) :
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
     this->initMedia();
-    interface = new allInterface(this);
 
 }
 
@@ -282,12 +281,7 @@ void MainWindow::on_accountBtn_clicked()
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->lastStepBtn->show ();
 }
-
-/**
-* @brief         账号登录查询数据库
-* @author        胡想成
-* @date          2018-请选择登录方式请选择登录方式08-15
-*/
+//账户登录操作
 void MainWindow::on_user_loginBtn_clicked()
 {
     ui->lastStepBtn->show ();//显示上一步按钮
@@ -295,10 +289,10 @@ void MainWindow::on_user_loginBtn_clicked()
     QString username = ui->user_loginEdit->text().trimmed();
     QString password = ui->user_pwdEdit->text().trimmed();
     if(!(username.isEmpty() && password.isEmpty())){
-       interface->info.setusername (username);
-       interface->info.setpassword (password);
-       interface->userInterface ();
-       connect (interface,SIGNAL(readUserDone()),this,SLOT(userLogin()));
+       allInterface::getinstance ()->info.setusername (username);
+       allInterface::getinstance ()->info.setpassword (password);
+       allInterface::getinstance ()->userInterface ();
+       connect (allInterface::getinstance (),SIGNAL(readUserDone()),this,SLOT(userLogin()));
     }else
     {
         QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("用户名密码不能为空！"));
@@ -310,7 +304,7 @@ void MainWindow::on_user_loginBtn_clicked()
 
 void MainWindow::userLogin ()
 {
-    if (interface->info.getmsg ()=="success")
+    if (allInterface::getinstance ()->info.getmsg ()=="success")
     {
         player->stop();
         this->sendPlayText("账号登录成功");
@@ -858,8 +852,8 @@ void MainWindow::on_busiBtn_clicked()
     this->sendPlayText("已选择差旅报销");
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (interface->info.getname ());
-    ui->tranDepartment->setText (interface->info.getofficeName ());
+    ui->transactor->setText (allInterface::getinstance ()->info.getname ());
+    ui->tranDepartment->setText (allInterface::getinstance ()->info.getofficeName ());
     expenseType = 12;
     mPersonType = 1;        //添加的人员类型是1，差旅人员
     setBasePage(12);
@@ -876,8 +870,8 @@ void MainWindow::on_costBtn_clicked()
     QDateTime local(QDateTime::currentDateTime());
     expenseType = 11;
     currentIndex = 11;
-    ui->costHandpEdit->setText (interface->info.getname ());
-    ui->costHandpdEdit->setText (interface->info.getofficeName ());
+    ui->costHandpEdit->setText (allInterface::getinstance ()->info.getname ());
+    ui->costHandpdEdit->setText (allInterface::getinstance ()->info.getofficeName ());
     ui->costRdateEdit->setText (local.toString("yyyy-MM-dd"));
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
@@ -899,8 +893,8 @@ void MainWindow::on_abroadBtn_clicked()
     mPersonType = 2;        //添加的人员类型是2,出国人员
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (interface->info.getname ());
-    ui->tranDepartment->setText (interface->info.getofficeName ());
+    ui->transactor->setText (allInterface::getinstance ()->info.getname ());
+    ui->tranDepartment->setText (allInterface::getinstance ()->info.getofficeName ());
     setBasePage(13);
     ui->personnelList->clear();
     perNum = 0;
@@ -1060,7 +1054,6 @@ void MainWindow::faceRegReply(QNetworkReply *reply){
     //拿到返回结果
     if(reply->error() == QNetworkReply::NoError){
         QByteArray all = reply->readAll();
-
         QJsonParseError jsonError;
         QJsonDocument doucment = QJsonDocument::fromJson(all, &jsonError);  // 转化为 JSON 文档
         if (!doucment.isNull() && (jsonError.error == QJsonParseError::NoError)) {  // 解析未发生错误
@@ -1359,6 +1352,7 @@ void MainWindow::faceDelReply(QNetworkReply *reply){
 */
 void MainWindow::dealIdCardReply(Information information,int exitCode)
 {
+
 
     qDebug()<<"exitCode:"<< exitCode << endl;
 

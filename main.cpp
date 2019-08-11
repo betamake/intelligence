@@ -11,6 +11,7 @@
 #include <QQmlApplicationEngine>
 #include <QIcon>
 #include <turing.h>
+//#include <frminput.h>
 //#include "databaseutils.h"
 //#pragma execution_character_set("utf-8")
 // 解决中文乱码的问题.
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     QTextCodec::setCodecForLocale(codec);
     MainWindow *mainWindow = new MainWindow(0);
+//    frmInput::Instance ()->hide ();
     mainWindow->show ();
 //    qmlRegisterType<Turing>("io.qt.turing", 1, 0, "Turning");
 

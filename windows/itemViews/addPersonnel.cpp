@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QDate>
-
 addPersonnel::addPersonnel(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::addPersonnel)
@@ -47,6 +46,7 @@ addPersonnel::addPersonnel(QWidget *parent) :
     connect(ui->workFee, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
     connect(ui->airportFee, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
     connect(ui->otherFees, &QLineEdit::editingFinished, this, &addPersonnel::addAllFee);
+    //接口实例
 }
 
 addPersonnel::~addPersonnel()
@@ -307,3 +307,31 @@ void addPersonnel::saveItem()
         emit added();
     }
 }
+
+void addPersonnel::on_searchPerson_clicked()
+{
+   allInterface::getinstance ()->info.setname (ui->busiPerson->text ());
+   allInterface::getinstance ()->getuserdatalist ();
+   connect (allInterface::getinstance (),SIGNAL(setUserDataListDone()),this,SLOT(dealUserList()));
+}
+void addPersonnel::dealUserList ()
+{
+    ui->departmentEdit->setText (allInterface::getinstance ()->info.getofficeName ());
+}
+
+void addPersonnel::on_arrivaPlace_editingFinished()
+{
+    QString arrivaPlace = ui->arrivaPlace->text ();
+    qDebug()<<"到达城市"<<arrivaPlace;
+    allInterface::getinstance ()->info.setarriveCity (arrivaPlace);
+    allInterface::getinstance ()->getdataTravel ();
+    connect (allInterface::getinstance (),SIGNAL(setDataTravelDone()),this,SLOT(dealDataTravel()));
+}
+void addPersonnel::dealDataTravel ()
+{
+    qDebug()<<"住宿标准"<<allInterface::getinstance ()->getinfo().getstaySubsidy ();
+    qDebug()<<"吃饭标准"<<allInterface::getinstance ()->getinfo().getmealSubsidy ();
+    qDebug()<<"交通标准"<<allInterface::getinstance ()->getinfo().gettrafficSubsidy ();
+}
+
+

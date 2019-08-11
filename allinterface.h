@@ -96,7 +96,91 @@ public:
     {
         this->reimburseName =reimburseName;
     }
+    QString getsessionid(){
+        return this->sessionid;
+    }
+    void setsessionid(const QString sessionid){
+        this->sessionid = sessionid;
 
+    }
+    QString getpeopleOutName(){
+        return this->peopleOutname;
+    }
+    void setpropleOutName(const QString peopleOutname)
+    {
+        this->peopleOutname = peopleOutname;
+    }
+    QString getCode(){
+       return this->code;
+    }
+    void setCode(const QString code){
+        this->code=code;
+    }
+    QString getRandId(){
+        return this->rankId;
+    }
+    void setRandId(const QString rankId){
+        this->rankId = rankId;
+    }
+    QString getarriveCity()
+    {
+        return this->arriveCity;
+    }
+    void setarriveCity(const QString arriveCity)
+    {
+        this->arriveCity =arriveCity;
+    }
+    int getstaySubsidy()
+    {
+        return this->staySubsidy;
+    }
+    void setstaySubsidy(const  int staySubsidy){
+        this->staySubsidy =staySubsidy;
+    }
+     int  gettrafficSubsidy(){
+        return this->trafficSubsidy;
+    }
+    void settrafficSubsidy(const  int trafficSubsidy){
+        this->trafficSubsidy =trafficSubsidy;
+    }
+     int getmealSubsidy(){
+        return this->mealSubsidy;
+    }
+    void setmealSubsidy(const  int mealSubsidy){
+        this->mealSubsidy=mealSubsidy;
+    }
+    QString getrankName(){
+        return this->rankName;
+    }
+    void setrankName(const QString rankName){
+        this->rankName=rankName;
+    }
+    int getcommonMiscellaneous(){
+        return this->commonMiscellaneous;
+    }
+    void setcommonMiscellaneous(const int commonMiscellaneous){
+        this->commonMiscellaneous=commonMiscellaneous;
+    }
+    int getaboradStaySubsidy()
+    {
+        return this->aboradStaySubsidy;
+    }
+    void setaboradStaySubsidy(const int aboradStaySubsidy)
+    {
+        this->aboradStaySubsidy=aboradStaySubsidy;
+    }
+    int getaboradMealSubsidy(){
+        return this->aboradMealSubsidy;
+    }
+    void setaboradMealSubsidy(const int aboradMealSubsidy){
+        this->aboradMealSubsidy=aboradMealSubsidy;
+    }
+    QString getcurrencyName(){
+        return this->currencyName;
+    }
+    void setcurrencyName(const QString currencyName){
+        this->currencyName=currencyName;
+    }
 
 private:
     //用户登录信息
@@ -105,17 +189,34 @@ private:
     QString msg;
     QString password;//用户密码
     //用户个人信息
+    QString code;
     QString officeName;//部门名称
     QString province; //省份
     QString city; //城市
     QString bankName; //银行
     QString bankAccount;//银行卡号
+    QString rankId;//用户级别Id
+    QString rankName;//用户级别名称
     //经费信息
     QString fundVsersion; //经费号
     QString projectName; //项目名称
     QString moneyOriginName; //经费类型;
     //业务事项
     QString reimburseName; //业务事项名字
+    //cookie
+    QString sessionid;
+    // 院外人员信息
+    QString peopleOutname; //院外人员信息名字
+    //国内差旅标准
+    QString arriveCity; //到达城市
+    int staySubsidy; //住宿标准
+    int trafficSubsidy;//交通费标准
+    int mealSubsidy; //伙食标准;
+    //国际差旅标准
+    int aboradStaySubsidy; //国外注册费用
+    int commonMiscellaneous;//公杂费
+    int aboradMealSubsidy;//国外伙食标准
+    QString currencyName;//币种
 
 
 
@@ -126,34 +227,43 @@ class allInterface : public QWidget
     Q_OBJECT
 public:
     explicit allInterface(QWidget *parent = 0);
-
+    ~allInterface();
     InterfaceInfo getinfo(){
         return info;
     }
     InterfaceInfo info;
     void userInterface(); //获取用户登录信息;
-//    void getDataPeopleOut();//获取院外人员信息.
+    void getDataPeopleOut();//获取院外人员信息.
     void getDataProject();//获取经费类型
-    void getDataReimberse();//获取业务事项.
+    void getdataTravel();//获取国内差旅标准信息;
+    void getdataCountriesExpense();//获取国外信差旅标准;
 
+    static allInterface *getinstance();
 signals:
     void readUserDone();
     void setDataProjectDone();
+    void setUserDataListDone();
+    void setdataCountriesExpenseDone();
+    void setdataTravelDone ();
 
 public slots:
     void readUserInterfaceinfo(QNetworkReply *reply); //保存用户登录信息
     void getuserdatalist(); //获取用户信息
     void setuserdatalist(QNetworkReply *reply); //保存用户信息
-//    void setDatapeopleOut(QNetworkReply *reply);//保存院外人员信息
+    void setDatapeopleOut(QNetworkReply *reply);//保存院外人员信息
     void setDataProject(QNetworkReply *reply);//保存经费类型
-    void setDataReimberse(QNetworkReply *reply);//保存
+    void setdataTravel(QNetworkReply *reply);//保存国内差旅标准信息;
+    void setdataCountriesExpense(QNetworkReply *reply);// 保存国外差旅标准信息;
+
 private:
-    QNetworkAccessManager *manager;
+
     QString ipAddress;
     CommonUtils commonutils;
 //    QList<QNetworkCookie> allcookies;
 //    QVariant varCookie;
+//    QString url;
     QNetworkCookieJar *managerJar;
+    static allInterface *instance;
 
 };
 #endif // ALLINTERFACE_H

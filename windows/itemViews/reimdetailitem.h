@@ -34,7 +34,6 @@ private:
     Ui::reimDetailItem *ui;
 
     reimDetail *detail;
-    allInterface *interface;
 };
 
 #endif // REIMDETAILITEM_H

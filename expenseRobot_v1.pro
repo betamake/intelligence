@@ -75,8 +75,9 @@ HEADERS += \
     managers/reimdetailmanager.h \
     managers/payinfomanager.h \
     managers/personnelmanager.h \
-    allinterface.h
-    costbaseinfo.h
+    allinterface.h\
+    costbaseinfo.h\
+    frminput.h
 FORMS += \
          facemangedialog.ui \
          mainwindow.ui \
@@ -89,7 +90,8 @@ FORMS += \
     windows/addpaydialog.ui \
     windows/itemViews/billitem.ui \
     windows/itemViews/reimdetailitem.ui\
-    windows/addpaydialog.ui
+    windows/addpaydialog.ui\
+    frminput.ui
 SOURCES += \
            billcheck.cpp \
            ClientSocket.cpp \
@@ -126,4 +128,5 @@ SOURCES += \
     managers/reimdetailmanager.cpp \
     managers/payinfomanager.cpp \
     managers/personnelmanager.cpp \
-    allinterface.cpp
+    allinterface.cpp\
+    frminput.cpp

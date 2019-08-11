@@ -268,3 +268,37 @@ void abroadPersonnel::saveItem()
 
     }
 }
+
+void abroadPersonnel::on_searchStaffBtn_clicked()
+{
+
+}
+
+void abroadPersonnel::on_staffNumber_editingFinished()
+{
+    QString staffname = ui->staffNumber->text ();
+    allInterface::getinstance ()->info.setname (staffname);
+    allInterface::getinstance ()->getuserdatalist ();
+    connect (allInterface::getinstance (),SIGNAL(setUserDataListDone()),this,SLOT(dealUserData()));
+}
+void abroadPersonnel::dealUserData ()
+{
+    ui->department->setText (allInterface::getinstance ()->getinfo ().getofficeName ());
+}
+
+
+void abroadPersonnel::on_arriveCity_editingFinished()
+{
+    allInterface::getinstance ()->getinfo ().setarriveCity (ui->arriveCity->text ());
+    allInterface::getinstance ()->getdataCountriesExpense ();
+    connect (allInterface::getinstance (),SIGNAL(setdataCountriesExpenseDone()),this,SLOT(dealdataCountriesExpense()));
+}
+void abroadPersonnel::dealdataCountriesExpense ()
+{
+    qDebug()<<"注册费"<<allInterface::getinstance ()->getinfo ().getaboradStaySubsidy ();
+    qDebug()<<"公杂费"<<allInterface::getinstance ()->getinfo ().getcommonMiscellaneous ();
+    qDebug()<<"伙食费"<<allInterface::getinstance ()->getinfo ().getaboradMealSubsidy ();
+    qDebug()<<"币种"<<allInterface::getinstance ()->getinfo ().getcurrencyName ();
+
+
+}

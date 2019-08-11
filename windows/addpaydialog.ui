@@ -526,6 +526,19 @@ border-color: rgb(186, 189, 182);</string>
       </item>
      </widget>
     </widget>
+    <widget class="QPushButton" name="searchPeopleButtop">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>60</y>
+       <width>89</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_2">
     <widget class="QWidget" name="widget_11" native="true">
