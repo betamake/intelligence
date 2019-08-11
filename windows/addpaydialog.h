@@ -31,9 +31,13 @@ private slots:
 
     void on_cardUsageCom_currentTextChanged(const QString &arg1);
 
+<<<<<<< HEAD
     void on_searchPeopleButtop_clicked();
     void dealPayInfo();
 
+=======
+    void on_searchBtn_clicked();
+>>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
 
 private:
     //规定金额处只能输入int类型

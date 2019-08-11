@@ -21,9 +21,16 @@ public:
 
     void setIndex(int index);
 
+    void setPerId(int idIndex);
+
+    void setPerson(abroadPersonInfo *info);
+
+    abroadPersonInfo *getPerson() const { return abroadPerInfo;}
+
 
 signals:
     void added();
+    void addToMainWindow(int index, abroadPersonInfo *info);
 
 public slots:
     void saveItem();
@@ -52,7 +59,8 @@ private:
 
     abroadPersonInfo    *abroadPerInfo;
 
-    int count;      //添加外币人民币的次数
+    int mIndex;
+
 };
 
 #endif // ABROADPERSONNEL_H

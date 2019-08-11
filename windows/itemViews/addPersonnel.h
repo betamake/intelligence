@@ -23,12 +23,18 @@ public:
 
     void setIndex(int index);
 
+    void setPerson(traBusPersonInfo *info);
+
+    traBusPersonInfo *getPerson() const { return traPerInfo;}
+
 private:
     void initItemView();    //初始化页面显示
 
 
 signals:
     void added();
+
+    void addToMainWindow(int index, traBusPersonInfo *info);
 
 private slots:
     void on_cleraBtn_clicked();
@@ -52,6 +58,8 @@ private:
 
     traBusPersonInfo *traPerInfo;
 
+    int mIndex;
+
     bool isInSchool;        //是否院内人员
     int businessdays;       //通过选日期控件获得的天数
 
@@ -64,7 +72,7 @@ private:
 
     int totalFee;           //总费用
 
-    QButtonGroup *groupBtn1;
+    QButtonGroup *groupBtn;
 };
 
 #endif // ADDPERSONNEL_H
