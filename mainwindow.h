@@ -49,6 +49,8 @@
 #include "travelbaseinfo.h"//处理差旅报销基本信息
 #include "database.h"
 #include "allinterface.h"
+#include <postdata.h>
+#include <facelogin.h>
 //#include "userinterface.h"
 #if _MSC_VER >= 1600
 
@@ -129,13 +131,10 @@ private:
 signals:
     //保存信息信号
     void saveReimDetail();      //保存费用报销明细
-<<<<<<< HEAD
 //    void emitLoginInfo(QString username,QString password);       //给userinterface 发送账号信息;
-=======
 
     void savePerson();          //保存更新人员列表
 
->>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
 private slots:
     void on_faceBtn_clicked();
     void on_idBtn_clicked();
@@ -146,6 +145,7 @@ private slots:
     void voiceReply(QNetworkReply * reply);
     void playReply(QNetworkReply * reply);
     void sendPhoto(int id,QImage image);
+    void dealFaceCheckDone(int sendIndex); //接受faceLogin的信号
     void faceDelReply(QNetworkReply * reply);
     void photoRegister(int id,QImage image);
     void on_lastStepBtn_clicked();
@@ -165,17 +165,9 @@ private slots:
     void on_RegBtn_2_clicked();
     void on_accountBtn_clicked();
     void on_user_loginBtn_clicked();
-    void on_RegAcountBtn_clicked();
-    //void on_costBodyAddBtn_clicked();
-    //void on_costBodyDelBtn_clicked();
-//    void on_pushButton_clicked();
-//    void on_pushButton_2_clicked();
     void dealIdCardReply(Information,int);
     void on_idLogin_clicked();
     void on_idCheckIgnoreBtn_clicked();
-    void on_idCheckBtn_clicked();
-    void showRegPhoto(QString);//注册页面显示图片
-    void on_pushButton_3_clicked();
     void dealGetIdCheck(User user, int currentIndex);
 
     void on_firstBtn_clicked();
@@ -185,13 +177,8 @@ private slots:
     void on_carmSkipBtn_clicked();
 
     void on_talkBtn_clicked();
-    //void on_answerBtn_clicked();
     void on_expenseBtn_clicked();
     void billScanRelpy();//处理扫面后的图片.
-    //表格信息处理
-    //void dealCost(); //处理发票信息
-//    void dealBusi(); //处理差旅信息
-//    void dealAbroad();// 处理出国信息;
 
     void on_applyButton_clicked();
 
@@ -237,6 +224,9 @@ private slots:
     void on_copyPerBtn_clicked();
 
     void on_totalAccountBtn_clicked();
+    void dealGetIdCard();//使用身份证登陆成功之后,处理返回的信息.
+
+    void on_RegAcountBtn_clicked();
 
 private:
     void setBasePage(int expenseType);
@@ -264,8 +254,6 @@ private:
     bool costType =false;
     bool busiType =false;
     bool abroadType = false;
-    //表格
-//    QTableWidget *table;
     int expenseTypeId;
     BillCheck bill; // 票据数据
     BillCheck billinfo;
@@ -315,6 +303,8 @@ private:
     //用户信息弹框
     UserInfoDialog* userInfoDialog;
     FaceMangeDialog* faceMangeDialog;
+    //人脸识别弹框
+    faceLogin *faceloginDialog;
 
     bool isFaceOk;//check if face ok
     int idFace;//1表示人脸注册， 2表示人脸检测

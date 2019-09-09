@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-
+    this->initMedia();
     initObjects();
 
     currentIndex = 0;
@@ -99,7 +99,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
-    this->initMedia();
+
+    //
 
 }
 
@@ -184,32 +185,41 @@ void MainWindow::on_faceBtn_clicked()
     this->sendPlayText("已选择人脸登录");
 
     // jump to facecheck page
-    currentIndex = 3;
-    ui->mainWidget->setCurrentIndex(currentIndex);
-    isFaceOk = false;
-    //扫描人脸次数
-    facetime = 0;
+//    currentIndex = 3;
+//    ui->mainWidget->setCurrentIndex(currentIndex);
+    faceloginDialog = new faceLogin(this);
+    faceloginDialog->show ();
+    connect(faceloginDialog,SIGNAL(faceCheckDone(int )),this,SLOT(dealFaceCheckDone(int)));
+    player->stop();
+    this->sendPlayText("登录成功");
+
+//    isFaceOk = false;
+//    //扫描人脸次数
+//    facetime = 0;
 
     // 设置取景器
     //    camera = new QCamera(this);
-    viewfinder = new QCameraViewfinder(this);
-    ui->imageLayout->addWidget(viewfinder);
-    camera->setViewfinder(viewfinder);
-    viewfinder->resize(600,350);
-    //    viewfinder->show();
 
-    imageCapture = new QCameraImageCapture(camera);
-    camera->setCaptureMode(QCamera::CaptureStillImage);
-    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-    camera->start();
+//    viewfinder = new QCameraViewfinder(this);
+//    ui->imageLayout->addWidget(viewfinder);
+//    camera->setViewfinder(viewfinder);
+//    viewfinder->resize(600,350);
+//    //    viewfinder->show();
 
-    timer = new QTimer(this);
-    timer->setInterval(5000);//1s发送一次timeout信号
-    timer->start();//启动定时器
-    connect(timer, SIGNAL(timeout()), this, SLOT(faceCheck()));
+//    imageCapture = new QCameraImageCapture(camera);
+//    camera->setCaptureMode(QCamera::CaptureStillImage);
+//    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+//    camera->start();
+//    timer = new QTimer(this);
+//    timer->setInterval(1000);//1s发送一次timeout信号
+//    timer->start();//启动定时器
+//    connect(timer, SIGNAL(timeout()), this, SLOT(faceCheck()));
 }
-
-
+void MainWindow::dealFaceCheckDone (int sendIndex)
+{
+    currentIndex=sendIndex;
+    ui->mainWidget->setCurrentIndex(currentIndex);
+}
 
 /**
 * @brief        身份证登录
@@ -309,7 +319,7 @@ void MainWindow::on_user_loginBtn_clicked()
 
 void MainWindow::userLogin ()
 {
-    if (allInterface::getinstance ()->info.getmsg ()=="success")
+    if (allInterface::getinstance ()->info.getmsg ()=="登录成功")
     {
         player->stop();
         this->sendPlayText("账号登录成功");
@@ -361,82 +371,6 @@ void MainWindow::on_carmBtn_clicked()
     camera->unlock();
     connect(imageCaptureReg, SIGNAL(imageCaptured(int,QImage)), this, SLOT(photoRegister(int,QImage)));
 }
-
-
-/**
-* @brief       账户注册插入数据库
-* @author        胡想成
-* @date          2018-08-15
-*/
-void MainWindow::on_RegAcountBtn_clicked()
-{
-    //获取字段值，封装user对象
-    QString username = ui->RegUsername_LineEdit->text().trimmed();
-    QString password = ui->RegPwd_LineEdit->text().trimmed();
-    QString phone = ui->RegPhoneNum_LineEdit->text().trimmed();
-    if(!(username.isEmpty() || password.isEmpty() || phone.isEmpty()))
-    {
-        //数据库查询一下此用户名是否存在
-        if(database.checkUsername(username))
-        {
-            regCode = 0;
-            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("用户名已被注册！"));
-        }
-        else
-        {
-            //封装数据
-            QUuid id = QUuid::createUuid();
-            QString uid = id.toString();
-            uid.remove("{").remove("}").remove("-"); // 一般习惯去掉左右花括号和连字符
-            qDebug() << "uid:"<< uid;
-
-            User user(uid,regUser.getAvater(),"",username,password,"","",phone,commonutils.getCurrentTime(),commonutils.getCurrentTime());
-
-            if(database.insertUser(user))
-            {
-                regCode = 1;//已进入账号注册状态
-                regUser = user; //authoid存在乱码问题
-                //                regUser.setAuthoId (0);
-                player->stop();
-                this->sendPlayText("账户注册成功");
-                QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("注册成功！"));
-
-                //clear
-                ui->RegUsername_LineEdit->clear ();
-                ui->RegPwd_LineEdit->clear ();
-                ui->RegPhoneNum_LineEdit->clear ();
-                ui->avaterLineEdit->clear ();
-                ui->avaterRegBoxLabel->clear();
-
-                //                this->on_facePreBtn_clicked();
-//                toCurrentPage (6);
-
-            }else
-            {
-                player->stop();
-                this->sendPlayText("帐号注册失败");
-                QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("注册失败!"));
-
-                currentIndex = 6;
-                ui->mainWidget->setCurrentIndex(currentIndex);
-                //clear
-                ui->RegUsername_LineEdit->clear ();
-                ui->RegPwd_LineEdit->clear ();
-                ui->RegPhoneNum_LineEdit->clear ();
-                ui->avaterLineEdit->clear ();
-                ui->avaterRegBoxLabel->clear();
-
-            }
-        }
-    }
-    else
-    {
-        player->stop();
-        this->sendPlayText("字段不能为空");
-        QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("字段不能为空！"));
-    }
-}
-
 
 /**
 * @brief      发送音频文本，进行语音合成
@@ -612,18 +546,19 @@ void MainWindow::toNextStep(){
         QString str = "请填写：";
 
         //由于还没有结合接口导入单据编号，人员信息，省略这三个必填项的判断
-//        if(ui->costRnumEdit->text().isEmpty()) {
-//            finished = false;
-//            str = QString("%1 %2 ").arg(str).arg("单据编号");
-//        }
-//        if(ui->costHandpEdit->text().isEmpty()) {
-//            finished = false;
-//            str = QString("%1 %2 ").arg(str).arg("经办人");
-//        }
-//        if(ui->costHandpdEdit->text().isEmpty()){
-//            finished = false;
-//            str = QString("%1 %2 ").arg(str).arg("经办人部门");
-//        }
+        if(ui->costRnumEdit->text().isEmpty()) {
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("单据编号");
+//            postData.getCostData ().setcode (ui->costRnumEdit->text().toInt ());
+        }
+        if(ui->costHandpEdit->text().isEmpty()) {
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("经办人");
+        }
+        if(ui->costHandpdEdit->text().isEmpty()){
+            finished = false;
+            str = QString("%1 %2 ").arg(str).arg("经办人部门");
+        }
         if(ui->costUseEdit->text().isEmpty()){
             finished = false;
             str = QString("%1 %2 ").arg(str).arg("用途");
@@ -720,7 +655,7 @@ void MainWindow::toCurrentPage (int pageNum)
         camera->start();
 
         //跳到人脸注册页面
-        currentIndex = 7;
+        currentIndex = 6;
         ui->mainWidget->setCurrentIndex(currentIndex);
         break;
     case 7:
@@ -796,20 +731,6 @@ void MainWindow::on_nextStepBtn_clicked()
     player->stop();
     this->sendPlayText("下一步");
     qDebug()<<currentIndex<<"111111111";
-//    switch (currentIndex) {
-//    case 3:
-//        this->deleteFace ();
-//        break;
-//    case 5:
-//        this->idCardThreadStop ();
-//        break;
-//    case 4:
-//        this->deleteAccountInfo ();
-//        break;
-
-//    default:
-//        break;
-//    }
     this->toNextStep();
 }
 /*
@@ -975,7 +896,6 @@ void MainWindow::deleteAccountInfo ()
 void MainWindow::deleteAccountReg ()
 {
     ui->RegPwd_LineEdit->clear ();
-    ui->RegPhoneNum_LineEdit->clear ();
     ui->RegUsername_LineEdit->clear ();
 }
 
@@ -1031,30 +951,24 @@ void MainWindow::photoRegister(int id,QImage image)
         manager = new QNetworkAccessManager(this);
         QUrlQuery params;
         //不能直接到第二步
-        if(regCode == 1)
-        {
-            QObject::connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(faceRegReply(QNetworkReply*)));
+        QObject::connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(faceRegReply(QNetworkReply*)));
 
-            fdata = fdata.toBase64();
-            fdata = fdata.replace("+","-");
-            fdata = fdata.replace("/","_");
-            params.addQueryItem("image",fdata);
-            params.addQueryItem("group_id","1");
-            params.addQueryItem("uid",regUser.getUid());
-            params.addQueryItem("user_info",regUser.getUsername());
-            params.addQueryItem("imageType",".jpg");
+        fdata = fdata.toBase64();
+        fdata = fdata.replace("+","-");
+        fdata = fdata.replace("/","_");
+        params.addQueryItem("image",fdata);
+        params.addQueryItem("group_id","1");
+        params.addQueryItem("uid",regUser.getUid());
+        params.addQueryItem("user_info",allInterface::getinstance ()->info.getusername ());
+        params.addQueryItem("imageType",".jpg");
 
-            QString  data = params.toString();
+        QString  data = params.toString();
 
-            //打印请求参数(测试)
-            this->printFile("reply.txt", fdata);
-            QNetworkRequest request = commonutils.getHttpRequest(address.left(25).append("/face/register/"));
-            request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
-            manager->post(request,params.toString().toUtf8());
-        }else//人脸已存在
-        {
-            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("请先注册账号！"));
-        }
+        //打印请求参数(测试)
+        this->printFile("reply.txt", fdata);
+        QNetworkRequest request = commonutils.getHttpRequest(address.left(25).append("/face/register/"));
+        request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
+        manager->post(request,params.toString().toUtf8());
     }
 }
 
@@ -1132,9 +1046,6 @@ void MainWindow::faceRegReply(QNetworkReply *reply){
                 //清空内容并定位光标
                 ui->RegUsername_LineEdit->clear();
                 ui->RegPwd_LineEdit->clear();
-                ui->RegPhoneNum_LineEdit->clear();
-                ui->avaterLineEdit->clear();
-                ui->avaterRegBoxLabel->clear();
             }
         }
     }
@@ -1155,8 +1066,9 @@ void MainWindow::faceCheck(){
         idFace = 2;//登录查人脸
 
         //take photos
+//        QCoreApplication::processEvents ();
         imageCapture->capture();
-        if(facetime < 5)
+        if(facetime < 2)
         {
             connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(sendPhoto(int,QImage)));
         qDebug() << "face check success,111111111"<< endl;
@@ -1170,8 +1082,9 @@ void MainWindow::faceCheck(){
                 timer->stop ();
             }
             camera->stop ();
-            currentIndex =7;
-            ui->mainWidget->setCurrentIndex(currentIndex);
+//            currentIndex =6;
+//            ui->mainWidget->setCurrentIndex(currentIndex);
+            toCurrentPage (6);
         }
 
     }
@@ -1253,41 +1166,21 @@ void MainWindow::faceReply(QNetworkReply *reply){
                         qDebug() << "user_info:" << user_info;
                         qDebug() << "uid:" << uid;
                         uname = user_info;
+                        isFaceOk = true;
+                        loginStatus = 1;//人脸已登录
+                        player->stop();
+                        this->sendPlayText("登录成功");
 
-                        if(!database.CheckUserByUid(uid))
+                        camera->stop();
+                        if(timer->isActive ())
                         {
-                            //数据库不存在此人脸信息
-                            //                            player->stop();
-                            //                            this->sendPlayText("人脸不存在，请重新注册！");
-                            //请求网络 删除人脸库数据
-                            this->deletePhoto(uid);
-                            //                            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("人脸不存在，请重新注册"));
-                            qDebug() << "人脸不存在，请重新注册" << uid;
-
-                        }else
-                        {
-                            isFaceOk = true;
-                            loginStatus = 1;//人脸已登录
-                            //成功登陆
-                            loginUser = database.SearchUserByUid(uid);
-                            qDebug() << "loginUser:" << loginUser.toString();
-
-                            this->showUserInfo(loginUser);
-                            player->stop();
-                            this->sendPlayText("登录成功");
-
-                            camera->stop();
-                            if(timer->isActive ())
-                            {
-                                timer->stop ();
-                            }
-                            currentIndex = 9;
-//                            ui->lastStepBtn->show ();
-//                            ui->nextStepBtn->show ();
-                            ui->mainWidget->setCurrentIndex(currentIndex);
-                            ui->lastStepBtn->hide ();
-                            ui->nextStepBtn->hide ();
+                            timer->stop ();
                         }
+                        currentIndex = 9;
+                        ui->mainWidget->setCurrentIndex(currentIndex);
+                        ui->lastStepBtn->hide ();
+                        ui->nextStepBtn->hide ();
+
                     }
                 }
             }
@@ -1375,100 +1268,117 @@ void MainWindow::dealIdCardReply(Information information,int exitCode)
     {
         idCardInformation = information;
         qDebug()<<"idCardInformation:"<< idCardInformation.toString ()<< endl;
-
-        switch (idCheckId) {
-        case 0://未登录
-            break;
-        case 1:// 注册身份证
-            ui->idName_2->setText(QString::fromStdString(information.getName()));
-            ui->idBirth_2->setText(QString::fromStdString(information.getBirthday()));
-            ui->idCardNum_2->setText(QString::fromStdString(information.getIdNumber()));
-            ui->idHomeAddre_2->setText(QString::fromStdString(information.getAddress()));
-            ui->idSex_2->setText(QString::fromStdString(information.getSex()));
-            ui->idNation_2->setText(QString::fromStdString(information.getNation()));
-            ui->idProvePlace_2->setText(QString::fromStdString(information.getSigningOrganization()));
-            ui->idStartDay_2->setText(QString::fromStdString(information.getValidityPeriodStart()));
-            ui->idEndDay_2->setText(QString::fromStdString(information.getValidityPeriodEnd()));
-            ui->idNewestAddre_2->setText(QString::fromStdString(information.getNewestAddress()));
-
-            player->stop();
-            this->sendPlayText("身份证识别成功！");
-            QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("识别成功"));
-            break;
-        case 2://身份证登录+
-            if(!idCardInformation.getName().empty())
-            {
-                qDebug()<<"idCardInformation:不为空:"<< QString::fromStdString(idCardInformation.getIdNumber())<<endl;
-                //判断information不为空
-                if(database.CheckUserByIdCard(QString::fromStdString(idCardInformation.getIdNumber())))
-                {
-                    player->stop();
-                    this->sendPlayText("身份证登录成功");
-
-                    loginStatus = 2;//身份证登录状态
-                    isIdcardChecked = true;
-                    //用户表中有此用户,可以登录
-                    loginUser  = database.SearchUserByIdNumber(QString::fromStdString(idCardInformation.getIdNumber()));
-                    loginInformation = database.searchIdCardByIdNumber(QString::fromStdString(idCardInformation.getIdNumber()));//以本地数据库注册信息为准
-                    //展示登录成功界面
-                    ui->idUsername->setText("欢迎用户："+loginUser.getUsername());
-
-                    ui->idLabel->show();
-                    ui->idLabel2->show();
-                    ui->idLabel3->show();
-                    ui->idLabel4->show();
-                    ui->idLabel5->show();
-
-                    ui->idName->setText(QString::fromStdString(information.getName()));
-                    ui->idAddress->setText(QString::fromStdString(information.getAddress()));
-                    ui->idCardNumber->setText(QString::fromStdString(information.getIdNumber()));
-                    ui->idSex->setText(QString::fromStdString(information.getSex()));
-                    ui->idPhone->setText(loginUser.getPhoneNumber());
-                    //隐藏数据显示框
-                    ui->idName->show();
-                    ui->idAddress->show();
-                    ui->idCardNumber->show();
-                    ui->idPhone->show();
-                    ui->idSex->show();
-                }
-                else
-                {
-                    player->stop();
-                    this->sendPlayText("此身份信息未认证！");
-
-                    loginStatus = 0;
-                    QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("身份信息未注册！"));
-                    currentIndex =2;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                }
-            }
-            break;
-        default:
-            break;
-        }
-
-
+        allInterface::getinstance ()->info.setidCardInformation (QString::fromStdString(information.getIdNumber ()));
+        allInterface::getinstance ()->getIdCardThread ();
+        connect (allInterface::getinstance (),SIGNAL(readUserDone()),this,SLOT(dealGetIdCard()));
     }
-    else
-    {
+//        switch (idCheckId) {
+//        case 0://未登录
+//            break;
+//        case 1:// 注册身份证
+//            ui->idName_2->setText(QString::fromStdString(information.getName()));
+//            ui->idBirth_2->setText(QString::fromStdString(information.getBirthday()));
+//            ui->idCardNum_2->setText(QString::fromStdString(information.getIdNumber()));
+//            ui->idHomeAddre_2->setText(QString::fromStdString(information.getAddress()));
+//            ui->idSex_2->setText(QString::fromStdString(information.getSex()));
+//            ui->idNation_2->setText(QString::fromStdString(information.getNation()));
+//            ui->idProvePlace_2->setText(QString::fromStdString(information.getSigningOrganization()));
+//            ui->idStartDay_2->setText(QString::fromStdString(information.getValidityPeriodStart()));
+//            ui->idEndDay_2->setText(QString::fromStdString(information.getValidityPeriodEnd()));
+//            ui->idNewestAddre_2->setText(QString::fromStdString(information.getNewestAddress()));
 
-        player->stop();
-        this->sendPlayText("身份证信息读取有误！");
-        QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("身份证读取有误！"));
-        //跳转到登录选择页
-        //身份信息读取有误后回到原页面
-        if(idCheckId==1)
-        {
-            toCurrentPage (7);}
-        else
-        {
-//            on_idBtn_clicked();
-            currentIndex =2;
-            ui->mainWidget->setCurrentIndex (currentIndex);
-        }
-        //        ui->mainWidget->setCurrentIndex(2);
+//            player->stop();
+//            this->sendPlayText("身份证识别成功！");
+//            QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("识别成功"));
+//            break;
+//        case 2://身份证登录+
+//            if(!idCardInformation.getName().empty())
+//            {
+//                qDebug()<<"idCardInformation:不为空:"<< QString::fromStdString(idCardInformation.getIdNumber())<<endl;
+//                //判断information不为空
+//                if(database.CheckUserByIdCard(QString::fromStdString(idCardInformation.getIdNumber())))
+//                {
+//                    player->stop();
+//                    this->sendPlayText("身份证登录成功");
+
+//                    loginStatus = 2;//身份证登录状态
+//                    isIdcardChecked = true;
+//                    //用户表中有此用户,可以登录
+//                    loginUser  = database.SearchUserByIdNumber(QString::fromStdString(idCardInformation.getIdNumber()));
+//                    loginInformation = database.searchIdCardByIdNumber(QString::fromStdString(idCardInformation.getIdNumber()));//以本地数据库注册信息为准
+//                    //展示登录成功界面
+//                    ui->idUsername->setText("欢迎用户："+loginUser.getUsername());
+
+//                    ui->idLabel->show();
+//                    ui->idLabel2->show();
+//                    ui->idLabel3->show();
+//                    ui->idLabel4->show();
+//                    ui->idLabel5->show();
+
+//                    ui->idName->setText(QString::fromStdString(information.getName()));
+//                    ui->idAddress->setText(QString::fromStdString(information.getAddress()));
+//                    ui->idCardNumber->setText(QString::fromStdString(information.getIdNumber()));
+//                    ui->idSex->setText(QString::fromStdString(information.getSex()));
+//                    ui->idPhone->setText(loginUser.getPhoneNumber());
+//                    //隐藏数据显示框
+//                    ui->idName->show();
+//                    ui->idAddress->show();
+//                    ui->idCardNumber->show();
+//                    ui->idPhone->show();
+//                    ui->idSex->show();
+//                }
+//                else
+//                {
+//                    player->stop();
+//                    this->sendPlayText("此身份信息未认证！");
+
+//                    loginStatus = 0;
+//                    QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("身份信息未注册！"));
+//                    currentIndex =2;
+//                    ui->mainWidget->setCurrentIndex(currentIndex);
+//                }
+//            }
+//            break;
+//        default:
+//            break;
+//        }
+
+
+//    }
+//    else
+//    {
+
+//        player->stop();
+//        this->sendPlayText("身份证信息读取有误！");
+//        QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("身份证读取有误！"));
+//        //跳转到登录选择页
+//        //身份信息读取有误后回到原页面
+//        if(idCheckId==1)
+//        {
+//            toCurrentPage (7);}
+//        else
+//        {
+////            on_idBtn_clicked();
+//            currentIndex =2;
+//            ui->mainWidget->setCurrentIndex (currentIndex);
+//        }
+//        //        ui->mainWidget->setCurrentIndex(2);
+//    }
+}
+void MainWindow::dealGetIdCard ()
+{
+    qDebug()<<"登录成功信息"<<allInterface::getinstance ()->info.getmsg ();
+    if(allInterface::getinstance ()->info.getmsg ()=="登录成功")
+    {
+        loginStatus = 2;//身份证登录状态
+        isIdcardChecked = true;
+        currentIndex = 9;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+        ui->lastStepBtn->hide ();
+        ui->nextStepBtn->hide ();
     }
 }
+
 /**
 * @function   sendPhoto
 * @brief         发送图片查找人脸库
@@ -1613,7 +1523,8 @@ void MainWindow::billReply(QNetworkReply * reply){
                         QPixmap pixmap = QPixmap::fromImage(img);
                         pixmap.save(fileDir);
                         bldir.append(billname);//保存票据识别的附件名称
-
+                        allInterface::getinstance ()->info.setuploadPath (billdir);
+                        allInterface::getinstance ()->getUploadFile ();
                         int billType = 0;
                         if(object.contains("type")){
                             QJsonValue typeVal = object.value("type");
@@ -1855,56 +1766,6 @@ void MainWindow::billReply(QNetworkReply * reply){
                         connect(billItemView, &billItem::openBillItem, this, &MainWindow::openBillItemDialog);
                         connect(billItemView, &billItem::deleteBillItem, this, &MainWindow::deleteBillItemView);
 
-                        //添加一行数据
-//                        table = ui->billTable;
-//                        int rowIndex = table->rowCount(); //获取行号
-//                        table->setRowCount(rowIndex + 1);
-//                        table->setRowHeight(rowIndex, 24);//设置行的高度
-//                        QTableWidgetItem *item = new QTableWidgetItem (type);
-//                        table->setItem(rowIndex, 0, item);
-//                        item = new QTableWidgetItem (bill.getBillcontent());
-//                        //                        item = new QTableWidgetItem (billContent);
-//                        table->setItem(rowIndex, 1, item);
-//                        item->setIcon(QIcon("/home/intelligence/qt/see.png"));
-//                        //在Table中显示上传的票据图片
-//                        QLabel *label = new QLabel(this);
-//                        pixmap.scaled(label->size(),Qt::KeepAspectRatio);
-//                        label->setScaledContents(true);
-//                        label->setPixmap(pixmap);
-//                        table->setCellWidget(rowIndex, 1, label);
-
-//                        //                        item = new QTableWidgetItem (billDate);
-//                        table->setItem(rowIndex, 1, item);
-//                        item = new QTableWidgetItem (bill.getBilldate());
-
-//                        table->setItem(rowIndex, 2, item);
-//                        item = new QTableWidgetItem (user);
-//                        //                        item = new QTableWidgetItem (money);
-
-//                        table->setItem(rowIndex, 3, item);
-//                        item = new QTableWidgetItem (bill.getBillmoney());
-
-//                        table->setItem(rowIndex, 4, item);
-//                        item = new QTableWidgetItem (start);
-
-//                        table->setItem(rowIndex, 5, item);
-//                        item = new QTableWidgetItem (end);
-//                        //                        item = new QTableWidgetItem (other);
-
-//                        table->setItem(rowIndex, 6, item);
-//                        item = new QTableWidgetItem (bill.getBillother());
-
-//                        table->setItem(rowIndex, 7, item);
-//                        item = new QTableWidgetItem (bill.getBillnumber());
-
-//                        table->setItem(rowIndex, 8, item);
-//                        item = new QTableWidgetItem (bill.getBillcode());
-
-//                        table->setItem(rowIndex, 9, item);
-//                        item = new QTableWidgetItem (bill.getBillcheckcode());
-
-//                        connect(table,SIGNAL(itemClicked(QTableWidgetItem*)),this,SLOT(showBillimg(QTableWidgetItem*)));
-
                     }
                 }
             }
@@ -1914,21 +1775,6 @@ void MainWindow::billReply(QNetworkReply * reply){
 
 }
 
-///**
-//* @brief      查看电子版票据
-//* @author        ljh
-//* @date        2018-09-12
-//*/
-//void MainWindow::showBillimg(QTableWidgetItem *img)
-//{
-//    billInfoDialog = new billinfodialog(this);
-
-//    int index=img->row();
-//    if(img->column()==1){
-//        billInfoDialog->showbill(blpath.at(index));
-//        billInfoDialog->show();
-//    }
-//}
 
 /**
 * @brief      语音识别返回处理
@@ -2598,180 +2444,6 @@ void MainWindow::onLocalThreadDestroy(QObject *obj)
     }
 }
 
-/**
-* @brief         注册时认证身份
-* @author        胡帅成
-* @date        2018-09-11
-*/
-void MainWindow::on_idCheckBtn_clicked()
-{
-    //判断线程状态
-    if(m_currentRunLoaclThread)
-    {
-        m_currentRunLoaclThread->stopImmediately();
-    }
-    //插入身份证数据
-    //封装身份注册信息
-    string name = ui->idName_2->text().trimmed().toStdString();
-    string birthday =ui->idBirth_2->text().trimmed().toStdString();
-    string idNumber =ui->idCardNum_2->text().trimmed().toStdString();
-    string address = ui->idHomeAddre_2->text().trimmed().toStdString();
-    string sex =ui->idSex_2->text().trimmed().toStdString();
-    string nation =ui->idNation_2->text().trimmed().toStdString();
-    string signingOrganization =ui->idProvePlace_2->text().trimmed().toStdString();
-    string startDay =ui->idStartDay_2->text().trimmed().toStdString();
-    string endDay =ui->idEndDay_2->text().trimmed().toStdString();
-    string newAdd =ui->idNewestAddre_2->text().trimmed().toStdString();
-
-    qDebug() << "------regInformation sex:------"<<ui->idSex_2->text().trimmed()<< endl;
-    qDebug() << "------regInformation nation:------"<<ui->idNation_2->text().trimmed()<< endl;
-
-
-    //插入身份证数据  认证之前先判断是否已存在此用户
-    if(!database.CheckUserByIdCard(QString::fromStdString(idCardInformation.getIdNumber())))
-    {
-        //更新身份信息
-        idCardInformation.setName(name);
-        idCardInformation.setSex(ui->idSex_2->text().trimmed().toStdString());
-        idCardInformation.setNation(nation);
-        idCardInformation.setSex(sex);
-        idCardInformation.setBirthday(birthday);
-        idCardInformation.setAddress(address);
-        idCardInformation.setSigningOrganization(signingOrganization);
-        idCardInformation.setIdNumber(idNumber);
-        idCardInformation.setValidityPeriodStart(startDay);
-        idCardInformation.setValidityPeriodEnd(endDay);
-        idCardInformation.setNewestAddress(newAdd);
-        //更新注册账户
-        regUser.setIdCard(ui->idCardNum_2->text().trimmed());
-        //        regUser.setAuthoId (1);
-        qDebug() << "------regUser------"<<regUser.toString()<< endl;
-        qDebug() << "------regInformation------"<<idCardInformation.toString()<< endl;
-
-
-        if(database.checkIdCargByIdNumber(QString::fromStdString(idCardInformation.getIdNumber())))
-        {
-            if(database.updateIdCard(idCardInformation))
-            {
-                //插入idcard表，如果已经存在，就更新
-                if(database.updateUser(regUser))
-                {
-                    //更新user表字段
-                    regCode = 3;
-                    QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("身份信息更新成功!"));
-
-                    player->stop();
-                    this->sendPlayText("身份信息更新成功");
-
-                    if(loginStatus==0)
-                    {
-                        currentIndex = 2;
-                        ui->mainWidget->setCurrentIndex(currentIndex);
-                    }
-                    else
-                    {
-                        currentIndex =9;
-                        ui->mainWidget->setCurrentIndex(currentIndex);
-                        //需要更新一下user
-                        this->showUserInfo(loginUser);
-
-                    }
-
-                }else
-                {
-                    regCode = 2;
-                    player->stop();
-                    this->sendPlayText("身份信息更新失败");
-                    QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("身份信息更新失败!"));
-                    currentIndex = 2;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                }
-            }
-            else
-            {
-                regCode = 2;
-                player->stop();
-                this->sendPlayText("身份信息更新失败");
-                QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("身份信息更新失败!"));
-                currentIndex = 2;
-                ui->mainWidget->setCurrentIndex(currentIndex);
-            }
-        }
-        else
-        {
-            //如果不存在，则插入idcard表并更新user的idcard字段
-            if(database.insertIdCard(idCardInformation) && database.updateUser (regUser))
-            {
-                idCheckId = 1;
-                regCode = 3;
-                player->stop();
-                this->sendPlayText("身份证认证成功");
-                QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("身份证认证成功!"));
-
-                //如果未登录,则为注册用户
-                if(loginStatus==0)
-                {
-                    currentIndex = 2;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                }else
-                {
-                    //已登录用户,认证身份证后返回
-                    isIdcardChecked = true;//身份已认证
-                    currentIndex = 9;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                    this->showUserInfo(loginUser);
-                }
-
-            }else
-            {
-                regCode = 2;
-                player->stop();
-                this->sendPlayText("身份证认证失败");
-                QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("身份证认证失败!"));
-
-                //如果未登录,则为注册用户
-                if(loginStatus==0)
-                {
-                    currentIndex = 2;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                }else
-                {
-                    //已登录用户,直接返回
-                    currentIndex = 9;
-                    ui->mainWidget->setCurrentIndex(currentIndex);
-                    this->showUserInfo(loginUser);
-                }
-            }
-        }
-    }
-    else
-    {
-        regCode=2;
-        player->stop();
-        this->sendPlayText("身份证信息已注册");
-        QMessageBox::information(this, QString::fromUtf8("成功"),QString::fromUtf8("此身份证信息已存在!"));
-
-        this->idCardThreadStop();
-        //判断登录状态
-        if(loginStatus == 0)
-        {
-            currentIndex =2;
-            ui->mainWidget->setCurrentIndex(2);
-            player->stop();
-            this->sendPlayText("账号注册完成");
-        }else
-        {
-            //            已登录状态
-            currentIndex = 9 ;
-            ui->mainWidget->setCurrentIndex(currentIndex);
-            showUserInfo (loginUser);
-
-        }
-
-    }
-
-}/*
- }*/
 
 
 
@@ -2811,77 +2483,77 @@ void MainWindow::idCardThreadStop()
 * @author        胡帅成
 * @date        2018-09-17
 */
-void MainWindow::showRegPhoto(QString filePath)
-{
-    qDebug() << "路径:"<< filePath;
-    if(!filePath.isEmpty())
-    {
-        QPixmap avater;
-        avater.load(filePath);
+//void MainWindow::showRegPhoto(QString filePath)
+//{
+//    qDebug() << "路径:"<< filePath;
+//    if(!filePath.isEmpty())
+//    {
+//        QPixmap avater;
+//        avater.load(filePath);
 
-        QLabel* avaterRegLabel = ui->mainWidget->findChild<QLabel*>("avaterRegLabel"); //根据子控件的名称查找子控件
-        avaterRegLabel->setPixmap(avater);
-        //        ui->avaterRegLabel2->setPixmap(avater);
-    }
-
-
-}
+//        QLabel* avaterRegLabel = ui->mainWidget->findChild<QLabel*>("avaterRegLabel"); //根据子控件的名称查找子控件
+//        avaterRegLabel->setPixmap(avater);
+//        //        ui->avaterRegLabel2->setPixmap(avater);
+//    }
 
 
-void MainWindow::on_pushButton_3_clicked()
-{
-    qDebug() << "选择文件";
-    //定义文件对话框类
-    QFileDialog *fileDialog = new QFileDialog(this);
-    //定义文件对话框标题
-    fileDialog->setWindowTitle(tr("打开图片"));
-    //设置默认文件路径    fileDialog->setDirectory(".");
-    //设置文件过滤器
-    fileDialog->setNameFilter(tr("Images(*.jpg *.jpeg)"));
-    //设置视图模式
-    fileDialog->setViewMode(QFileDialog::Detail);
-    QStringList fileNames;
-    if(fileDialog->exec()){
-        fileNames = fileDialog->selectedFiles();
-    }
-    //    QString fileName;
-    avaterFilePath = fileNames.at(0);
-    qDebug() <<"avater avaterFilePath: "<< avaterFilePath;
-    ui->avaterLineEdit->setText(avaterFilePath);
+//}
 
-    if(!avaterFilePath.isEmpty())
-    {
-        //判断路径的合法性
-        //        QFile file(avaterFilePath);
-        QFile* file= new QFile(avaterFilePath); //file为二进制数据文件名
 
-        if (!file->open(QIODevice::ReadOnly))
-        {
-            //            file.close();
-            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("图片打开失败!"));
-            ui->avaterLineEdit->clear();
-            ui->avaterRegBoxLabel->clear();
-            //            qDebug() << "图片打开失败";
-            //            currentIndex = 5;
-            //            ui->mainWidget->setCurrentIndex(currentIndex);
-            //            ui->avaterLineEdit->clear();
-        }else
-        {
-            //插入头像
-            QByteArray data;
-            //            file.open(QIODevice::ReadOnly);
-            data = file->readAll();
-            QVariant imageData(data);
-            regUser.setAvater(imageData);
+//void MainWindow::on_pushButton_3_clicked()
+//{
+//    qDebug() << "选择文件";
+//    //定义文件对话框类
+//    QFileDialog *fileDialog = new QFileDialog(this);
+//    //定义文件对话框标题
+//    fileDialog->setWindowTitle(tr("打开图片"));
+//    //设置默认文件路径    fileDialog->setDirectory(".");
+//    //设置文件过滤器
+//    fileDialog->setNameFilter(tr("Images(*.jpg *.jpeg)"));
+//    //设置视图模式
+//    fileDialog->setViewMode(QFileDialog::Detail);
+//    QStringList fileNames;
+//    if(fileDialog->exec()){
+//        fileNames = fileDialog->selectedFiles();
+//    }
+//    //    QString fileName;
+//    avaterFilePath = fileNames.at(0);
+//    qDebug() <<"avater avaterFilePath: "<< avaterFilePath;
+//    ui->avaterLineEdit->setText(avaterFilePath);
 
-            QPixmap avater;
-            avater.loadFromData(data,"jpg");
-            ui->avaterRegBoxLabel->setPixmap(avater);
-            ui->avaterRegBoxLabel->setScaledContents(true);
-        }
-        file->close();
-    }
-}
+//    if(!avaterFilePath.isEmpty())
+//    {
+//        //判断路径的合法性
+//        //        QFile file(avaterFilePath);
+//        QFile* file= new QFile(avaterFilePath); //file为二进制数据文件名
+
+//        if (!file->open(QIODevice::ReadOnly))
+//        {
+//            //            file.close();
+//            QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("图片打开失败!"));
+//            ui->avaterLineEdit->clear();
+//            ui->avaterRegBoxLabel->clear();
+//            //            qDebug() << "图片打开失败";
+//            //            currentIndex = 5;
+//            //            ui->mainWidget->setCurrentIndex(currentIndex);
+//            //            ui->avaterLineEdit->clear();
+//        }else
+//        {
+//            //插入头像
+//            QByteArray data;
+//            //            file.open(QIODevice::ReadOnly);
+//            data = file->readAll();
+//            QVariant imageData(data);
+//            regUser.setAvater(imageData);
+
+//            QPixmap avater;
+//            avater.loadFromData(data,"jpg");
+//            ui->avaterRegBoxLabel->setPixmap(avater);
+//            ui->avaterRegBoxLabel->setScaledContents(true);
+//        }
+//        file->close();
+//    }
+//}
 
 void MainWindow::dealGetIdCheck(User user, int currentIndex)
 {
@@ -2891,11 +2563,6 @@ void MainWindow::dealGetIdCheck(User user, int currentIndex)
     toCurrentPage (7);
 }
 
-/**
-* @brief         首页
-* @author        胡帅成
-* @date        2018-10-11
-*/
 void MainWindow::on_firstBtn_clicked()
 {
 //    currentIndex=0;
@@ -3581,4 +3248,12 @@ void MainWindow::on_totalAccountBtn_clicked()
 //        }
 //    }
 //    ui->totalAccount->setNum(totalAccount);
+}
+
+void MainWindow::on_RegAcountBtn_clicked()
+{
+    allInterface::getinstance ()->info.setusername (ui->RegUsername_LineEdit->text ());
+    allInterface::getinstance ()->info.setpassword (ui->RegPwd_LineEdit->text ());
+    currentIndex =7;
+    ui->mainWidget->setCurrentIndex(currentIndex);
 }

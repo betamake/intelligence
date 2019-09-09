@@ -36,19 +36,27 @@ QString CommonUtils::getCurrentTime()
 QNetworkRequest CommonUtils::getHttpRequest(QString url){
     QNetworkRequest request;
     request.setUrl(QUrl(url));
-//    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded;charset=utf-8");
     qDebug() <<"getHttpRequest"<<url;
-    //    request.setRawHeader("Accept","text/html, application/xhtml+xml, */*");
-    //    request.setRawHeader("Accept-Language","zh-CN");
-    //    request.setRawHeader("X-Requested-With","XMLHttpRequest");
+    request.setRawHeader("Accept","text/html, application/xhtml+xml, */*");
+    request.setRawHeader("Accept-Language","zh-CN");
     //    request.setRawHeader("User-Agent","Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
-    //    request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
+    request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
     //    request.setRawHeader("Accept-Encoding","gzip,deflate");
     //    request.setRawHeader("Host","localhost:8888");
     //    request.setRawHeader("Content-Length","18");
     //    request.setRawHeader("Connection","Keep-Alive");
     //    request.setRawHeader("Cache-Control","no-cache");
     return request;
+}
+QNetworkRequest CommonUtils::getHttpRequestRemote (QString url)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl(url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json;charset=utf-8");
+    request.setRawHeader("X-Requested-With","XMLHttpRequest");
+    qDebug() <<"getHttpRequest"<<url;
+    return request;
+
 }
 
 /**

@@ -354,7 +354,6 @@ void addPersonnel::saveItem()
     }
 }
 
-<<<<<<< HEAD
 void addPersonnel::on_searchPerson_clicked()
 {
    allInterface::getinstance ()->info.setname (ui->busiPerson->text ());
@@ -369,8 +368,12 @@ void addPersonnel::dealUserList ()
 void addPersonnel::on_arrivaPlace_editingFinished()
 {
     QString arrivaPlace = ui->arrivaPlace->text ();
+    QString dateBegin = ui->leaveDateEdit->text ();
+    QString dateEnd = ui->backDateEdit->text ();
     qDebug()<<"到达城市"<<arrivaPlace;
     allInterface::getinstance ()->info.setarriveCity (arrivaPlace);
+    allInterface::getinstance ()->info.setdateBegin (dateBegin);
+    allInterface::getinstance ()->info.setdateEnd (dateEnd);
     allInterface::getinstance ()->getdataTravel ();
     connect (allInterface::getinstance (),SIGNAL(setDataTravelDone()),this,SLOT(dealDataTravel()));
 }
@@ -382,7 +385,6 @@ void addPersonnel::dealDataTravel ()
 }
 
 
-=======
 void addPersonnel::setPerson(traBusPersonInfo *info)
 {
     ui->busiPerson->setText(info->getStaffName());
@@ -398,4 +400,4 @@ void addPersonnel::setPerson(traBusPersonInfo *info)
     ui->fundsTypeEdit->setText(info->getBudgetType());
 
 }
->>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
+

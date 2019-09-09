@@ -284,7 +284,6 @@ void abroadPersonnel::saveItem()
     }
 }
 
-<<<<<<< HEAD
 void abroadPersonnel::on_searchStaffBtn_clicked()
 {
 
@@ -316,8 +315,7 @@ void abroadPersonnel::dealdataCountriesExpense ()
     qDebug()<<"伙食费"<<allInterface::getinstance ()->getinfo ().getaboradMealSubsidy ();
     qDebug()<<"币种"<<allInterface::getinstance ()->getinfo ().getcurrencyName ();
 
-
-=======
+}
 void abroadPersonnel::setPerson(abroadPersonInfo *info)
 {
     ui->staffName->setText(info->getStaffName());
@@ -337,5 +335,4 @@ void abroadPersonnel::setPerson(abroadPersonInfo *info)
     ui->budgetNumEdit->setText(QString::number(info->getBudgetNum()));
     ui->budgetNameEdit->setText(info->getBudgetName());
     ui->budgetTypeEdit->setText(info->getBudgetType());
->>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
 }

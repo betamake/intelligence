@@ -46,8 +46,7 @@ void reimDetailItem::saveDetail()
 
 void reimDetailItem::on_searchBudgetBtn_clicked()
 {
-    QString budgetNumber = ui->budgetNumber->text ();
-    allInterface::getinstance ()->info.setfundVersion (budgetNumber);
+    allInterface::getinstance ()->info.setprojectName (ui->budgetName->text ());
     allInterface::getinstance ()->getDataProject ();
 
 

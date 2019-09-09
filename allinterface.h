@@ -12,6 +12,7 @@
 #include <QList>
 #include <QUrl>
 #include <QNetworkCookieJar>
+#include <QFile>
 class InterfaceInfo{
 public:
     QString getname(){
@@ -181,13 +182,67 @@ public:
     void setcurrencyName(const QString currencyName){
         this->currencyName=currencyName;
     }
+    QString getpubExep(){
+        return this->pubExep;
+    }
+    void setpubExep(const QString pubExep){
+        this->pubExep=pubExep;
+    }
+    QString getmodulus(){
+        return this->modulus;
+    }
+    void setmodulus(const QString modulus){
+        this->modulus=modulus;
+    }
+    QString getpubKeys(){
+        return this->pubKeys;
+    }
+    void setpubKeys(const QString pubKeys){
+        this->pubKeys=pubKeys;
+    }
+    QString getdateBegin(){
+        return this->dateBegin;
+    }
+    void setdateBegin(const QString dateBegin){
+        this->dateBegin=dateBegin;
+    }
+    QString getdateEnd(){
+        return this->dateEnd;
+    }
+    void setdateEnd(const QString dateEnd){
+        this->dateEnd=dateEnd;
+    }
+    QString getuploadName(){
+        return this->uploadName;
+    }
+    void setuploadName(const QString uploadName){
+        this->uploadName=uploadName;
+    }
+    QString getuploadPath(){
+        return this->uploadPath;
+    }
+    void setuploadPath(const QString uploadPath){
+        this->uploadPath=uploadPath;
+    }
+    QString getidCardInformation(){
+        return this->idCardInformation;
+    }
+    void setidCardInformation(const QString idCardInformation){
+        this->idCardInformation=idCardInformation;
+    }
+
 
 private:
+    //获取公钥
+    QString pubExep;
+    QString modulus;
+    QString pubKeys;
     //用户登录信息
     QString name; //用户名
     QString username; //登录名
     QString msg;
     QString password;//用户密码
+    QString idCardInformation;//身份证ID
     //用户个人信息
     QString code;
     QString officeName;//部门名称
@@ -208,6 +263,8 @@ private:
     // 院外人员信息
     QString peopleOutname; //院外人员信息名字
     //国内差旅标准
+    QString dateBegin; //开始时间
+    QString dateEnd;  //结束时间
     QString arriveCity; //到达城市
     int staySubsidy; //住宿标准
     int trafficSubsidy;//交通费标准
@@ -217,6 +274,10 @@ private:
     int commonMiscellaneous;//公杂费
     int aboradMealSubsidy;//国外伙食标准
     QString currencyName;//币种
+    //上传文件返回
+    QString uploadName; //上文文件名字
+    QString uploadPath;//上传文件路径
+
 
 
 
@@ -232,11 +293,14 @@ public:
         return info;
     }
     InterfaceInfo info;
+    void getPubKeys();//获取公钥
     void userInterface(); //获取用户登录信息;
     void getDataPeopleOut();//获取院外人员信息.
     void getDataProject();//获取经费类型
     void getdataTravel();//获取国内差旅标准信息;
     void getdataCountriesExpense();//获取国外信差旅标准;
+    void getUploadFile();//上传文件
+    void getIdCardThread();//获取身份证登录信息
 
     static allInterface *getinstance();
 signals:
@@ -254,14 +318,14 @@ public slots:
     void setDataProject(QNetworkReply *reply);//保存经费类型
     void setdataTravel(QNetworkReply *reply);//保存国内差旅标准信息;
     void setdataCountriesExpense(QNetworkReply *reply);// 保存国外差旅标准信息;
+    void setPubkeys(QNetworkReply *reply); //保存公钥
+    void setUploadFile(QNetworkReply *reply);//保存
+    void setIdCardThread(QNetworkReply *reply);//保存身份证返回信息;
 
 private:
 
     QString ipAddress;
     CommonUtils commonutils;
-//    QList<QNetworkCookie> allcookies;
-//    QVariant varCookie;
-//    QString url;
     QNetworkCookieJar *managerJar;
     static allInterface *instance;
 

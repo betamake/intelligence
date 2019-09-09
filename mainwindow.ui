@@ -310,11 +310,7 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-<<<<<<< HEAD
-      <number>17</number>
-=======
-      <number>16</number>
->>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
+      <number>7</number>
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -1061,7 +1057,7 @@
         <enum>QFrame::StyledPanel</enum>
        </property>
        <property name="text">
-        <string>账号注册</string>
+        <string>人脸补录,请输入账号和密码</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1092,42 +1088,13 @@
        <property name="title">
         <string/>
        </property>
-       <widget class="QLabel" name="avaterRegBoxLabel">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>110</y>
-          <width>141</width>
-          <height>111</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Panel</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>60</y>
-          <width>71</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>选择头像</string>
-        </property>
-       </widget>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>220</x>
-          <y>140</y>
+          <x>130</x>
+          <y>120</y>
           <width>261</width>
-          <height>41</height>
+          <height>71</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
@@ -1156,45 +1123,16 @@
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>220</x>
-          <y>180</y>
+          <x>130</x>
+          <y>60</y>
           <width>261</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="0">
-          <widget class="QLabel" name="upwdlabel_4">
-           <property name="font">
-            <font>
-             <family>宋体</family>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>手机:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="RegPhoneNum_LineEdit">
-           <property name="echoMode">
-            <enum>QLineEdit::Normal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>100</y>
-          <width>261</width>
-          <height>41</height>
+          <height>61</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="RegUsername_LineEdit"/>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="unmlabel_3">
            <property name="font">
@@ -1207,9 +1145,6 @@
             <string>用户名:</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="RegUsername_LineEdit"/>
          </item>
         </layout>
        </widget>
@@ -1230,25 +1165,6 @@
         </property>
         <property name="text">
          <string>注册</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="avaterLineEdit">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>55</y>
-          <width>321</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Panel</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </widget>

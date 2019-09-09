@@ -182,7 +182,6 @@ void addPayDialog::on_cardUsageCom_currentTextChanged(const QString &arg1)
 
 }
 
-<<<<<<< HEAD
 void addPayDialog::on_searchPeopleButtop_clicked()
 {
     allInterface::getinstance ()->info.setname (ui->bankPayee->text ());
@@ -195,9 +194,8 @@ void addPayDialog::dealPayInfo ()
     ui->bankCity->setText (allInterface::getinstance ()->info.getcity ());
     ui->bank->setText (allInterface::getinstance ()->info.getbankName ());
     ui->bankcardNumber->setText (allInterface::getinstance ()->info.getbankAccount ());
-=======
+}
 void addPayDialog::on_searchBtn_clicked()
 {
->>>>>>> dd504d932f0390321f85c892a106e4f9649e4076
 
 }

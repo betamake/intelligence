@@ -27,12 +27,15 @@ void scanDialog::setBillCheck(BillCheck info)
 {
     ui->accountEdit->setText(info.getBillmoney());
     ui->typeEdit->setText(info.getBilltype());
+    ui->lineEdit_2->setText (info.getBillnumber ());
+    ui->lineEdit_3->setText (info.getBillcontent ());
 }
 
 void scanDialog::on_buttonScan_clicked()
 {
     qDebug() << "开始扫描";
     ui->label->setText ("开始扫描");
+    ui->buttonScan->setText ("再添加一张");
     thread->start ();
     connect (thread,&ScanThread::isDone,this,&scanDialog::dealDone);
     QThread::sleep (2);
@@ -45,12 +48,10 @@ void scanDialog::on_buttonScan_clicked()
 
 
 
-void scanDialog::on_buttonClose_clicked()
-{
-    this->billInfoRead ();
-    this->dealDone ();
-    close();
-}
+//void scanDialog::on_buttonClose_clicked()
+//{
+//    this->billInfoRead ();
+//}
 
 void scanDialog::dealDone ()
 {
@@ -108,3 +109,9 @@ void scanDialog::billInfoRead ()
 //    billinfo.setbuyerAdress ("");
 //}
 
+
+void scanDialog::on_ExitButton_clicked()
+{
+    this->dealDone ();
+    close();
+}

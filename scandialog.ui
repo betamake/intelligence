@@ -18,25 +18,12 @@
     <rect>
      <x>39</x>
      <y>610</y>
-     <width>111</width>
+     <width>81</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>开始扫描并识别</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="buttonClose">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>610</y>
-     <width>80</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>保存并退出</string>
+    <string>扫描识别</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -441,6 +428,19 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ExitButton">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>610</y>
+     <width>89</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>退出</string>
    </property>
   </widget>
  </widget>
