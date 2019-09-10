@@ -79,7 +79,6 @@ HEADERS += \
     costbaseinfo.h\
     frminput.h \
     postdata.h \
-    facelogin.h \
     cameradevice.h
 FORMS += \
          facemangedialog.ui \
@@ -94,8 +93,7 @@ FORMS += \
     windows/itemViews/billitem.ui \
     windows/itemViews/reimdetailitem.ui\
     windows/addpaydialog.ui\
-    frminput.ui \
-    facelogin.ui
+    frminput.ui
 SOURCES += \
            billcheck.cpp \
            ClientSocket.cpp \
@@ -135,5 +133,7 @@ SOURCES += \
     allinterface.cpp\
     frminput.cpp \
     postdata.cpp \
-    facelogin.cpp \
     cameradevice.cpp
+#INCLUDEPATH += ./include
+#LIBS += libcrypto.lib \
+#           libssl.lib

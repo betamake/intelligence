@@ -50,7 +50,7 @@
 #include "database.h"
 #include "allinterface.h"
 #include <postdata.h>
-#include <facelogin.h>
+#include <cameradevice.h>
 //#include "userinterface.h"
 #if _MSC_VER >= 1600
 
@@ -115,7 +115,8 @@ public:
 //报销流程处理函数
     void costbaseRead() ;//读取费用报销基本信息
     void travelbaseRead();//读取差旅报销基本信息
-
+    void initCamera();//初始化摄像头
+//    void rsa_pub_encrypt_base64(const QString strClearData, const QString PubKey);//rsa公钥加密
 
 
 private:
@@ -146,6 +147,7 @@ private slots:
     void playReply(QNetworkReply * reply);
     void sendPhoto(int id,QImage image);
     void dealFaceCheckDone(int sendIndex); //接受faceLogin的信号
+    void dealFaceCheckFailure(int sendIndex);//接受faceCheck失败信号;
     void faceDelReply(QNetworkReply * reply);
     void photoRegister(int id,QImage image);
     void on_lastStepBtn_clicked();
@@ -303,8 +305,6 @@ private:
     //用户信息弹框
     UserInfoDialog* userInfoDialog;
     FaceMangeDialog* faceMangeDialog;
-    //人脸识别弹框
-    faceLogin *faceloginDialog;
 
     bool isFaceOk;//check if face ok
     int idFace;//1表示人脸注册， 2表示人脸检测

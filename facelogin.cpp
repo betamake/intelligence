@@ -32,46 +32,13 @@ void faceLogin::initCamera ()
    ui->imageLayout->addWidget(CameraDevice::getinstance ()->CameraInfo.getviewfinder ());
    CameraDevice::getinstance ()->CameraInfo.getcamera ()->setViewfinder(CameraDevice::getinstance ()->CameraInfo.getviewfinder ());
    CameraDevice::getinstance ()->CameraInfo.getviewfinder ()->resize(600,400);
-   //    viewfinder->show();
-
    imageCapture = new QCameraImageCapture(camera);
    CameraDevice::getinstance ()->CameraInfo.setimageCapture (imageCapture);
    CameraDevice::getinstance ()->CameraInfo.getcamera ()->setCaptureMode(QCamera::CaptureStillImage);
    CameraDevice::getinstance ()->CameraInfo.getimageCapture ()->setCaptureDestination(QCameraImageCapture::CaptureToFile);
    CameraDevice::getinstance ()->CameraInfo.getcamera ()->start();
 }
-QByteArray faceLogin::getPixmapData(QString filePath,QImage image)
-{
-    //    qDebug()<<"发送照片";
-    QString baseDir = QCoreApplication::applicationDirPath();
-    QString fileDir = baseDir.append(filePath);
 
-    //创建目录
-    QDir dir;
-    if(!dir.exists(fileDir))
-    {
-        bool res = dir.mkpath(fileDir);
-        qDebug() << "创建人脸图片目录结果:" << res;
-    }
-
-    fileDir.append(commonutils.getCurrentTime());
-    fileDir.append(".jpg");
-
-    QPixmap pixmap = QPixmap::fromImage(image);
-    pixmap.save(fileDir);
-    qDebug()<<fileDir<<endl;
-
-    QFile file(fileDir);
-
-    if (!file.open(QIODevice::ReadOnly)||file.size()==0)
-    {
-        file.close();
-        qDebug() << "文件打开失败";
-    }
-    QByteArray fdata = file.readAll();
-    file.close();
-    return fdata;
-}
 void faceLogin::faceBegin ()
 {
         isFaceOk = false;
@@ -95,13 +62,9 @@ void faceLogin::faceCheck ()
         qDebug()<<"第" << facetime << "次查询人脸";
         if(facetime < 2)
         {
-            QElapsedTimer et;
-            et.start();
             imageCapture->capture();
             qDebug()<<"第" << "facetime" << "次查询人脸";
             connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(sendPhoto(int,QImage)));
-            while(et.elapsed()<300)
-                QCoreApplication::processEvents();
 
         }else
         {
