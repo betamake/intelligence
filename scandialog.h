@@ -150,10 +150,12 @@ signals:
 
 private slots:
     void on_buttonScan_clicked();
-    void on_buttonClose_clicked();
+//    void on_buttonClose_clicked();
     void dealDone();
     void dealThread();
 
+
+    void on_ExitButton_clicked();
 
 private:
     Ui::scanDialog *ui;

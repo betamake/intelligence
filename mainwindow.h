@@ -49,6 +49,8 @@
 #include "travelbaseinfo.h"//处理差旅报销基本信息
 #include "database.h"
 #include "allinterface.h"
+#include <postdata.h>
+#include <cameradevice.h>
 //#include "userinterface.h"
 #if _MSC_VER >= 1600
 
@@ -113,7 +115,8 @@ public:
     //报销流程处理函数
     void costbaseRead() ;//读取费用报销基本信息
     void travelbaseRead();//读取差旅报销基本信息
-
+    void initCamera();//初始化摄像头
+//    void rsa_pub_encrypt_base64(const QString strClearData, const QString PubKey);//rsa公钥加密
 
 
 private:
@@ -130,11 +133,9 @@ private:
 signals:
     //保存信息信号
     void saveReimDetail();      //保存费用报销明细
-
 //    void emitLoginInfo(QString username,QString password);       //给userinterface 发送账号信息;
 
     void savePerson();          //保存更新人员列表
-
 private slots:
 //    void checkReimListFinished();   //当列表中的所有报销明细都检查完成后，才完成跳转到下一页的操作
 
@@ -148,6 +149,8 @@ private slots:
     void voiceReply(QNetworkReply * reply);
     void playReply(QNetworkReply * reply);
     void sendPhoto(int id,QImage image);
+    void dealFaceCheckDone(int sendIndex); //接受faceLogin的信号
+    void dealFaceCheckFailure(int sendIndex);//接受faceCheck失败信号;
     void faceDelReply(QNetworkReply * reply);
     void photoRegister(int id,QImage image);
     void on_lastStepBtn_clicked();
@@ -167,17 +170,9 @@ private slots:
     void on_RegBtn_2_clicked();
     void on_accountBtn_clicked();
     void on_user_loginBtn_clicked();
-    void on_RegAcountBtn_clicked();
-    //void on_costBodyAddBtn_clicked();
-    //void on_costBodyDelBtn_clicked();
-//    void on_pushButton_clicked();
-//    void on_pushButton_2_clicked();
     void dealIdCardReply(Information,int);
     void on_idLogin_clicked();
     void on_idCheckIgnoreBtn_clicked();
-    void on_idCheckBtn_clicked();
-    void showRegPhoto(QString);//注册页面显示图片
-    void on_pushButton_3_clicked();
     void dealGetIdCheck(User user, int currentIndex);
 
     void on_firstBtn_clicked();
@@ -187,13 +182,8 @@ private slots:
     void on_carmSkipBtn_clicked();
 
     void on_talkBtn_clicked();
-    //void on_answerBtn_clicked();
     void on_expenseBtn_clicked();
     void billScanRelpy();//处理扫面后的图片.
-    //表格信息处理
-    //void dealCost(); //处理发票信息
-//    void dealBusi(); //处理差旅信息
-//    void dealAbroad();// 处理出国信息;
 
     void on_applyButton_clicked();
 
@@ -243,7 +233,10 @@ private slots:
 
     //添加费用报销明细
     void addReimAccount();
+    void on_totalAccountBtn_clicked();
+    void dealGetIdCard();//使用身份证登陆成功之后,处理返回的信息.
 
+    void on_RegAcountBtn_clicked();
 private:
     void setBasePage(int expenseType);
 

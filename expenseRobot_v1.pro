@@ -77,7 +77,9 @@ HEADERS += \
     costbaseinfo.h\
     frminput.h \
     windows/itemViews/personitem.h \
-    tools/cdateedit.h
+    tools/cdateedit.h\
+    postdata.h \
+    cameradevice.h
 FORMS += \
          facemangedialog.ui \
          mainwindow.ui \
@@ -128,4 +130,9 @@ SOURCES += \
     allinterface.cpp\
     frminput.cpp \
     windows/itemViews/personitem.cpp \
-    tools/cdateedit.cpp
+    tools/cdateedit.cpp \
+    postdata.cpp \
+    cameradevice.cpp
+#INCLUDEPATH += ./include
+#LIBS += libcrypto.lib \
+#           libssl.lib

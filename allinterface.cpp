@@ -219,7 +219,8 @@ void allInterface::setuserdatalist (QNetworkReply *reply)
                             info.setofficeName (officeName);
                         }
                         if(dataObject.contains ("rankId"))
-                        {
+
+                        {  
                             QString id = dataObject.take ("rankId").toString ();
                             info.setRandId (id);
                         }
@@ -566,3 +567,6 @@ void allInterface::setIdCardThread (QNetworkReply *reply)
     }
 
 }
+
+    
+

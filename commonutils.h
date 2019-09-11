@@ -1,4 +1,4 @@
-﻿#ifndef COMMONUTILS_H
+#ifndef COMMONUTILS_H
 #define COMMONUTILS_H
 
 #include <QObject>

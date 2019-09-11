@@ -14,12 +14,12 @@ class reimDetail {
 public:
     reimDetail() { this->account = 0;}
 
-    void setBudgetNumber(const QString &number) { this->budgetNumber = number;}
-    void setBudgetName(const QString &name) { this->budgetName = name;}
-    void setItem(const QString &item) { this->item = item;}
-    void setDetails(const QString &details) { this->details = details;}
-    void setDepartment(const QString &department) { this->department = department;}
-    void setFeeType(const QString &type) { this->feeType = type;}
+    void setBudgetNumber(const QString number) { this->budgetNumber = number;}
+    void setBudgetName(const QString name) { this->budgetName = name;}
+    void setItem(const QString item) { this->item = item;}
+    void setDetails(const QString details) { this->details = details;}
+    void setDepartment(const QString department) { this->department = department;}
+    void setFeeType(const QString type) { this->feeType = type;}
     void setAccount(int account) { this->account = account;}
     void setuser(QString const user){
         this->user = user;

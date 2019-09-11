@@ -33,9 +33,10 @@ private slots:
     void on_searchPeopleButtop_clicked();
     void dealPayInfo();
 
-    void on_searchBtn_clicked();
 
     void on_bankUsageCom_currentIndexChanged(int index);
+    void on_searchBtn_clicked();
+
 
 private:
     //规定金额处只能输入int类型

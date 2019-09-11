@@ -195,9 +195,6 @@ void addPayDialog::dealPayInfo ()
     ui->bankcardNumber->setText (allInterface::getinstance ()->info.getbankAccount ());
 }
 
-void addPayDialog::on_searchBtn_clicked()
-{
 
-}
 
 
