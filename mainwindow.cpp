@@ -27,6 +27,9 @@
 #include<QFileDialog>
 #include<QJsonDocument>
 #include<QJsonParseError>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QJsonObject>
 #include<QScriptEngine>
 #include<QScriptValue>
 #include<QScriptValueIterator>
@@ -79,19 +82,21 @@ MainWindow::MainWindow(QWidget *parent) :
     loginStatus = 0;//未登录
     idCheckId = 0;//初始化身份证调用id
 
-    modifyItemIndex = -1;
-
     isScan=false;
+
+    billList.clear();
 
     qRegisterMetaType<Information>("Information");//注册information类
     qRegisterMetaType<QMap<QString,QString>>("QMap<QString,QString>");//注册information类
     qRegisterMetaType<QByteArray>("QByteArray");//注册QByteArray类
 
-    feeNum = 0;
+    totalReimAccount = 0;
+
+    mPayItemList.clear();
+    totalPayAccount = 0;
 
     mPersonType = 1;
-    perNum = 0;
-    perIndex = 0;
+    totalPerAccount = 0;
 
     expenseType = 11;//报销类型页面号   //这两行没有用 @hkl
     expenseTypeId = 11;//判断提交数据的前一页
@@ -282,67 +287,54 @@ void MainWindow::on_accountBtn_clicked()
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->lastStepBtn->show ();
 }
-
-/**
-* @brief         账号登录查询数据库
-* @author        胡想成
-* @date          2018-请选择登录方式请选择登录方式08-15
-*/
+//账户登录操作
 void MainWindow::on_user_loginBtn_clicked()
 {
     ui->lastStepBtn->show ();//显示上一步按钮
-    //连接数据库
-    database.outputUserInfo();
-    //判断用户名和密码是否正确
+    ui->nextStepBtn->show ();
     QString username = ui->user_loginEdit->text().trimmed();
     QString password = ui->user_pwdEdit->text().trimmed();
-    if(!(username.isEmpty() && password.isEmpty()))
-    {
-        if(database.verificationLogin(username, password))
-        {
-            qDebug() << "验证结果："<< database.verificationLogin(username, password);
-            //登录成功
-            //查数据库
-            loginStatus = 3;//账号登录状态
-            loginUser = database.SearchUserByUsername(username);
-            this->showUserInfo(loginUser);
-            if (loginUser.getIdCard ().isEmpty ()){
-            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("请补录身份证信息"));
-                toCurrentPage (8);
-                player->stop();
-                this->sendPlayText("请补录身份证信息");
-            }else{
-            player->stop();
-            this->sendPlayText("账号登录成功");
-            currentIndex = 9;
-            ui->mainWidget->setCurrentIndex (currentIndex);
-//            ui->nextStepBtn->show();
-//            ui->lastStepBtn->show ();
-            ui->lastStepBtn->hide ();
-            ui->nextStepBtn->hide ();
-
-            //下次进来的时候
-            ui->user_loginEdit->clear();
-            ui->user_pwdEdit->clear();
-            ui->user_loginEdit->setFocus();}
-        }
-        else
-        {
-            //登录失败，清空用户编辑框，密码编辑框，设置光标到用户编辑框
-            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("登录失败！"));
-            player->stop();
-            this->sendPlayText("账号有误，请重新登录");
-            //清空内容并定位光标
-            ui->user_loginEdit->clear();
-            ui->user_pwdEdit->clear();
-            ui->user_loginEdit->setFocus();
-        }
+    if(!(username.isEmpty() && password.isEmpty())){
+       allInterface::getinstance ()->info.setusername (username);
+       allInterface::getinstance ()->info.setpassword (password);
+       allInterface::getinstance ()->userInterface ();
+       connect (allInterface::getinstance (),SIGNAL(readUserDone()),this,SLOT(userLogin()));
     }else
     {
         QMessageBox::information(this, QString::fromUtf8("警告"),QString::fromUtf8("用户名密码不能为空！"));
         player->stop();
         this->sendPlayText("用户名密码不能为空");
     }
+
+}
+
+void MainWindow::userLogin ()
+{
+    if (allInterface::getinstance ()->info.getmsg ()=="success")
+    {
+        player->stop();
+        this->sendPlayText("账号登录成功");
+        currentIndex = 9;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+        ui->lastStepBtn->hide ();
+        ui->nextStepBtn->hide ();
+        ui->user_loginEdit->clear();
+        ui->user_pwdEdit->clear();
+        ui->user_loginEdit->setFocus();
+    }
+    else
+    {
+        qDebug()<<"获取msg信息:"<<endl;
+        //登录失败，清空用户编辑框，密码编辑框，设置光标到用户编辑框
+        QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("登录失败！"));
+        player->stop();
+        this->sendPlayText("账号有误，请重新登录");
+        //清空内容并定位光标
+        ui->user_loginEdit->clear();
+        ui->user_pwdEdit->clear();
+        ui->user_loginEdit->setFocus();
+    }
+
 }
 
 //首页注册方式选择
@@ -536,10 +528,11 @@ void MainWindow::toLastStep(){
     }
     else if(currentIndex == 15){
         if (expenseType==12||expenseType==14)
-        currentIndex = 14;
-        else
-            currentIndex=16;
-    }else if(currentIndex == 14 || currentIndex == 16 ){
+            currentIndex = 16;
+        else if(expenseType==11)
+            currentIndex=14;
+    }
+    else if(currentIndex == 14 || currentIndex == 16 ){
         currentIndex = 13;
     }
     else if(currentIndex == 13){
@@ -684,13 +677,34 @@ void MainWindow::toNextStep(){
         ui->mainWidget->setCurrentIndex (currentIndex);
 
     }
-    else if(currentIndex == 14 || currentIndex == 16){
-        currentIndex=15;
-        ui->mainWidget->setCurrentIndex (currentIndex);
+    else if(currentIndex == 14){
+        if (mReimItemList.size() == 0)
+            QMessageBox::warning(this, "waring", "报销明细至少有一条！", QMessageBox::Ok);
+        else {
+//            emit saveReimDetail();
+            addReimAccount();
+            //需要确认把所有的条目加进去再换到下页，还需要修改一下
+            currentIndex=15;
+            ui->mainWidget->setCurrentIndex (currentIndex);
+        }
     }
     else if(currentIndex == 15){
         currentIndex=17;
         ui->mainWidget->setCurrentIndex (currentIndex);
+    }
+    else if(currentIndex == 16){
+        currentIndex=15;
+        ui->mainWidget->setCurrentIndex (currentIndex);
+    }
+    else if(currentIndex == 16){
+        //必须有一条人员信息
+        if (ui->personnelList->count() == 0)
+            QMessageBox::warning(this, "warning", "必须有一条人员信息", QMessageBox::Ok);
+        else {
+            //保存退出
+            currentIndex=15;
+            ui->mainWidget->setCurrentIndex (currentIndex);
+        }
     }
 }
 
@@ -869,15 +883,17 @@ void MainWindow::on_busiBtn_clicked()
     this->sendPlayText("已选择差旅报销");
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (loginUser.getUsername());
+    ui->transactor->setText (allInterface::getinstance ()->info.getname ());
+    ui->tranDepartment->setText (allInterface::getinstance ()->info.getofficeName ());
+
+    chargeManName = allInterface::getinstance ()->info.getname ();
+    chargeDepartment = allInterface::getinstance ()->info.getofficeName ();
+
     expenseType = 12;
     mPersonType = 1;        //添加的人员类型是1，差旅人员
+    mTravelPersons.clear();
     setBasePage(12);
     ui->personnelList->clear();
-    perNum = 0;
-    perIndex = 0;
-//    mTravelPerList.clear();
-    on_addPerBtn_clicked();
 }
 
 //选择费用报销单
@@ -888,15 +904,19 @@ void MainWindow::on_costBtn_clicked()
     QDateTime local(QDateTime::currentDateTime());
     expenseType = 11;
     currentIndex = 11;
-    ui->costHandpEdit->setText (loginUser.getUsername());
+    ui->costHandpEdit->setText (allInterface::getinstance ()->info.getname ());
+    ui->costHandpdEdit->setText (allInterface::getinstance ()->info.getofficeName ());
     ui->costRdateEdit->setText (local.toString("yyyy-MM-dd"));
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->nextStepBtn->show ();
     //显示报销流程按钮
     this->isShowguiInforn ();
 
+    chargeManName = allInterface::getinstance ()->info.getname ();
+    chargeDepartment = allInterface::getinstance ()->info.getofficeName ();
+
+    mReimItemList.clear();
     ui->feeDetailList->clear();
-    feeNum = 0;
     on_addDetailBtn_clicked();
 }
 
@@ -906,16 +926,19 @@ void MainWindow::on_abroadBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择出国报销");
-    expenseType = 14;
-    mPersonType = 2;        //添加的人员类型是2,出国人员
     QDateTime local(QDateTime::currentDateTime());
     ui->duckDate->setText (local.toString("yyyy-MM-dd"));
-    ui->transactor->setText (loginUser.getUsername());
+    ui->transactor->setText (allInterface::getinstance ()->info.getname ());
+    ui->tranDepartment->setText (allInterface::getinstance ()->info.getofficeName ());
+
+    chargeManName = allInterface::getinstance ()->info.getname ();
+    chargeDepartment = allInterface::getinstance ()->info.getofficeName ();
+
+    expenseType = 14;
+    mPersonType = 2;        //添加的人员类型是2,出国人员
+    mAbroadPersons.clear();
     setBasePage(13);
     ui->personnelList->clear();
-    perNum = 0;
-    perIndex = 0;
-    on_addPerBtn_clicked();
 }
 
 /**
@@ -1071,7 +1094,6 @@ void MainWindow::faceRegReply(QNetworkReply *reply){
     //拿到返回结果
     if(reply->error() == QNetworkReply::NoError){
         QByteArray all = reply->readAll();
-
         QJsonParseError jsonError;
         QJsonDocument doucment = QJsonDocument::fromJson(all, &jsonError);  // 转化为 JSON 文档
         if (!doucment.isNull() && (jsonError.error == QJsonParseError::NoError)) {  // 解析未发生错误
@@ -1370,6 +1392,7 @@ void MainWindow::faceDelReply(QNetworkReply *reply){
 */
 void MainWindow::dealIdCardReply(Information information,int exitCode)
 {
+
 
     qDebug()<<"exitCode:"<< exitCode << endl;
 
@@ -1684,6 +1707,7 @@ void MainWindow::billReply(QNetworkReply * reply){
                                 if(goodsVal.isString()){
                                     billContent = goodsVal.toString();
                                     billGoods = billContent;
+                                    qDebug()<<"billGoods:"<<billGoods;
                                     bill.setBillcontent(billContent);
                                 }
                             }
@@ -1850,6 +1874,8 @@ void MainWindow::billReply(QNetworkReply * reply){
 
                         ui->billListWidget->addItem(item);
                         ui->billListWidget->setItemWidget(item, billItemView);
+
+                        billList.append(bill);
 
                         int row = ui->billListWidget->row(item);
                         billItemView->setIndex(row);
@@ -3158,12 +3184,42 @@ void MainWindow::on_costAgainButton_clicked()
 * @author      黄梦君
 * @date        2019-07-02
 */
-void MainWindow::on_addPayInfoBtn_clicked()
+void MainWindow::on_addPayItemBtn_clicked()
 {
     addPayDlg = new addPayDialog(this);
     addPayDlg->show();
 
     connect(addPayDlg, &addPayDialog::addPayItem, this, &MainWindow::addPayInfoItem);
+}
+
+void MainWindow::on_modifyPayItemBtn_clicked()
+{
+    int row = ui->payInfoList->currentRow();
+    if (row <= -1)
+        return;
+
+    addPayDlg = new addPayDialog(this);
+    addPayDlg->setIndex(row);
+
+    payItemInfo *info = mPayItemList.takeAt(row);
+    addPayDlg->setItem(info);
+    connect(addPayDlg, &addPayDialog::addPayItem, this, &MainWindow::addPayInfoItem);
+
+    ui->payInfoList->takeItem(row);
+
+    addPayDlg->show();
+}
+
+void MainWindow::on_deletePayItemBtn_clicked()
+{
+    int row = ui->payInfoList->currentRow();
+    if (row <= -1)
+        return;
+
+    payItemInfo *info = mPayItemList.takeAt(row);
+    ui->payInfoList->takeItem(row);
+
+    addPayAccount();
 }
 
 /**
@@ -3172,71 +3228,25 @@ void MainWindow::on_addPayInfoBtn_clicked()
 * @author      黄梦君
 * @date        2019-07-02
 */
-void MainWindow::addPayInfoItem(payItemInfo *info)
+void MainWindow::addPayInfoItem(int index, payItemInfo *info)
 {
     QListWidgetItem *item = new QListWidgetItem();
-    item->setSizeHint(QSize(720, 100));
+    item->setSizeHint(QSize(720, 50));
 
     payMethodsItem *widget = new payMethodsItem();
     widget->setInfoItem(info);
 
     //对于修改的item，在原来的位置添加view
-    if (modifyItemIndex > -1) {
-        ui->payInfoList->insertItem(modifyItemIndex, item);
-        ui->payInfoList->setItemWidget(item, widget);
-        widget->setCurrentIndex(modifyItemIndex+1);
-        modifyItemIndex = -1;
+    if (index > -1) {
+        ui->payInfoList->insertItem(index, item);
     }
     else {
         ui->payInfoList->addItem(item);
-        ui->payInfoList->setItemWidget(item, widget);
-        int row = ui->payInfoList->row(item);
-        row += 1;
-        widget->setCurrentIndex(row);
     }
+    ui->payInfoList->setItemWidget(item, widget);
+    mPayItemList.append(info);
 
-    connect(widget, &payMethodsItem::openItem, this, &MainWindow::openPayInfoItem);
-    connect(widget, &payMethodsItem::deleteItem, this, &MainWindow::deletePayInfoItem);
-}
-
-/**
-* @brief       打开要修改的支付信息的addPayDialog窗口
-* @author      黄梦君
-* @date        2019-07-09
-*/
-void MainWindow::openPayInfoItem(payItemInfo *info, int index)
-{
-    if (index < 1)
-        return;
-    modifyItemIndex = index -1 ;
-
-    addPayDlg = new addPayDialog(this);
-    addPayDlg->setItem(info);
-    addPayDlg->show();
-
-    connect(addPayDlg, &addPayDialog::modifyPayItem, this, &MainWindow::modifyPayInfoItem);
-}
-
-/**
-* @brief       完成对支付信息的修改后再将原itemView修改出来
-* @author      黄梦君
-* @date        2019-07-08
-*/
-void MainWindow::modifyPayInfoItem(payItemInfo *info)
-{
-    //删除选中的支付信息item，然后在此处重新添加一条itemView
-    //int row = ui->payInfoList->currentRow();      行不通，因为打开dialog后就失去焦点了
-
-    QListWidgetItem *item = ui->payInfoList->takeItem(modifyItemIndex);
-    delete item;
-
-    addPayInfoItem(info);
-}
-
-//删除支付信息
-void MainWindow::deletePayInfoItem(int index)
-{
-    QListWidgetItem *item = ui->payInfoList->takeItem(index-1);
+    addPayAccount();
 }
 
 void MainWindow::costbaseRead () //获取费用基本报销信息
@@ -3260,8 +3270,18 @@ void MainWindow::travelbaseRead (){
 //    travelBinfo.setstaffName ();
 //    travelBinfo.setstaffNumber ();
 //    travelBinfo.setleaveDate ();
+}
 
+void MainWindow::addPayAccount()
+{
+    int totalAccount = 0;
 
+    for (int i=0; i< mPayItemList.size(); i++)
+        totalAccount += mPayItemList.at(i)->getAccount();
+
+    ui->payAccount->setText(QString::number(totalAccount));
+
+    totalPayAccount = totalAccount;
 }
 
 /**
@@ -3272,17 +3292,42 @@ void MainWindow::travelbaseRead (){
 */
 void MainWindow::on_addDetailBtn_clicked()
 {
+//    if (mReimItemList.size() > 0)
+//        emit saveReimDetail();
+
     QListWidgetItem *item = new QListWidgetItem();
     item->setSizeHint(QSize(645, 210));
 
-    feeNum += 1;
+    reimDetail *info = new reimDetail;
     reimDetailItem *detailItem = new reimDetailItem();
+    detailItem->setReimDetail(info);
 
     ui->feeDetailList->addItem(item);
     ui->feeDetailList->setItemWidget(item, detailItem);
 
-    connect(this, &MainWindow::saveReimDetail, detailItem, &reimDetailItem::saveDetail);
+    mReimItemList.append(info);
 
+//    int index = ui->feeDetailList->count();
+//    qDebug() << "this new detail's index is :" << index;
+
+    qDebug() << "报销明细列表此时有 " << mReimItemList.size() << "个项目！";
+
+    connect(detailItem, &reimDetailItem::changeAccount, this, &MainWindow::addReimAccount);
+//    connect(this, &MainWindow::saveReimDetail, detailItem, &reimDetailItem::saveDetail);
+
+    addReimAccount();
+}
+
+void MainWindow::addReimAccount()
+{
+    int totalAccount = 0;
+
+    for (int i=0; i< mReimItemList.size(); i++)
+        totalAccount += mReimItemList.at(i)->getAccount();
+
+    ui->reimAccount->setText(QString::number(totalAccount));
+
+    totalReimAccount = totalAccount;
 }
 
 /**
@@ -3305,40 +3350,22 @@ void MainWindow::on_copyDetailBtn_clicked()
 void MainWindow::on_deleteDetailBtn_clicked()
 {
     //只有一条报销明细的时候，提示至少保留一条，并添加在页面上
-    if(feeNum == 1) {
+    if(ui->feeDetailList->count() == 1) {
         if (QMessageBox::warning(this, "删除提醒", "至少要保留一条报销明细！", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
             ui->feeDetailList->clear();
-            feeNum = 0;
             on_addDetailBtn_clicked();
         }
     }
     else {
         QListWidgetItem *item = ui->feeDetailList->currentItem();
+        int row = ui->feeDetailList->currentRow();
         ui->feeDetailList->removeItemWidget(item);
+        mReimItemList.takeAt(row);
         delete item;
-
-        feeNum -= 1;
-        if (feeNum != ui->feeDetailList->count())
-            qDebug() << "number error";
     }
 
-}
-
-/**
-* @brief
-* @brief       保存费用报销明细按钮
-* @author      黄梦君
-* @date        2019-07-09
-*/
-void MainWindow::on_saveDetailBtn_clicked()
-{
-    emit saveReimDetail();
-
-    int count = ui->feeDetailList->count();
-    for (int i=0; i < count; i++) {
-        QListWidgetItem *item = ui->feeDetailList->item(i);
-
-    }
+    qDebug() << "报销明细列表此时有 " << mReimItemList.size() << "个项目！";
+    addReimAccount();
 }
 
 //打开要编辑的票据信息窗口
@@ -3356,6 +3383,7 @@ void MainWindow::deleteBillItemView(int row)
 {
     //int row = ui->billListWidget->currentRow();
     QListWidgetItem *item = ui->billListWidget->takeItem(row);
+    billList.takeAt(row);
     delete item;
 }
 
@@ -3390,38 +3418,605 @@ void MainWindow::clearAllInput()
     ui->personnelList->clear();
 }
 
-
 //添加人员
 void MainWindow::on_addPerBtn_clicked()
 {
     addPerDlg = new insertPersonnelDialog(this);
+    addPerDlg->show();
     addPerDlg->setType(mPersonType);
-    addPayDlg->show();
+
+    if (mPersonType == 1) {
+        connect(addPerDlg, &insertPersonnelDialog::addTravelPerson, this, &MainWindow::addTravelPerson);
+    }
+    else if (mPersonType == 2) {
+        connect(addPerDlg, &insertPersonnelDialog::addAbroadPerson, this, &MainWindow::addAbroadPerson);
+    }
+}
+
+//添加出差人员
+void MainWindow::addTravelPerson(int index, traBusPersonInfo *info)
+{
+    //使List失去焦点，需要重写方法，clearFocus()无效
+    //ui->personnelList->clearFocus();
+
+    if (mPersonType != 1)
+        return;
+    mTravelPersons.append(info);
+//    qDebug() << "travel person list info:" << mTravelPersons ;
+
+    QString strName = info->getStaffName();
+    int account = info->getTotalFee();
+    QString departure = info->getLeavePlace();
+    QString destination = info->getArrivePlace();
+
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setSizeHint(QSize(850, 55));
+
+    personItem *widget = new personItem;
+    widget->setPersonName(strName);
+    widget->setAccount(account);
+    widget->setDeparture(departure);
+    widget->setDestination(destination);
+
+    if (index > -1) {
+        ui->personnelList->insertItem(index, item);
+    } else {
+        ui->personnelList->addItem(item);
+    }
+
+    ui->personnelList->setItemWidget(item, widget);
+
+    addPersonAccount();
+
+}
+
+//添加出国人员
+void MainWindow::addAbroadPerson(int index, abroadPersonInfo *info)
+{
+    //使List失去焦点，需要重写方法，clearFocus()无效
+    //ui->personnelList->clearFocus();
+
+    if (mPersonType != 2)
+        return;
+    mAbroadPersons.append(info);
+//    qDebug() << "abroad person list info:" << mAbroadPersons;
+
+    QString strName = info->getStaffName();
+    int account = info->getTotalFee();
+    QString departure = info->getLeaveCity();
+    QString destination = info->getArriveCity();
+
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setSizeHint(QSize(850, 55));
+
+    personItem *widget = new personItem;
+    widget->setPersonName(strName);
+    widget->setAccount(account);
+    widget->setDeparture(departure);
+    widget->setDestination(destination);
+
+    if (index > -1) {
+        ui->personnelList->insertItem(index, item);
+    } else {
+        ui->personnelList->addItem(item);
+    }
+    ui->personnelList->setItemWidget(item, widget);
+
+    addPersonAccount();
 }
 
 //删除人员
 void MainWindow::on_delPerBtn_clicked()
 {
+    int row = ui->personnelList->currentRow();
+    if (row <= -1)
+        return;
 
+    if(mPersonType == 1) {
+        traBusPersonInfo *info = mTravelPersons.takeAt(row);
+    } else if (mPersonType == 2) {
+        abroadPersonInfo *info = mAbroadPersons.takeAt(row);
+    }
+    ui->personnelList->takeItem(row);
+    addPersonAccount();
 }
 
-//复制人员
-void MainWindow::on_copyPerBtn_clicked()
+//修改人员
+void MainWindow::on_modifyPerBtn_clicked()
 {
-//    emit savePerson();
+    int row = ui->personnelList->currentRow();
+    if (row <= -1)
+        return;
 
-
-
+    addPerDlg = new insertPersonnelDialog(this);
+    addPerDlg->setType(mPersonType);
+    addPerDlg->setIndex(row);
+    if (mPersonType == 1) {
+        traBusPersonInfo *info = mTravelPersons.takeAt(row);
+        addPerDlg->setTravelPerson(info);
+        connect(addPerDlg, &insertPersonnelDialog::addTravelPerson, this, &MainWindow::addTravelPerson);
+    }
+    else if (mPersonType == 2) {
+        abroadPersonInfo *info = mAbroadPersons.takeAt(row);
+        addPerDlg->setAbroadPerson(info);
+        connect(addPerDlg, &insertPersonnelDialog::addAbroadPerson, this, &MainWindow::addAbroadPerson);
+    }
+    ui->personnelList->takeItem(row);
+    addPerDlg->show();
 }
 
-//在出国人员Map中添加相应的人员信息
-void MainWindow::insertAbroadPer(int index, abroadPersonInfo *info)
+//获得人员总金额
+void MainWindow::addPersonAccount()
 {
+    int totalAccount = 0;
+    if (mPersonType == 1) {
+        for (int i=0; i< mTravelPersons.size(); i++)
+            totalAccount += mTravelPersons.at(i)->getTotalFee();
+    }
+    else if (mPersonType == 2) {
+        for (int i=0; i< mAbroadPersons.size(); i++)
+            totalAccount += mAbroadPersons.at(i)->getTotalFee();
+    }
+    ui->totalAccount->setNum(totalAccount);
+
+    totalPerAccount = totalAccount;
 }
 
-//在出差人员Map中添加相应的人员信息
-void MainWindow::insertTravelPer(int index, traBusPersonInfo *info)
+void MainWindow::on_savePayBtn_clicked()
 {
+    QDateTime local(QDateTime::currentDateTime());
+
+    if (expenseType == 11) {
+        if (totalPayAccount > totalReimAccount) {
+            QMessageBox::warning(this, "支付总金额问题", "支付总金额不得超过报销总金额", QMessageBox::Ok);
+        } else {
+            QJsonObject object;
+            QJsonArray attachementList;
+            QJsonArray detailList;
+            QJsonArray payList;
+            QJsonArray updateRecordList;
+            QJsonDocument document;
+
+            QJsonObject attachement;
+            for (int i=0; i<billList.size(); i++) {
+                BillCheck bill = billList.at(i);
+
+                attachement.insert("billid", bill.getBillid());            //单据id string
+                attachement.insert("extend", bill.getBillexpenseid());      //拓展名 string
+                attachement.insert("id", bill.getBillid());                //ID唯一标示
+                attachement.insert("invoiceNum", bill.getBusid());        //发票号 string
+                attachement.insert("invoiceType", "1");                     //发票类型(0纸制1电子) string
+                attachement.insert("name", bill.getBillattachmenttitle());  //附件名称 string
+                attachement.insert("path", bill.getBillrealpath());         //附件路径 string
+                attachement.insert("reviewpath", bill.getBillrealpath());   //预览路径 string
+                attachement.insert("size", 0);                           //附件大小 int
+                attachement.insert("swfpath", "");                          //swf格式路径 string
+                attachement.insert("type", "");                             //附件类型 string
+
+                attachementList.append(QJsonValue(attachement));
+            }
+
+            QJsonObject detail;
+            for (int i=0; i<mReimItemList.size(); i++) {
+                reimDetail *info = mReimItemList.at(i);
+
+                detail.insert("billId", "");   //(string)表头单据id
+                detail.insert("budgetDepartId", "");             //(string)预算归口部门id
+                detail.insert("budgetSubjectId", info->getBudgetNumber());    //预算科目id string
+                detail.insert("budgetSubjectName", info->getBudgetName());  //预算科目名称 string
+                detail.insert("busiId", info->getItem());  //业务事项(字典: dict_data_business_matters) string
+                detail.insert("busiName", info->getItem());          //(string)业务事项名称
+                detail.insert("feeDepartId", info->getDepartment());            //(string)费用承担科室id
+                detail.insert("fundType", info->getFeeType());     //(string)经费类型
+                detail.insert("id", "");       //string
+                detail.insert("memo", "");                   //(string)备注
+                detail.insert("moneyReim", info->getAccount());           //(number)报销金额
+                detail.insert("projectId", "");        //(string)项目id
+                detail.insert("projectName", "");           //(string)项目名称
+
+                detailList.append(QJsonValue(detail));
+            }
+
+            QJsonObject pay;
+            for (int i=0 ; i<mPayItemList.size() ; i++) {
+                payItemInfo *info = mPayItemList.at(i);
+
+                pay.insert("bankAddress", info->getBankName());   //(string)开户银行
+                pay.insert("bankName", info->getBank());      //(string)所属银行
+                pay.insert("bankNo", info->getBankcardNumber());     //(string)银行账号
+                pay.insert("billId", "");        //(string)单据id
+                pay.insert("busiCardNo", "");    //(string)公务卡卡号
+                pay.insert("cardDate", info->getCardDate().toString()); //(string)刷卡日期
+                pay.insert("cardNo", info->getBankcardNumber());    //(string)银行卡卡号
+                pay.insert("checkNum", "");      //(string)支票号
+                pay.insert("collectPeopleId", "");   //(string)收款人/单位id
+                pay.insert("collectPeopleName", info->getPayeeName());     //(string)收款人/单位名称
+                pay.insert("counterPartName", info->getDepartment());       //(string)对方单位名称
+                pay.insert("id", "");            //(string)
+                pay.insert("jkCode", "");        //(string)借款单编号
+                pay.insert("jkId", "");          //(string)借款单id
+                pay.insert("memo", info->getRemark());          //(string)备注
+                pay.insert("money", info->getAccount());         //(number)金额
+                pay.insert("moneyBack", 0);     //(number)应归还金额
+                pay.insert("moneyCard", 0);     //(number)刷卡金额
+                pay.insert("moneyLoan", 0);     //(number)借款金额
+                pay.insert("moneyOffset", 0);   //(number)冲借款金额
+                pay.insert("payeeCity", info->getCity());     //(string)收款人省市
+                pay.insert("paymethod", info->getStrType());     //(string)支付方式
+
+                payList.append(QJsonValue(pay));
+            }
+
+            QJsonObject updateRecord;
+            for (int i=0; i<1; i++) {
+                updateRecord.insert("billId", "");    //(string)单据id
+                updateRecord.insert("dict", "");    //(string)变更字典
+                updateRecord.insert("field", "");    //(string)字段
+                updateRecord.insert("id", "");    //(string)ID唯一标识
+                updateRecord.insert("name", "");    //(string)明细标识名称
+                updateRecord.insert("type", 0);    //(integer)修改类型
+                updateRecord.insert("updateString", "");    //(string)变更字符串
+                updateRecord.insert("valueUpdateAfter", "");    //(string)修改后数值
+                updateRecord.insert("valueUpdateBefore", "");    //(string)修改前数值
+
+                updateRecordList.append(QJsonValue(updateRecord));
+            }
+
+            object.insert("attachementList", QJsonValue(attachementList));
+            object.insert("audit", 0);	//单据审核状态 int
+            object.insert("auditFlag", "");	//是否查询审批标识 string
+            object.insert("auditState", 1);	//审批状态 int
+            object.insert("billAmount", billList.size());	//单据张数 int
+            object.insert("billDate", local.toString("yyyy-MM-dd"));	//填报日期 string
+            object.insert("code", "");      //单据编号 string
+            object.insert("contractCode", "");	//(string)合同编号
+            object.insert("contractId", "");	//(string)合同id
+            object.insert("contractName", "");	//(string)合同名称
+            object.insert("currency", "");	//(string)币种
+            object.insert("departId", chargeDepartment);	//经办人部门 string
+            object.insert("detailList", QJsonValue(detailList));
+            object.insert("id", "");		//唯一标识 string
+            object.insert("isContract", "");    //(string)是否有合同
+            object.insert("isElecTicket", "");//是否有电子发票号 string
+            object.insert("moneyBack", 0);	//应还款金额合计 number
+            object.insert("moneyContract", totalPayAccount); //(number)合同总金额
+            object.insert("moneyHandling", 0);	//手续费 number
+            object.insert("moneyOffset", 0);	//冲款金额合计
+            object.insert("moneyReim", totalReimAccount);	//报销金额合计
+            object.insert("moneyReissue", 0);//应补发金额合计
+            object.insert("operator", chargeManName);	//经办人 string
+            object.insert("payDate", local.toString("yyyy-MM-dd"));	//支付日期 string
+            object.insert("payList", QJsonValue(payList));
+            object.insert("period", "");	//单据所属区间 string
+            object.insert("procInsId", "");	//流程实例Id string
+            object.insert("projectType", "");	//项目类型 string
+            object.insert("reportPerson", 0);//填报人 int
+            object.insert("submitAudit", "");	//(string)是否是提交
+            object.insert("ticketNo", "");	//(string)支票号
+            object.insert("updateRecordList", QJsonValue(updateRecordList));
+            object.insert("use", "");   //(string)用途
+
+
+            document.setObject(object);
+            QByteArray bytes = document.toJson(QJsonDocument::Compact);
+            QString strBytes(bytes);
+
+            qDebug() << strBytes;
+        }
+    }
+    else if (expenseType == 12) {
+        if (totalPayAccount > totalPerAccount) {
+            QMessageBox::warning(this, "支付总金额问题", "支付总金额不得超过人员补贴总金额", QMessageBox::Ok);
+        } else {
+            QJsonObject object;
+            QJsonArray attachementList;
+            QJsonArray detailList;
+            QJsonArray payList;
+            QJsonDocument document1;
+
+            QJsonObject attachement;
+            for (int i=0; i<billList.size(); i++) {
+                BillCheck bill = billList.at(i);
+
+                attachement.insert("billid", bill.getBillid());            //单据id string
+                attachement.insert("extend", bill.getBillexpenseid());      //拓展名 string
+                attachement.insert("id", bill.getBillid());                //ID唯一标示
+                attachement.insert("invoiceNum", bill.getBusid());        //发票号 string
+                attachement.insert("invoiceType", "1");                     //发票类型(0纸制1电子) string
+                attachement.insert("name", bill.getBillattachmenttitle());  //附件名称 string
+                attachement.insert("path", bill.getBillrealpath());         //附件路径 string
+                attachement.insert("reviewpath", bill.getBillrealpath());   //预览路径 string
+                attachement.insert("size", 0);                           //附件大小 int
+                attachement.insert("swfpath", "");                          //swf格式路径 string
+                attachement.insert("type", "");                             //附件类型 string
+
+                attachementList.append(QJsonValue(attachement));
+            }
+
+            QJsonObject detail;
+            for (int i=0; i<mTravelPersons.size(); i++) {
+                traBusPersonInfo *info = mTravelPersons.at(i);
+
+                detail.insert("addressBegin", info->getLeavePlace());             //(string)出发地点
+                detail.insert("addressEnd", info->getArrivePlace());             //(string)到达地点
+                detail.insert("billId", "");    //(string)表头单据id
+                detail.insert("budgetSubjectId", info->getBudgetNumber());    //(string)预算科目id
+                detail.insert("budgetSubjectName", info->getBudgetName());  //预算科目名称 string
+                detail.insert("businessMattersId", "");  //业务事项(字典: dict_data_business_matters) string
+                detail.insert("businessMattersName", "");          //(string)业务事项名称
+                detail.insert("dateBegin", info->getLeaveDate());     //起始时间 string
+                detail.insert("dateEnd", info->getReturnDate());       //终止时间 string
+                detail.insert("days", info->getDays());                   //出差天数 int
+                detail.insert("feeDepartId", "");        //费用承担部门id string
+                detail.insert("feeDepartName", info->getDepartment());        //费用承担部门id string
+                detail.insert("fundsType", info->getBudgetType());           //经费类型(dict_fund_type) string
+                detail.insert("id", "");                 //ID唯一标识 string
+                detail.insert("level", "");                //职级id string
+                detail.insert("moneyOther", info->getOtherFee());   //其他费用金额 number
+                detail.insert("moneyStay", info->getStayFee());     //住宿费 number
+                detail.insert("moneySum", info->getTotalFee());     //小计 number
+                detail.insert("moneyTrans", info->getCityFee());    //城市间交通费 number
+                detail.insert("otherMemo", "");          //其他费用说明 string
+                detail.insert("people", info->getStaffNumber());  //(string)出差人员id
+                detail.insert("peopleDepartId", "");    //(string)部门id
+                detail.insert("peopleDepartName", info->getDepartment());   //(string)部门名称
+                detail.insert("peopleName", info->getStaffName());  //(string)出差人员名称
+                detail.insert("peoplePost", "");            //职务 string
+                detail.insert("peopleType", "");         //人员类别 string
+                detail.insert("projectCode", QString::number(info->getBudgetNumber()));  //预算项目编码 string
+                detail.insert("projectId", QString::number(info->getBudgetNumber()));          //预算项目id string
+                detail.insert("projectName", info->getBudgetName());    //预算项目名称 string
+                detail.insert("subsidyDays", info->getDays());     //(integer)补贴天数
+                detail.insert("subsidyEating", info->getLunchSubsidy());    //(number)伙食补贴
+                detail.insert("subsidyTrans", info->getTraSubsidy());       //(number)交通补贴
+
+                detailList.append(QJsonValue(detail));
+            }
+
+            QJsonObject pay;
+            for (int i=0 ; i<mPayItemList.size() ; i++) {
+                payItemInfo *info = mPayItemList.at(i);
+
+                pay.insert("bankAddress", info->getBankName());   //(string)开户银行
+                pay.insert("bankName", info->getBank());      //(string)所属银行
+                pay.insert("bankNo", info->getBankcardNumber());     //(string)银行账号
+                pay.insert("billId", "");        //(string)单据id
+                pay.insert("busiCardNo", "");    //(string)公务卡卡号
+                pay.insert("cardDate", info->getCardDate().toString()); //(string)刷卡日期
+                pay.insert("cardNo", info->getBankcardNumber());    //(string)银行卡卡号
+                pay.insert("checkNum", "");      //(string)支票号
+                pay.insert("collectPeopleId", "");   //(string)收款人/单位id
+                pay.insert("collectPeopleName", info->getPayeeName());     //(string)收款人/单位名称
+                pay.insert("counterPartName", info->getDepartment());       //(string)对方单位名称
+                pay.insert("id", "");            //(string)
+                pay.insert("jkCode", "");        //(string)借款单编号
+                pay.insert("jkId", "");          //(string)借款单id
+                pay.insert("memo", info->getRemark());          //(string)备注
+                pay.insert("money", info->getAccount());         //(number)金额
+                pay.insert("moneyBack", 0);     //(number)应归还金额
+                pay.insert("moneyCard", 0);     //(number)刷卡金额
+                pay.insert("moneyLoan", 0);     //(number)借款金额
+                pay.insert("moneyOffset", 0);   //(number)冲借款金额
+                pay.insert("payeeCity", info->getCity());     //(string)收款人省市
+                pay.insert("paymethod", info->getStrType());     //(string)支付方式
+
+                payList.append(QJsonValue(pay));
+            }
+
+            object.insert("attachementList", QJsonValue(attachementList));
+            object.insert("audit", 0);	//单据审核状态 int
+            object.insert("auditFlag", "");	//是否查询审批标识 string
+            object.insert("auditState", 1);	//审批状态 int
+            object.insert("billCount", billList.size());	//单据张数 int
+            object.insert("billDate", local.toString("yyyy-MM-dd"));	//填报日期 string
+            object.insert("check", false);	//数据是否完整 bool
+            object.insert("checkNum", "");	//支票号 string
+            object.insert("code", "");      //单据编号 string
+            object.insert("departId", chargeDepartment);	//经办人部门 string
+            object.insert("detailList", QJsonValue(detailList));
+            object.insert("id", "");		//唯一标识 string
+            object.insert("isElecInvoice", "");//是否有电子发票号 string
+            object.insert("moneyBack", 0);	//还款金额合计 number
+            object.insert("moneyCheck", 0);	//手续费 number
+            object.insert("moneyOffset", 0);	//冲款金额合计
+            object.insert("moneyReim", 0);	//报销金额合计
+            object.insert("moneyReissue", 0);//应补发金额合计
+            object.insert("operator", chargeManName);	//经办人 string
+            object.insert("payDate", local.toString("yyyy-MM-dd"));	//支付日期 string
+            object.insert("payList", QJsonValue(payList));
+
+            QString peoples = mTravelPersons.at(1)->getStaffName();
+            for (int i=1; i<mTravelPersons.size(); i++) {
+                peoples = peoples + ",";
+                peoples = peoples + mTravelPersons.at(i)->getStaffName();
+            }
+            object.insert("peoples", peoples);
+
+            object.insert("period", "");	//单据所属区间 string
+            object.insert("procInsId", "");	//流程实例Id string
+            object.insert("projectType", "");	//项目类型 string
+            object.insert("reportPerson", 0);//填报人 int
+            object.insert("submitAudit", 0);	//是否提交 Int
+            object.insert("use", ui->busiReason->toPlainText());		//出差事由string
+
+            document1.setObject(object);
+            QByteArray bytes = document1.toJson(QJsonDocument::Compact);
+            QString strBytes(bytes);
+
+            qDebug() << strBytes;
+        }
+    }
+    else if (expenseType == 14) {
+        if (totalPayAccount > totalPerAccount) {
+            QMessageBox::warning(this, "支付总金额问题", "支付总金额不得超过人员补贴总金额", QMessageBox::Ok);
+        } else {
+            QJsonObject object;
+            QJsonArray attachementList;
+            QJsonArray detailList;
+            QJsonArray payList;
+            QJsonDocument document1;
+
+            QJsonObject attachement;
+            for (int i=0; i<billList.size(); i++) {
+                BillCheck bill = billList.at(i);
+
+                attachement.insert("billid", bill.getBillid());            //单据id string
+                attachement.insert("extend", bill.getBillexpenseid());      //拓展名 string
+                attachement.insert("id", bill.getBillid());                //ID唯一标示
+                attachement.insert("invoiceNum", bill.getBusid());        //发票号 string
+                attachement.insert("invoiceType", "1");                     //发票类型(0纸制1电子) string
+                attachement.insert("name", bill.getBillattachmenttitle());  //附件名称 string
+                attachement.insert("path", bill.getBillrealpath());         //附件路径 string
+                attachement.insert("reviewpath", bill.getBillrealpath());   //预览路径 string
+                attachement.insert("size", 0);                           //附件大小 int
+                attachement.insert("swfpath", "");                          //swf格式路径 string
+                attachement.insert("type", "");                             //附件类型 string
+
+                attachementList.append(QJsonValue(attachement));
+            }
+
+            QJsonObject detail;
+            for (int i=0; i<mAbroadPersons.size(); i++) {
+                abroadPersonInfo *info = mAbroadPersons.at(i);
+
+                detail.insert("billConut", billList.size());             //单据张数 int
+                detail.insert("billId", "");             //单据id string
+                detail.insert("budgetSubjectId", info->getBudgetNum());    //预算科目id string
+                detail.insert("budgetSubjectName", info->getBudgetName());  //预算科目名称 string
+                detail.insert("businessMattersId", "");  //业务事项(字典: dict_data_business_matters) string
+                detail.insert("cityBegin", info->getLeaveCity());          //出发城市 string
+                detail.insert("cityEnd", info->getArriveCity());            //到达城市 string
+                detail.insert("dateBegin", info->getLeaveDate());     //起始时间 string
+                detail.insert("dateEnd", info->getReturnDate());       //终止时间 string
+                detail.insert("days", info->getDays());                   //出国天数 int
+                detail.insert("departId", "");           //部门id string
+                detail.insert("feeDepartId", "");        //费用承担部门id string
+                detail.insert("fundsType", info->getBudgetType());           //经费类型(dict_fund_type) string
+                detail.insert("id", "");                 //ID唯一标识 string
+                detail.insert("level", "");                //职级id string
+                detail.insert("moneyMeal", 0);              //伙食费外币金额 number
+                detail.insert("moneyMiscellaneou", 0);      //公杂费外币金额 number
+                detail.insert("moneyOther", 0);             //其他费外币金额 number
+                detail.insert("moneyRmbMeal", 0);           //伙食费人民币 number
+                detail.insert("moneyRmbMiscellaneou", 0);   //公杂费人民币 number
+                detail.insert("moneyRmbOther", 0);          //其他费人民币 number
+                detail.insert("moneyRmbStay", 0);           //住宿费人民币 number
+                detail.insert("moneyRmbSum", 0);            //人民币小计 number
+                detail.insert("moneyRmbTraffic", 0);        //交通费人民币 number
+                detail.insert("moneyStandardMeal", 0);      //伙食费标准币种金额 number
+                detail.insert("moneyStandardMiscellaneou", 0);    //公杂费标准币种金额 number
+                detail.insert("moneyStandardOther", 0);     //其他费标准币种金额 number
+                detail.insert("moneyStandardStay", 0);      //住宿费标准币种金额 number
+                detail.insert("moneyStandardSum", 0);       //标准币种小计 number
+                detail.insert("moneyStandardTraffic", 0);   //交通费标准币种金额 number
+                detail.insert("moneyStay", 0);              //住宿费外币金额 number
+                detail.insert("moneyTraffic", 0);           //交通费外币金额 number
+                detail.insert("otherMemo", "说明");          //其他费用说明 string
+                detail.insert("peopleCode", "123");         //员工工号 string
+                detail.insert("peopleId", "123");           //员工id string
+                detail.insert("peoplePost", "");            //职务 string
+                detail.insert("peopleType", "秘书");         //人员类别 string
+                detail.insert("projectCode", "123");        //预算项目编码 string
+                detail.insert("projectId", "123");          //预算项目id string
+                detail.insert("projectName", "项目1");       //预算项目名称 string
+                detail.insert("rateMeal", 2);               //伙食费币种汇率 number
+                detail.insert("rateMiscellaneou", 1.2);     //公杂费币种汇率 number
+                detail.insert("rateOther", 0.5);            //其他费币种汇率 number
+                detail.insert("rateStandard", 1.2);         //标准币种汇率 number
+                detail.insert("rateStay", 1.2);             //住宿费币种汇率 number
+                detail.insert("rateTraffic", 1.2);          //交通费币种汇率 number
+                detail.insert("typeMeal", "美元");           //伙食费币种 string
+                detail.insert("typeMiscellaneou", "美元");   //公杂费币种 string
+                detail.insert("typeOther", "美元");          //其他费币种 string
+                detail.insert("typeStandard", "美元");       //到达地标准币种 string
+                detail.insert("typeStay", "美元");           //住宿费币种 string
+                detail.insert("typeTraffic", "美元");         //交通费币种 string
+
+                detailList.append(QJsonValue(detail));
+            }
+
+            QJsonObject pay;
+            for (int i=0 ; i<mPayItemList.size() ; i++) {
+                payItemInfo *info = mPayItemList.at(i);
+
+                pay.insert("bankAddress", info->getBankName());   //(string)开户银行
+                pay.insert("bankName", info->getBank());      //(string)所属银行
+                pay.insert("bankNo", info->getBankcardNumber());     //(string)银行账号
+                pay.insert("billId", "");        //(string)单据id
+                pay.insert("busiCardNo", "");    //(string)公务卡卡号
+                pay.insert("cardDate", info->getCardDate().toString()); //(string)刷卡日期
+                pay.insert("cardNo", info->getBankcardNumber());    //(string)银行卡卡号
+                pay.insert("checkNum", "");      //(string)支票号
+                pay.insert("collectPeopleId", "");   //(string)收款人/单位id
+                pay.insert("collectPeopleName", info->getPayeeName());     //(string)收款人/单位名称
+                pay.insert("counterPartName", info->getDepartment());       //(string)对方单位名称
+                pay.insert("id", "");            //(string)
+                pay.insert("jkCode", "");        //(string)借款单编号
+                pay.insert("jkId", "");          //(string)借款单id
+                pay.insert("memo", info->getRemark());          //(string)备注
+                pay.insert("money", info->getAccount());         //(number)金额
+                pay.insert("moneyBack", 0);     //(number)应归还金额
+                pay.insert("moneyCard", 0);     //(number)刷卡金额
+                pay.insert("moneyLoan", 0);     //(number)借款金额
+                pay.insert("moneyOffset", 0);   //(number)冲借款金额
+                pay.insert("payeeCity", info->getCity());     //(string)收款人省市
+                pay.insert("paymethod", info->getStrType());     //(string)支付方式
+
+                payList.append(QJsonValue(pay));
+            }
+
+            object.insert("attachementList", QJsonValue(attachementList));
+            object.insert("audit", 1);	//单据审核状态 int
+            object.insert("auditFlag", "yes");	//是否查询审批标识 string
+            object.insert("auditState", 1);	//审批状态 int
+            object.insert("billCount", 1);	//单据张数 int
+            object.insert("billDate", "20190901");	//单据日期 string
+            object.insert("check", true);	//数据是否完整 bool
+            object.insert("checkNum", "123");	//支票号 string
+            object.insert("code", "123");	//单据编号 string
+            object.insert("departId", "秘书部");	//经办人部门 string
+            object.insert("detailList", QJsonValue(detailList));
+            object.insert("id", "only");		//唯一标识 string
+            object.insert("isElecInvoice", "yes");//是否有电子发票号 string
+            object.insert("moneyBack", 111111);	//还款金额合计 number
+            object.insert("moneyCheck", 111);	//手续费 number
+            object.insert("moneyOffset", 1111);	//冲款金额合计
+            object.insert("moneyReim", 111111);	//报销金额合计
+            object.insert("moneyReissue", 111111);//应补发金额合计
+            object.insert("operator", "张三");	//经办人 string
+            object.insert("payDate", "20190901");	//支付日期 string
+            object.insert("payList", QJsonValue(payList));
+            object.insert("period", "1-100");	//单据所属区间 string
+            object.insert("procInsId", "123");	//流程实例Id string
+            object.insert("projectType", "未命名");	//项目类型 string
+            object.insert("reportPerson", 123);//填报人 int
+            object.insert("submitAudit", 1);	//是否提交 Int
+            object.insert("use", "出国");		//出国事由string
+
+            document1.setObject(object);
+            QByteArray bytes = document1.toJson(QJsonDocument::Compact);
+            QString strBytes(bytes);
+
+            qDebug() << strBytes;
+        }
+    }
 }
 
+void MainWindow::on_commitPayBtn_clicked()
+{
+    if (expenseType == 11) {
+        if (totalPayAccount > totalReimAccount) {
+            QMessageBox::warning(this, "支付总金额问题", "支付总金额不得超过报销总金额", QMessageBox::Ok);
+        } else {
+
+        }
+    }
+    else if (expenseType == 12 || expenseType == 14) {
+        if (totalPayAccount > totalPerAccount) {
+            QMessageBox::warning(this, "支付总金额问题", "支付总金额不得超过人员补贴总金额", QMessageBox::Ok);
+        } else {
+
+        }
+    }
+}
 

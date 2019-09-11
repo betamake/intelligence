@@ -8,6 +8,7 @@ class payItemInfo
 {
 public:
     void setType(const int type) { this->type = type;}
+    void setStrType(const QString type) { this->strType = type;}
     void setAccount(const int account) { this->account = account;}
     void setPayeeName(const QString &payeeName) { this->payeeName = payeeName;}
     void setDepartment(const QString &department) { this->department = department;}
@@ -25,6 +26,7 @@ public:
     void clear();
 
     int getType() const { return this->type;}
+    QString getStrType() const { return this->strType;}
     int getAccount() const { return this->account;}
     QString getPayeeName() const { return this->payeeName;}
     QString getDepartment() const { return this->department;}
@@ -41,6 +43,7 @@ public:
 
 private:
     int type;               //支付方式
+    QString strType;        //支付方式
     int account;            //支付金额
     QString payeeName;      //收款人姓名
     QString department;     //收款人单位

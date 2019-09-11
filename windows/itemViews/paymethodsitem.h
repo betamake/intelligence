@@ -16,29 +16,14 @@ public:
     explicit payMethodsItem(QWidget *parent = nullptr);
     ~payMethodsItem();
 
-    void setCurrentIndex(int index);
-
     void setInfoItem(payItemInfo *info);
 
-    payItemInfo *getInfoItem();
-
-signals:
-    void openItem(payItemInfo *info, int index);
-
-    void deleteItem(int index);
-
-private slots:
-
-    void on_delBtn_clicked();
-
-    void on_modifyBtn_clicked();
+    payItemInfo *getInfoItem() { return this->curItem;}
 
 private:
     Ui::payMethodsItem *ui;
 
     payItemInfo *curItem;
-
-    int currentIndex;
 };
 
 #endif // PAYMETHODSITEM_H

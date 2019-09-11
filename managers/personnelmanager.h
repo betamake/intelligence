@@ -14,11 +14,11 @@ public:
     QString getStaffName() {return this->staffName;}
     void setStaffName(const QString staffName) { this->staffName = staffName;}
 
-    int getStaffNumber();
+    int getStaffNumber() {return this->staffNumber;}
     void setStaffNumber(const int staffNumber) { this->staffNumber = staffNumber;}
 
-    QString getPayInfoBankNum();
-    void setPayInfoBankNum(const QString payInfoBankNum);
+//    QString getPayInfoBankNum() ;
+//    void setPayInfoBankNum(const QString payInfoBankNum);
 
     QString getDepartment() { return this->department;}
     void setDepartment(const QString department) { this->department = department;}
@@ -28,6 +28,9 @@ public:
 
     QDate getLeaveDate1() { return this->leaveDate1;}
     void setLeaveDate1(const QDate leaveDate) { this->leaveDate1 = leaveDate;}
+
+    int getDays() { return this->days;}
+    void setDays(int days) { this->days = days;}
 
     QString getReturnDate() { return this->returnDate;}
     void setReturnDate(const QString returnDate) { this->returnDate = returnDate;}
@@ -69,6 +72,7 @@ private:
     QDate   leaveDate1;
     QString returnDate;         //出访终止时间
     QDate   returnDate1;
+    int     days;               //天数
 //    QString country;            //出访国家
     QString leaveCity;          //出发城市
     QString arriveCity;         //到达城市
@@ -88,11 +92,14 @@ public:
 
     void setEmpty();
 
+    bool getIsInSchool() { return this->isInSchool;}
+    void setIsInSchool(bool isInSchool) { this->isInSchool = isInSchool;}
+
     QString getStaffName() {return this->staffName;}
     void setStaffName(const QString staffName) { this->staffName = staffName;}
 
     int getStaffNumber() { return this->staffNumber;}
-    void setStaffNumber(const int staffNumber) { this->staffNumber = staffNumber;};
+    void setStaffNumber(const int staffNumber) { this->staffNumber = staffNumber;}
 
     QString getLeaveDate() { return this->leaveDate;}
     void setLeaveDate(const QString leaveDate) { this->leaveDate = leaveDate;}
@@ -127,6 +134,15 @@ public:
     QString getBudgetType() { return this->budgetType;}
     void setBudgetType(const QString budgetType) { this->budgetType = budgetType;}
 
+    int getLunchPerDay() { return this->lunchPerDay;}
+    void setLunchPerDay(int per) { this->lunchPerDay = per;}
+
+    int getTravelPerDay() { return this->travelPerDay;}
+    void setTravelPerDay(int per) { this->travelPerDay = per;}
+
+    int getStayPerDay() { return this->stayPerDay;}
+    void setStayPerDay(int per) { this->stayPerDay = per;}
+
     int getCityFee() { return this->cityFee;}
     void setCityFee(const int cityFee) { this->cityFee = cityFee;}
 
@@ -160,6 +176,7 @@ public:
     QString toString();
 
 private:
+    bool    isInSchool;         //true为院内人员，其他不是院内人员
     QString staffName;          //出差人员名
     int     staffNumber;        //员工工号
     QString leaveDate;          //出发时间
@@ -174,6 +191,10 @@ private:
     int     budgetNum;          //预算项目号/经费号
     QString budgetName;         //预算项目名称
     QString budgetType;         //经费类型
+
+    int     lunchPerDay;        //伙食每日补贴
+    int     travelPerDay;       //交通每日补贴
+    int     stayPerDay;         //住宿每日补贴
 
     int     cityFee;            //城市间交通费
     int     stayFee;            //住宿费

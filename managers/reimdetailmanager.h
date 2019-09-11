@@ -12,6 +12,8 @@
 class reimDetail {
 
 public:
+    reimDetail() { this->account = 0;}
+
     void setBudgetNumber(const QString &number) { this->budgetNumber = number;}
     void setBudgetName(const QString &name) { this->budgetName = name;}
     void setItem(const QString &item) { this->item = item;}

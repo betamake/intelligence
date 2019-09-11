@@ -57,15 +57,11 @@ HEADERS += \
            user.h \
            userinfodialog.h \
            voicecheck.h \
-    networkthread.h \
     connectionpool.h \
-    networkhandler.h  \
     turing.h \
     scandialog.h \
     scanthread.h \
-    windows/itemViews/addPersonnel.h \
     windows/insertpersonneldialog.h \
-    windows/itemViews/abroadpersonnel.h \
     common/commondefs.h \
     windows/itemViews/paymethodsitem.h \
     windows/addpaydialog.h \
@@ -76,21 +72,25 @@ HEADERS += \
     database.h \
     managers/reimdetailmanager.h \
     managers/payinfomanager.h \
-    managers/personnelmanager.h
-    costbaseinfo.h
+    managers/personnelmanager.h \
+    allinterface.h\
+    costbaseinfo.h\
+    frminput.h \
+    windows/itemViews/personitem.h \
+    tools/cdateedit.h
 FORMS += \
          facemangedialog.ui \
          mainwindow.ui \
          userinfodialog.ui \
     scandialog.ui \
-    windows/itemViews/addPersonnel.ui \
     windows/insertpersonneldialog.ui \
-    windows/itemViews/abroadpersonnel.ui \
     windows/itemViews/paymethodsitem.ui \
     windows/addpaydialog.ui \
     windows/itemViews/billitem.ui \
     windows/itemViews/reimdetailitem.ui\
-    windows/addpaydialog.ui
+    windows/addpaydialog.ui\
+    frminput.ui \
+    windows/itemViews/personitem.ui
 SOURCES += \
            billcheck.cpp \
            ClientSocket.cpp \
@@ -109,15 +109,11 @@ SOURCES += \
            user.cpp \
            userinfodialog.cpp \
            voicecheck.cpp \
-    networkthread.cpp \
     connectionpool.cpp \
-    networkhandler.cpp \
     turing.cpp \
     scandialog.cpp \
     scanthread.cpp \
-    windows/itemViews/addPersonnel.cpp \
     windows/insertpersonneldialog.cpp \
-    windows/itemViews/abroadpersonnel.cpp \
     common/commondefs.cpp \
     windows/itemViews/paymethodsitem.cpp \
     windows/addpaydialog.cpp \
@@ -128,4 +124,8 @@ SOURCES += \
     database.cpp \
     managers/reimdetailmanager.cpp \
     managers/payinfomanager.cpp \
-    managers/personnelmanager.cpp
+    managers/personnelmanager.cpp \
+    allinterface.cpp\
+    frminput.cpp \
+    windows/itemViews/personitem.cpp \
+    tools/cdateedit.cpp

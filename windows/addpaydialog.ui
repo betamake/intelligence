@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QTextEdit" name="bankRemark">
@@ -538,6 +538,19 @@ border-color: rgb(186, 189, 182);</string>
        </property>
       </item>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="searchPeopleButtop">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>60</y>
+       <width>89</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">

@@ -40,10 +40,7 @@ void scanDialog::on_buttonScan_clicked()
     QPixmap dest = pix.scaled(ui->label_32->size (),Qt::KeepAspectRatio);
     ui->label_32->setPixmap (dest);
     emit scanDone ();
-
 }
-
-
 
 void scanDialog::on_buttonClose_clicked()
 {

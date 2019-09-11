@@ -16,6 +16,7 @@ public:
     QByteArray Image_To_Base64(QString ImgPath);
 //    void printFile(QString dataFileName,QByteArray fdata);
     QNetworkRequest getHttpRequest(QString url);
+    QNetworkRequest getHttpRequestRemote(QString url);
 
 signals:
 

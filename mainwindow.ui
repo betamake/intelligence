@@ -26,24 +26,69 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_10">
-   <item row="1" column="1">
-    <widget class="QPushButton" name="costBaseButton">
+   <item row="2" column="2">
+    <widget class="QLabel" name="costScanLabel">
      <property name="text">
-      <string>1</string>
+      <string>扫描发票</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="3">
-    <widget class="QLabel" name="costItemLabel">
-     <property name="text">
-      <string>事项明细</string>
+   <item row="1" column="5" colspan="4">
+    <spacer name="horizontalSpacer_8">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>346</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="1" column="4">
     <widget class="QPushButton" name="costPayButton">
      <property name="text">
       <string>4</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <spacer name="horizontalSpacer_9">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>331</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="costScanButton">
+     <property name="text">
+      <string>2</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="lastStepBtn">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>38</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Adobe 仿宋 Std R</family>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>上一步</string>
      </property>
     </widget>
    </item>
@@ -66,6 +111,26 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="costBaseButton">
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>83</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="8">
     <widget class="QPushButton" name="firstBtn">
      <property name="minimumSize">
@@ -79,98 +144,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer_6">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>7</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="6">
-    <widget class="QPushButton" name="faceManBtn">
-     <property name="minimumSize">
-      <size>
-       <width>80</width>
-       <height>31</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>人脸管理</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1">
     <widget class="QLabel" name="costBaseLabel">
      <property name="text">
       <string>   基本信息</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QVBoxLayout" name="levelLayout"/>
-   </item>
-   <item row="1" column="5" colspan="4">
-    <spacer name="horizontalSpacer_8">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>346</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="4">
-    <widget class="QLabel" name="costPayLabel">
-     <property name="text">
-      <string>支付信息</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <spacer name="horizontalSpacer_10">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>98</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="lastStepBtn">
-     <property name="minimumSize">
-      <size>
-       <width>80</width>
-       <height>38</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Adobe 仿宋 Std R</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>上一步</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="costScanButton">
-     <property name="text">
-      <string>2</string>
      </property>
     </widget>
    </item>
@@ -202,45 +179,35 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="3">
-    <widget class="QPushButton" name="costItemButton">
+   <item row="2" column="3">
+    <widget class="QLabel" name="costItemLabel">
      <property name="text">
-      <string>3</string>
+      <string>事项明细</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="5">
-    <spacer name="horizontalSpacer_9">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>331</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
+   <item row="0" column="0" colspan="2">
+    <layout class="QVBoxLayout" name="levelLayout"/>
    </item>
-   <item row="2" column="2">
-    <widget class="QLabel" name="costScanLabel">
+   <item row="2" column="4">
+    <widget class="QLabel" name="costPayLabel">
      <property name="text">
-      <string>扫描发票</string>
+      <string>支付信息</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+   <item row="0" column="6">
+    <widget class="QPushButton" name="faceManBtn">
+     <property name="minimumSize">
       <size>
-       <width>83</width>
-       <height>20</height>
+       <width>80</width>
+       <height>31</height>
       </size>
      </property>
-    </spacer>
+     <property name="text">
+      <string>人脸管理</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="8">
     <spacer name="horizontalSpacer_3">
@@ -250,6 +217,19 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>77</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="7">
+    <spacer name="horizontalSpacer_10">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>98</width>
        <height>20</height>
       </size>
      </property>
@@ -267,6 +247,26 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>7</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="3">
+    <widget class="QPushButton" name="costItemButton">
+     <property name="text">
+      <string>3</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0" colspan="9">
     <widget class="QStackedWidget" name="mainWidget">
@@ -310,7 +310,7 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-      <number>16</number>
+      <number>12</number>
      </property>
      <widget class="QWidget" name="welcomepage">
       <property name="toolTipDuration">
@@ -1781,7 +1781,7 @@
       <widget class="QLabel" name="costHandpdLabel">
        <property name="geometry">
         <rect>
-         <x>380</x>
+         <x>370</x>
          <y>180</y>
          <width>111</width>
          <height>23</height>
@@ -2212,81 +2212,6 @@
      </widget>
      <widget class="QWidget" name="costItem">
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="6">
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>23</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="0">
-        <spacer name="horizontalSpacer_20">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="5">
-        <widget class="QPushButton" name="deleteDetailBtn">
-         <property name="text">
-          <string>删除</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="costItemdetailLabel">
-         <property name="font">
-          <font>
-           <pointsize>13</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>费用报销明细</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="5">
-        <widget class="QPushButton" name="saveDetailBtn">
-         <property name="text">
-          <string>保存</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="6">
-        <spacer name="horizontalSpacer_19">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1" colspan="5">
-        <widget class="QListWidget" name="feeDetailList">
-         <property name="minimumSize">
-          <size>
-           <width>650</width>
-           <height>400</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
@@ -2300,10 +2225,15 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="addDetailBtn">
+       <item row="0" column="1">
+        <widget class="QLabel" name="costItemdetailLabel">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>增加</string>
+          <string>费用报销明细</string>
          </property>
         </widget>
        </item>
@@ -2320,6 +2250,13 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="addDetailBtn">
+         <property name="text">
+          <string>增加</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="4">
         <widget class="QPushButton" name="copyDetailBtn">
          <property name="text">
@@ -2327,11 +2264,130 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="deleteDetailBtn">
+         <property name="text">
+          <string>删除</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>23</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1" colspan="5">
+        <widget class="QListWidget" name="feeDetailList">
+         <property name="minimumSize">
+          <size>
+           <width>650</width>
+           <height>400</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>总金额：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4" colspan="2">
+        <widget class="QLineEdit" name="reimAccount">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="payinfo">
-      <layout class="QGridLayout" name="gridLayout_22">
-       <item row="1" column="1" colspan="2">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>总金额：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="payAccount">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <spacer name="horizontalSpacer_33">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="addPayItemBtn">
+         <property name="text">
+          <string>添加</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="deletePayItemBtn">
+         <property name="text">
+          <string>删除</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QPushButton" name="modifyPayItemBtn">
+         <property name="text">
+          <string>编辑</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_31">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>120</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1" colspan="7">
         <widget class="QListWidget" name="payInfoList">
          <property name="minimumSize">
           <size>
@@ -2347,69 +2403,89 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <spacer name="horizontalSpacer_45">
+       <item row="1" column="8">
+        <spacer name="horizontalSpacer_32">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>634</width>
+           <width>120</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="addPayInfoBtn">
+       <item row="2" column="1">
+        <spacer name="horizontalSpacer_34">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="2">
+        <spacer name="horizontalSpacer_35">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="5">
+        <widget class="QPushButton" name="savePayBtn">
          <property name="text">
-          <string>添加支付信息</string>
+          <string>保存</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <spacer name="horizontalSpacer_46">
+       <item row="2" column="6">
+        <spacer name="horizontalSpacer_36">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>90</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer_47">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="2" column="7">
+        <widget class="QPushButton" name="commitPayBtn">
+         <property name="text">
+          <string>提交</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_48">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="addPersonnelWidget">
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer_26">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="0" column="2">
         <widget class="QWidget" name="widget" native="true">
          <widget class="QLabel" name="label">
@@ -2471,21 +2547,8 @@ border-color: rgb(211, 215, 207);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <spacer name="horizontalSpacer_22">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="6">
-        <widget class="QPushButton" name="copyPerBtn">
+        <widget class="QPushButton" name="modifyPerBtn">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -2499,12 +2562,38 @@ border-color: rgb(211, 215, 207);</string>
           </size>
          </property>
          <property name="text">
-          <string>复制人员</string>
+          <string>修改人员</string>
          </property>
         </widget>
        </item>
+       <item row="2" column="2">
+        <spacer name="horizontalSpacer_23">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="1" column="7">
         <spacer name="horizontalSpacer_21">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer_22">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -2535,8 +2624,8 @@ border-color: rgb(211, 215, 207);</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <spacer name="horizontalSpacer_26">
+       <item row="1" column="0">
+        <spacer name="horizontalSpacer_17">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -2558,8 +2647,8 @@ border-color: rgb(211, 215, 207);</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_17">
+       <item row="2" column="3">
+        <spacer name="horizontalSpacer_27">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -2573,32 +2662,6 @@ border-color: rgb(211, 215, 207);</string>
        </item>
        <item row="2" column="1">
         <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="2">
-        <spacer name="horizontalSpacer_23">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="3">
-        <spacer name="horizontalSpacer_27">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>

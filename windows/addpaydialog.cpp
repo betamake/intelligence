@@ -11,9 +11,11 @@ addPayDialog::addPayDialog(QWidget *parent) :
 
     initInput();
 
+    mIndex = -1;
     curItem = new payItemInfo();
     beginModify = false;
     currentType = 0;
+    strUsage = "";
     ui->comboBox->setCurrentIndex(currentType);
     ui->stackedWidget->setCurrentIndex(currentType);
 
@@ -112,6 +114,7 @@ void addPayDialog::on_saveEditBtn_clicked()
         } else {
             hasFixed = true;
             curItem->setType(0);
+            curItem->setStrType("网银支付");
             curItem->setAccount(ui->bankAccount->text().toInt());
             curItem->setPayeeName(ui->bankPayee->text());
             curItem->setProvince(ui->bankProvince->text());
@@ -133,6 +136,7 @@ void addPayDialog::on_saveEditBtn_clicked()
         else {
             hasFixed = true;
             curItem->setType(1);
+            curItem->setStrType("公务卡支付");
             curItem->setAccount(ui->cardAccount->text().toInt());
             curItem->setPayeeName(ui->cardPayee->text());
             curItem->setDepartment(ui->cardDepartment->text());
@@ -153,6 +157,7 @@ void addPayDialog::on_saveEditBtn_clicked()
         } else {
             hasFixed = true;
             curItem->setType(2);
+            curItem->setStrType("现金支付");
             curItem->setAccount(ui->cashAccount->text().toInt());
             curItem->setPayeeName(ui->cashPayee->text());
             curItem->setRemark(ui->cashRemark->toPlainText());
@@ -162,27 +167,37 @@ void addPayDialog::on_saveEditBtn_clicked()
     if(!hasFixed)
         return;
 
-    if (true == beginModify) {
-        //在payInfoManager中也要修改对应的支付信息
-
-        emit modifyPayItem(curItem);
-        beginModify = false;
-        close();
-    }
-    else {
-        payInfoManager::getInstance()->addPayItem(curItem);
-        emit addPayItem(curItem);
-        close();
-    }
-
+    emit addPayItem(mIndex, curItem);
+    close();
 }
 
-void addPayDialog::on_cardUsageCom_currentTextChanged(const QString &arg1)
+void addPayDialog::on_bankUsageCom_currentIndexChanged(int index)
 {
+    if (index == 0)
+        strUsage = "";
+    else if (index == 1)
+        strUsage = "货款";
+    else if (index == 2)
+        strUsage = "报销";
+}
 
+void addPayDialog::on_searchPeopleButtop_clicked()
+{
+    allInterface::getinstance ()->info.setname (ui->bankPayee->text ());
+    allInterface::getinstance ()->getuserdatalist ();
+    connect (allInterface::getinstance (),SIGNAL(setUserDataListDone()),this,SLOT(dealPayInfo()));
+}
+void addPayDialog::dealPayInfo ()
+{
+    ui->bankProvince->setText (allInterface::getinstance ()->info.getprovice ());
+    ui->bankCity->setText (allInterface::getinstance ()->info.getcity ());
+    ui->bank->setText (allInterface::getinstance ()->info.getbankName ());
+    ui->bankcardNumber->setText (allInterface::getinstance ()->info.getbankAccount ());
 }
 
 void addPayDialog::on_searchBtn_clicked()
 {
 
 }
+
+

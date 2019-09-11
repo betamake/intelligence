@@ -21,8 +21,7 @@
 #include "windows/itemViews/paymethodsitem.h"
 #include "windows/itemViews/billitem.h"
 #include "windows/itemViews/reimdetailitem.h"
-#include "windows/itemViews/addPersonnel.h"
-#include "windows/itemViews/abroadpersonnel.h"
+#include "windows/itemViews/personitem.h"
 
 #include "managers/payinfomanager.h"
 #include "managers/personnelmanager.h"
@@ -49,6 +48,8 @@
 #include "costbaseinfo.h"//处理费用报销基本信息
 #include "travelbaseinfo.h"//处理差旅报销基本信息
 #include "database.h"
+#include "allinterface.h"
+//#include "userinterface.h"
 #if _MSC_VER >= 1600
 
 #pragma execution_character_set("utf-8")
@@ -109,7 +110,7 @@ public:
     void deleteAccountReg(); //清空注册信息.
     void isShowguiInforn(); //显示报销流程引导
     void noShowguiInforn(); //不显示报销流程引导
-//报销流程处理函数
+    //报销流程处理函数
     void costbaseRead() ;//读取费用报销基本信息
     void travelbaseRead();//读取差旅报销基本信息
 
@@ -125,11 +126,17 @@ private:
     void clearAllInput();       //一次报销完成后，将报销流程中的所有信息清空
     void initObjects();         //初始化控件，一些控件的固定属性
 
+
 signals:
     //保存信息信号
     void saveReimDetail();      //保存费用报销明细
 
+//    void emitLoginInfo(QString username,QString password);       //给userinterface 发送账号信息;
+
     void savePerson();          //保存更新人员列表
+
+private slots:
+//    void checkReimListFinished();   //当列表中的所有报销明细都检查完成后，才完成跳转到下一页的操作
 
 private slots:
     void on_faceBtn_clicked();
@@ -202,19 +209,8 @@ private slots:
 
     void on_costAgainButton_clicked();
 
-    void on_addPayInfoBtn_clicked();
-
-    void addPayInfoItem(payItemInfo *info);                     //添加支付信息，参数后续添加
-
-    void openPayInfoItem(payItemInfo *info, int index);         //打开要修改的支付信息的窗口
-    void modifyPayInfoItem(payItemInfo *info);                  //修改支付信息
-    void deletePayInfoItem(int index);                          //删除支付信息
-
     void openBillItemDialog(BillCheck info);
     void deleteBillItemView(int row);                           //删除选中的票据item
-
-    void insertAbroadPer(int index, abroadPersonInfo *info);       //在出国人员Map中添加相应的人员信息
-    void insertTravelPer(int index, traBusPersonInfo *info);        //在出差人员Map中添加相应的人员信息
 
     void on_addDetailBtn_clicked();
 
@@ -222,13 +218,31 @@ private slots:
 
     void on_deleteDetailBtn_clicked();
 
-    void on_saveDetailBtn_clicked();
+    void userLogin();
 
     void on_addPerBtn_clicked();
-
     void on_delPerBtn_clicked();
+    void on_modifyPerBtn_clicked();
 
-    void on_copyPerBtn_clicked();
+    void on_savePayBtn_clicked();
+    void on_commitPayBtn_clicked();
+
+    void on_addPayItemBtn_clicked();
+    void on_modifyPayItemBtn_clicked();
+    void on_deletePayItemBtn_clicked();
+
+private slots:
+    //在人员列表中添加人员信息
+    void addTravelPerson(int index, traBusPersonInfo *info);
+    void addAbroadPerson(int index, abroadPersonInfo *info);
+    void addPersonAccount();
+
+    //添加支付信息
+    void addPayInfoItem(int index, payItemInfo *info);
+    void addPayAccount();
+
+    //添加费用报销明细
+    void addReimAccount();
 
 private:
     void setBasePage(int expenseType);
@@ -256,11 +270,17 @@ private:
     bool costType =false;
     bool busiType =false;
     bool abroadType = false;
-    //表格
+
+    QString chargeManName;      //经办人姓名
+    QString chargeDepartment;   //经办人部门
+
+    //票据表格
 //    QTableWidget *table;
     int expenseTypeId;
     BillCheck bill; // 票据数据
-    BillCheck billinfo;
+//    BillCheck billinfo;
+    QList<BillCheck> billList;
+
     int recordNum;//音频样本数量
     int recordLow;//低音音频样本数量
     int recordHigh;//高音样本数量
@@ -319,17 +339,21 @@ private:
 //    billinfodialog* billInfoDialog;//显示票据的弹框
     scanDialog *scanInfoDialog;
 
-    addPayDialog *addPayDlg;
-    int modifyItemIndex;        //要修改的支付信息的序号，从0开始，对应的是在list中的行数
+    //添加费用报销明细
+    QList<reimDetail*> mReimItemList;
+    int totalReimAccount;
 
-    insertPersonnelDialog *addPerDlg;   //添加人员弹窗
+    //添加支付方式
+    addPayDialog *addPayDlg;
+    QList<payItemInfo*> mPayItemList;   //支付信息列表
+    int totalPayAccount;                //支付总金额
 
     //添加人员信息
-    int mPersonType;         //人员类型，1为出差，2为出国
-    int perNum;             //人员数
-    int perIndex;           //每个添加的人员的序号，从1开始增加，删除人员不会减少这个序号
-    int currentPerIndex;       //当前被选中的人员
-
+    insertPersonnelDialog *addPerDlg;           //添加人员弹窗
+    int mPersonType;                            //人员类型，1为出差，2为出国
+    QList<traBusPersonInfo*> mTravelPersons;    //出差人员列表
+    QList<abroadPersonInfo*> mAbroadPersons;    //出国人员列表
+    int totalPerAccount;                        //人员报销总金额
 
     QByteArray getPixmapData(QString filePath,QImage image);
     QString avaterFilePath;
@@ -337,15 +361,8 @@ private:
     IdCardThread* m_currentRunLoaclThread;
     IdCardThread* m_thread;
 
-    //Qobject请求网络
-//    QTimer m_heart;
-//    QTimer *m_timer;
     QTimer *timer;
 
-//    NetworkThread* m_obj;
-//    QThread* m_objThread;
-
-//    NetworkHandler *m_network;
     Turing *turing;
     //扫描线程
     ScanThread *myScanThread;
@@ -353,13 +370,6 @@ private:
     costBase costBinfo; //费用报销基本信息
     travelBase travelBinfo;//差旅报销基本信息
 
-    //添加费用报销明细
-    int feeNum;             //报销明细数量
-
-
-
-//    QList<abroadPersonInfo*> mAbroadPerList;        //出国人员列表
-//    QList<traBusPersonInfo*> mTravelPerList;        //出差人员列表
 };
 
 #endif // MAINWINDOW_H

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "managers/payinfomanager.h"
-
+#include <allinterface.h>
 namespace Ui {
 class addPayDialog;
 }
@@ -20,18 +20,22 @@ public:
 
     void setItem(payItemInfo *info);
 
+    void setIndex(int index) { mIndex = index;}
+
 signals:
-    void addPayItem(payItemInfo *info);
-    void modifyPayItem(payItemInfo *info);
+    void addPayItem(int index, payItemInfo *info);
 
 private slots:
     void on_comboBox_currentIndexChanged(int index);
 
     void on_saveEditBtn_clicked();
 
-    void on_cardUsageCom_currentTextChanged(const QString &arg1);
+    void on_searchPeopleButtop_clicked();
+    void dealPayInfo();
 
     void on_searchBtn_clicked();
+
+    void on_bankUsageCom_currentIndexChanged(int index);
 
 private:
     //规定金额处只能输入int类型
@@ -41,7 +45,11 @@ private:
     Ui::addPayDialog *ui;
 
     int currentType;
+
+    int mIndex;
     payItemInfo *curItem;
+
+    QString strUsage;
 
     bool beginModify;       //修改的标志
 };

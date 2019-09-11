@@ -6,7 +6,6 @@ payMethodsItem::payMethodsItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::payMethodsItem)
 {
-    currentIndex = 0;
     curItem = new payItemInfo();
     ui->setupUi(this);
 }
@@ -14,22 +13,6 @@ payMethodsItem::payMethodsItem(QWidget *parent) :
 payMethodsItem::~payMethodsItem()
 {
     delete ui;
-}
-
-void payMethodsItem::setCurrentIndex(int index)
-{
-    currentIndex = index;
-    ui->numLabel->setNum(currentIndex);
-}
-
-void payMethodsItem::on_delBtn_clicked()
-{
-    emit deleteItem(currentIndex);
-}
-
-void payMethodsItem::on_modifyBtn_clicked()
-{
-    emit openItem(curItem, currentIndex);
 }
 
 void payMethodsItem::setInfoItem(payItemInfo *info)
@@ -50,9 +33,4 @@ void payMethodsItem::setInfoItem(payItemInfo *info)
         ui->methodLabel->setText("现金支付");
         ui->accountLabel->setNum(info->getAccount());
     }
-}
-
-payItemInfo *payMethodsItem::getInfoItem()
-{
-    return curItem;
 }
