@@ -1,6 +1,5 @@
-#ifndef CAMERADEVICE_H
-#define CAMERADEVICE_H
-
+#ifndef FACEREG_H
+#define FACEREG_H
 #include <QObject>
 #include <QCameraImageCapture>
 #include <QCamera>
@@ -29,7 +28,7 @@
 #include <allinterface.h>
 #include<QCoreApplication>
 #include <QDebug>
-class Camera{
+class Camerainfo{
 public:
     QCameraViewfinder *getviewfinder()
     {
@@ -63,32 +62,31 @@ private:
     QCamera *camera;
     int faceId;
 };
-
-class CameraDevice : public QThread
+class faceReg : public QThread
 {
     Q_OBJECT
 public:
-    explicit CameraDevice(QObject *parent = 0);
-    ~CameraDevice();
-    Camera getCameraInfo(){
+    explicit faceReg(QObject *parent = 0);
+    ~faceReg();
+    Camerainfo getCameraInfo(){
         return CameraInfo;
     }
-    Camera CameraInfo;
-    static CameraDevice *getinstance();
+    Camerainfo CameraInfo;
+    static faceReg *getinstance();
     QByteArray getPixmapData(QString filePath,QImage image); //
     void run();
-
     void initCamera();
 
 signals:
-    void faceCheckDone(int sentIndex);//发送人脸检测成功信号
-    void faceCheckFailure(int sentIndex);//发送人脸检测失败信号
+    void faceRegSucess(int sentIndex);
+    void faceRegFailure(int sentIndex);
 public slots:
-         void sendPhoto(int Id,QImage image);
-         void faceReply(QNetworkReply * reply);
-         void faceCheck();//人脸检测
+    void photoRegister(int Id,QImage image);
+    void faceRegReply(QNetworkReply *reply);
+    void faceCapute();
+
 private:
-    static CameraDevice *instance;
+    static faceReg *instance;
     int currentIndex;
     //人脸扫描
     int facetime;
@@ -100,4 +98,4 @@ private:
     CommonUtils commonutils;
 };
 
-#endif // CAMERADEVICE_H
+#endif // FACEREG_H

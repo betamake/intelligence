@@ -310,7 +310,6 @@
       <number>-3</number>
      </property>
      <property name="currentIndex">
-      <number>12</number>
       <number>7</number>
      </property>
      <widget class="QWidget" name="welcomepage">
@@ -1206,44 +1205,6 @@
         </rect>
        </property>
        <layout class="QHBoxLayout" name="faceRegImageLayout"/>
-      </widget>
-      <widget class="QPushButton" name="carmBtn">
-       <property name="geometry">
-        <rect>
-         <x>230</x>
-         <y>400</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Adobe 仿宋 Std R</family>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>拍照</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="carmSkipBtn">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>400</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Adobe 仿宋 Std R</family>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>跳过</string>
-       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="idCardReg">

@@ -51,6 +51,7 @@
 #include "allinterface.h"
 #include <postdata.h>
 #include <cameradevice.h>
+#include <facereg.h>
 //#include "userinterface.h"
 #if _MSC_VER >= 1600
 
@@ -115,7 +116,7 @@ public:
     //报销流程处理函数
     void costbaseRead() ;//读取费用报销基本信息
     void travelbaseRead();//读取差旅报销基本信息
-    void initCamera();//初始化摄像头
+
 //    void rsa_pub_encrypt_base64(const QString strClearData, const QString PubKey);//rsa公钥加密
 
 
@@ -151,6 +152,8 @@ private slots:
     void sendPhoto(int id,QImage image);
     void dealFaceCheckDone(int sendIndex); //接受faceLogin的信号
     void dealFaceCheckFailure(int sendIndex);//接受faceCheck失败信号;
+    void dealFaceRegSucess(int sendIndex);//接收faceReg信号
+    void dealFaceRegFailure(int sendIndex);//接收faceReg失败信号.
     void faceDelReply(QNetworkReply * reply);
     void photoRegister(int id,QImage image);
     void on_lastStepBtn_clicked();
@@ -165,7 +168,6 @@ private slots:
 //    void on_confirmBtn_clicked();
     void processBuffer(const QAudioBuffer&);
     void playChanged();
-    void on_carmBtn_clicked();
     void on_LogBtn_clicked();
     void on_RegBtn_2_clicked();
     void on_accountBtn_clicked();
@@ -179,7 +181,7 @@ private slots:
     void on_faceManBtn_clicked();
     void on_scanBillbtn_clicked();
     void onLocalThreadDestroy(QObject* obj);//一个成员变量记录正在运行的线程
-    void on_carmSkipBtn_clicked();
+//    void on_carmSkipBtn_clicked();
 
     void on_talkBtn_clicked();
     void on_expenseBtn_clicked();
@@ -233,7 +235,7 @@ private slots:
 
     //添加费用报销明细
     void addReimAccount();
-    void on_totalAccountBtn_clicked();
+//    void on_totalAccountBtn_clicked();
     void dealGetIdCard();//使用身份证登陆成功之后,处理返回的信息.
 
     void on_RegAcountBtn_clicked();

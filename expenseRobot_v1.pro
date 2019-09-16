@@ -79,7 +79,8 @@ HEADERS += \
     windows/itemViews/personitem.h \
     tools/cdateedit.h\
     postdata.h \
-    cameradevice.h
+    cameradevice.h \
+    facereg.h
 FORMS += \
          facemangedialog.ui \
          mainwindow.ui \
@@ -132,7 +133,8 @@ SOURCES += \
     windows/itemViews/personitem.cpp \
     tools/cdateedit.cpp \
     postdata.cpp \
-    cameradevice.cpp
+    cameradevice.cpp \
+    facereg.cpp
 #INCLUDEPATH += ./include
 #LIBS += libcrypto.lib \
 #           libssl.lib

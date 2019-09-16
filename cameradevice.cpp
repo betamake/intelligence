@@ -3,6 +3,7 @@ CameraDevice *CameraDevice::instance =NULL;
 CameraDevice::CameraDevice(QObject *parent) : QThread(parent)
 {
        address = "http://192.168.3.185:8000";
+       this->initCamera ();
 
 }
 CameraDevice::~CameraDevice(){
@@ -16,6 +17,28 @@ CameraDevice *CameraDevice::getinstance ()
     }
     return instance;
 }
+void CameraDevice::initCamera ()
+{
+    QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
+    if(cameras.count() > 0){
+        foreach (const QCameraInfo &cameraInfo, cameras) {
+            qDebug()<<cameraInfo.description();
+        }
+        QCamera *camera = new QCamera(cameras.at(0));
+        CameraInfo.setcamera (camera);
+    }
+    //登录
+    QCameraViewfinder *viewfinder = new QCameraViewfinder();
+    CameraInfo.setviewfinder (viewfinder);
+    CameraInfo.getcamera ()->setViewfinder( CameraInfo.getviewfinder ());
+    CameraInfo.getviewfinder ()->resize(600,400);
+
+    QCameraImageCapture *imageCapture = new QCameraImageCapture(CameraInfo.getcamera ());
+    CameraInfo.setimageCapture (imageCapture);
+
+    CameraInfo.getcamera ()->setCaptureMode(QCamera::CaptureStillImage);
+    CameraInfo.getimageCapture ()->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+}
 void CameraDevice::run ()
 {
     isFaceOk = false;
@@ -24,29 +47,15 @@ void CameraDevice::run ()
 
 
     qDebug()<<"进入线程";
-    if (CameraInfo.getfaceId ()==1){
-        qDebug()<<"人脸登录";
-        timer = new QTimer(this);
+    qDebug()<<"人脸登录";
+    timer = new QTimer(this);
     //    this->faceCheck ();
-        timer->setInterval(1000);//1s发送一次timeout信号
-        connect(timer, SIGNAL(timeout()), this, SLOT(faceCheck()));
-        timer->start();//启动定时器
-        exec() ;
-    }else{
-        qDebug()<<"进入注册人脸";
-        this->faceRegistered ();
-    }
-
-
+    timer->setInterval(2000);//1s发送一次timeout信号
+    connect(timer, SIGNAL(timeout()), this, SLOT(faceCheck()));
+    timer->start();//启动定时器
+    exec() ;
 }
-void CameraDevice::faceRegistered ()
-{
-    qDebug()<<"进入注册人脸函数";
-    CameraInfo.getcamera ()->searchAndLock();
-    CameraInfo.getimageCaptureReg ()->capture();
-    CameraInfo.getcamera ()->unlock();
-    connect(CameraInfo.getimageCaptureReg (), SIGNAL(imageCaptured(int,QImage)), this, SLOT(photoRegister(int,QImage)));
-}
+
 
 QByteArray CameraDevice::getPixmapData(QString filePath,QImage image)
 {
@@ -90,22 +99,22 @@ void CameraDevice::faceCheck ()
         idFace = 2;//登录查人脸
         CameraInfo.getimageCapture ()->capture();
         //take photos
-        if(facetime < 5)
+        if(facetime < 4)
         {
             qDebug()<<"第" << "facetime" << "次查询人脸";
             connect(CameraInfo.getimageCapture (), SIGNAL(imageCaptured(int,QImage)), this, SLOT(sendPhoto(int,QImage)));
-
         }else
         {
             qDebug() << "face check failed, stop send photos"<< endl;
             sentIndex=6;
-            emit faceCheckFailure (sentIndex);
+
 //            QMessageBox::information(this, QString::fromUtf8("失败"),QString::fromUtf8("人脸不存在，请补录人脸信息"));
             if(timer->isActive ())
             {
                 timer->stop ();
             }
             CameraInfo.getcamera ()->stop ();
+            emit faceCheckFailure (sentIndex);
         }
 
     }
@@ -118,7 +127,6 @@ void CameraDevice::sendPhoto (int Id, QImage image)
         QNetworkAccessManager *manager  = new QNetworkAccessManager(this);
         //发送结束后，进行人脸结果处理
         QObject::connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(faceReply(QNetworkReply*)));
-
         //封装请求参数(看接口文档)
         QUrlQuery params;
         fdata = fdata.toBase64().replace("+","-").replace("/","_");
@@ -127,6 +135,7 @@ void CameraDevice::sendPhoto (int Id, QImage image)
         params.addQueryItem("imageType",".jpg");
         QString  data = params.toString();
         QNetworkRequest request = commonutils.getHttpRequest(address.left(25).append("/face/search/"));
+
         request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
         manager->post(request,params.toString().toUtf8());
     }
@@ -213,81 +222,6 @@ void CameraDevice::faceReply (QNetworkReply *reply)
                 }
             }
 
-        }
-    }
-}
-void CameraDevice::photoRegister(int id,QImage image)
-{
-    qDebug()<<"摄像头状态:"<<CameraInfo.getcamera ()->status();
-    if(QCamera::ActiveStatus == CameraInfo.getcamera ()->status())
-     {   QByteArray fdata = this->getPixmapData("/files/regFace/",image);
-        CameraInfo.getcamera ()->stop();//停止相机拍照
-
-        //准备发送网络请求和接收应答
-        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        QUrlQuery params;
-        //不能直接到第二步
-        QObject::connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(faceRegReply(QNetworkReply*)));
-        fdata = fdata.toBase64();
-        fdata = fdata.replace("+","-");
-        fdata = fdata.replace("/","_");
-        params.addQueryItem("image",fdata);
-        params.addQueryItem("group_id","1");
-        params.addQueryItem("uid",allInterface::getinstance ()->info.getpassword ());
-        params.addQueryItem("user_info",allInterface::getinstance ()->info.getusername ());
-        params.addQueryItem("imageType",".jpg");
-        QString  data = params.toString();
-        QNetworkRequest request = commonutils.getHttpRequest(address.left(25).append("/face/register/"));
-        request.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
-        manager->post(request,params.toString().toUtf8());
-}
-}
-void CameraDevice::faceRegReply(QNetworkReply *reply){
-
-    //拿到返回结果
-    if(reply->error() == QNetworkReply::NoError){
-        QByteArray all = reply->readAll();
-        QJsonParseError jsonError;
-        QJsonDocument doucment = QJsonDocument::fromJson(all, &jsonError);  // 转化为 JSON 文档
-        if (!doucment.isNull() && (jsonError.error == QJsonParseError::NoError)) {  // 解析未发生错误
-            if(doucment.isObject()){
-                QJsonObject object = doucment.object();
-                qDebug()<< "----faceReg result:----"<<QString(doucment.toJson()).replace("\n","").replace("\"","").replace(" ","") <<endl;
-                /*
-                    注册成功
-                    {
-                        "log_id": 2764578038040222
-                    }
-                    注册失败
-
-                    {
-                        "error_code": 216616,
-                        "log_id": 674786177,
-                        "error_msg": "image exist"
-                    }
-                 */
-                QString error_msg="";
-
-                //注册失败
-                if(object.contains("error_code")){
-                    QJsonValue numValue = object.value("error_code");
-                    //                    QJsonValue numValue2 = object.value("error_msg");
-                    if(numValue.isDouble()){
-                        //                        error_code = numValue.toInt();
-                    }
-                    qDebug()<< "----result failure:----"<< error_msg<<endl;
-//                    QMessageBox::information(this, QString::fromUtf8("警告!"),QString::fromUtf8("人脸注册失败!"));
-
-                }
-                //注册成功
-                else{
-                    //取log_id  16位字符串
-                    QString log_id =  QString(doucment.toJson()).replace("\n","").replace("\"","").replace(" ","").mid(8,16);
-                    qDebug() <<"log_id:"<<log_id<<endl;
-                }
-                //清空内容并定位光标
-
-            }
         }
     }
 }

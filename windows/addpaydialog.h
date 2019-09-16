@@ -35,7 +35,7 @@ private slots:
 
 
     void on_bankUsageCom_currentIndexChanged(int index);
-    void on_searchBtn_clicked();
+//    void on_searchBtn_clicked();
 
 
 private:

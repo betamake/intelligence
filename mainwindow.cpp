@@ -65,14 +65,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     this->initMedia();
-    this->initCamera ();
     initObjects();
-
+    ui->firstBtn->show ();
     currentIndex = 0;
     ui->mainWidget->setCurrentIndex(currentIndex);
     ui->faceManBtn->hide();//人脸库管理登陆后才展示
     ui->lastStepBtn->hide ();
-    ui->firstBtn->hide ();
+//    ui->firstBtn->hide ();
     this->noShowguiInforn ();
 
     ui->userInfo->installEventFilter(this); //初始化个人信息页
@@ -196,26 +195,6 @@ void MainWindow::initMedia()
     player->stop();
     this->sendPlayText("欢迎使用财务机器人");
 }
-void MainWindow::initCamera ()
-{
-    QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
-    if(cameras.count() > 0){
-        foreach (const QCameraInfo &cameraInfo, cameras) {
-            qDebug()<<cameraInfo.description();
-        }
-        camera = new QCamera(cameras.at(0));
-        CameraDevice::getinstance ()->CameraInfo.setcamera (camera);
-    }
-   viewfinder = new QCameraViewfinder(this);
-   CameraDevice::getinstance ()->CameraInfo.setviewfinder (viewfinder);
-   ui->imageLayout->addWidget(CameraDevice::getinstance ()->CameraInfo.getviewfinder ());
-   CameraDevice::getinstance ()->CameraInfo.getcamera ()->setViewfinder(CameraDevice::getinstance ()->CameraInfo.getviewfinder ());
-   CameraDevice::getinstance ()->CameraInfo.getviewfinder ()->resize(600,400);
-   imageCapture = new QCameraImageCapture(camera);
-   CameraDevice::getinstance ()->CameraInfo.setimageCapture (imageCapture);
-   CameraDevice::getinstance ()->CameraInfo.getcamera ()->setCaptureMode(QCamera::CaptureStillImage);
-   CameraDevice::getinstance ()->CameraInfo.getimageCapture ()->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-}
 
 //-------------------------------------------event start----------------------------------------
 //首页登录方式选择
@@ -237,8 +216,8 @@ void MainWindow::on_faceBtn_clicked()
 {
     player->stop();
     this->sendPlayText("已选择人脸登录");
-    int faceId=1;
-    CameraDevice::getinstance ()->CameraInfo.setfaceId (faceId);
+    qDebug()<<"人脸登录"<<CameraDevice::getinstance ()->CameraInfo.getviewfinder ();
+    ui->imageLayout->addWidget(CameraDevice::getinstance ()->CameraInfo.getviewfinder ());
     CameraDevice::getinstance ()->CameraInfo.getcamera ()->start();
     CameraDevice::getinstance ()->moveToThread (CameraDevice::getinstance ()); //解决类不在一个线程
     CameraDevice::getinstance ()->start ();
@@ -258,8 +237,36 @@ void MainWindow::dealFaceCheckDone (int sendIndex)
 }
 void MainWindow::dealFaceCheckFailure (int sendIndex)
 {
+    CameraDevice::getinstance ()->quit ();
+    CameraDevice::getinstance ()->wait ();
     currentIndex=sendIndex;
     ui->mainWidget->setCurrentIndex(currentIndex);
+}
+void MainWindow::on_RegAcountBtn_clicked()
+{
+    allInterface::getinstance ()->info.setusername (ui->RegUsername_LineEdit->text ());
+    allInterface::getinstance ()->info.setpassword (ui->RegPwd_LineEdit->text ());
+    currentIndex =7;
+    ui->mainWidget->setCurrentIndex(currentIndex);
+    ui->faceRegImageLayout->addWidget(faceReg::getinstance ()->CameraInfo.getviewfinder ());
+    faceReg::getinstance ()->CameraInfo.getcamera ()->start();
+    faceReg::getinstance ()->moveToThread (faceReg::getinstance ()); //解决类不在一个线程
+    faceReg::getinstance ()->start ();
+    connect(faceReg::getinstance (),SIGNAL(faceRegSucess(int)),this,SLOT(dealFaceRegSucess(int)));
+    connect(faceReg::getinstance (),SIGNAL(faceRegFailure(int)),this,SLOT(dealFaceRegFailure(int)));
+}
+void MainWindow::dealFaceRegSucess (int sendIndex)
+{
+    this->on_faceBtn_clicked();
+    faceReg::getinstance ()->quit ();
+    faceReg::getinstance ()->wait ();
+}
+void MainWindow::dealFaceRegFailure (int sendIndex)
+{
+    currentIndex=6;
+    ui->mainWidget->setCurrentIndex (currentIndex);
+    faceReg::getinstance ()->quit ();
+    faceReg::getinstance ()->wait ();
 }
 
 /**
@@ -392,31 +399,12 @@ void MainWindow::on_RegBtn_2_clicked()
 {
     currentIndex = 6;
     ui->mainWidget->setCurrentIndex(currentIndex);
+
+
 }
 
 
-/**
-* @function   on_carmBtn_clicked
-* @brief      人脸注册插入人脸库
-* @author        胡想成
-* @date          2018-08-15
-*/
-void MainWindow::on_carmBtn_clicked()
-{
-    //    qDebug()<<camera->status()<<endl;
 
-    idFace=1;
-    int faceId=2;
-    CameraDevice::getinstance ()->CameraInfo.setfaceId (faceId);
-    CameraDevice::getinstance ()->moveToThread (CameraDevice::getinstance ()); //解决类不在一个线程
-    CameraDevice::getinstance ()->start ();
-
-//    camera->searchAndLock();
-//    //    imageCapture2->capture();
-//    imageCaptureReg->capture();
-//    camera->unlock();
-//    connect(imageCaptureReg, SIGNAL(imageCaptured(int,QImage)), this, SLOT(photoRegister(int,QImage)));
-}
 
 /**
 * @brief      发送音频文本，进行语音合成
@@ -711,16 +699,16 @@ void MainWindow::toCurrentPage (int pageNum)
     case 6:
         //the next step we should init a carma
         //设置取景器
-        viewfinder = new QCameraViewfinder(this);
-        ui->faceRegImageLayout->addWidget(viewfinder);
-        camera->setViewfinder(viewfinder);
-        viewfinder->resize(600,400);
+//        viewfinder = new QCameraViewfinder(this);
+//        ui->faceRegImageLayout->addWidget(viewfinder);
+//        camera->setViewfinder(viewfinder);
+//        viewfinder->resize(600,400);
 
-        imageCaptureReg = new QCameraImageCapture(camera);
-        camera->setCaptureMode(QCamera::CaptureStillImage);
-        imageCaptureReg->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+//        imageCaptureReg = new QCameraImageCapture(camera);
+//        camera->setCaptureMode(QCamera::CaptureStillImage);
+//        imageCaptureReg->setCaptureDestination(QCameraImageCapture::CaptureToFile);
 
-        camera->start();
+//        camera->start();
 
         //跳到人脸注册页面
         currentIndex = 6;
@@ -978,11 +966,16 @@ void MainWindow::deleteAccountReg ()
 void MainWindow::deleteFace ()
 {
     qDebug() << "销毁人脸登录";
-    camera->stop();
-    if(timer->isActive ())
-    {
-        timer->stop ();
-    }
+//    camera->stop();
+//    if(timer->isActive ())
+//    {
+//        timer->stop ();
+//    }
+    CameraDevice::getinstance ()->CameraInfo.getcamera ()->stop ();
+    CameraDevice::getinstance ()->quit ();
+    CameraDevice::getinstance ()->wait ();
+
+
 }
 
 
@@ -2778,14 +2771,14 @@ bool MainWindow::VerifyNumber(QString str) { //这一步做什么,
     return true;
 }
 
-void MainWindow::on_carmSkipBtn_clicked()
-{
-    idCheckId = 1;//认证的时候调用
-    //    currentIndex=4;
-    //    ui->mainWidget->setCurrentIndex(currentIndex);
-    //    this->idCardRead();
-    toCurrentPage (7);
-}
+//void MainWindow::on_carmSkipBtn_clicked()
+//{
+//    idCheckId = 1;//认证的时候调用
+//    //    currentIndex=4;
+//    //    ui->mainWidget->setCurrentIndex(currentIndex);
+//    //    this->idCardRead();
+//    toCurrentPage (7);
+//}
 
 
 
@@ -3732,22 +3725,4 @@ void MainWindow::on_commitPayBtn_clicked()
     }
 }
 
-void MainWindow::on_RegAcountBtn_clicked()
-{
-    allInterface::getinstance ()->info.setusername (ui->RegUsername_LineEdit->text ());
-    allInterface::getinstance ()->info.setpassword (ui->RegPwd_LineEdit->text ());
-    currentIndex =7;
-    ui->mainWidget->setCurrentIndex(currentIndex);
-    //初始化注册摄像头
-    viewfinder = new QCameraViewfinder(this);
-    CameraDevice::getinstance ()->CameraInfo.setviewfinder (viewfinder);
-    ui->faceRegImageLayout->addWidget(CameraDevice::getinstance ()->CameraInfo.getviewfinder());
-    CameraDevice::getinstance ()->CameraInfo.getcamera ()->setViewfinder(CameraDevice::getinstance ()->CameraInfo.getviewfinder());
-    CameraDevice::getinstance ()->CameraInfo.getviewfinder()->resize(600,400);
-    imageCaptureReg = new QCameraImageCapture(camera);
-    CameraDevice::getinstance ()->CameraInfo.setimageCaptureReg (imageCaptureReg);
-    CameraDevice::getinstance ()->CameraInfo.getcamera ()->setCaptureMode(QCamera::CaptureStillImage);
-    CameraDevice::getinstance ()->CameraInfo.getimageCaptureReg()->setCaptureDestination(QCameraImageCapture::CaptureToFile);
-    CameraDevice::getinstance ()->CameraInfo.getcamera ()->start();
 
-}
